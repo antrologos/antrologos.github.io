@@ -23,7 +23,14 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#research">Research</a></li>
                 <li><a href="#publications">Publications</a></li>
-                <li><a href="#software">Software</a></li>
+                <li class="nav-dropdown">
+                    <a href="#software" class="nav-dropdown-toggle">Software</a>
+                    <ul class="nav-dropdown-menu">
+                        <li><a href="https://antrologos.github.io/mensalizePNADC/" target="_blank">mensalizePNADC</a></li>
+                        <li><a href="https://github.com/ipeaGIT/censobr" target="_blank">censobr</a></li>
+                        <li><a href="https://github.com/antrologos/tableInequality" target="_blank">tableInequality</a></li>
+                    </ul>
+                </li>
                 <li><a href="#teaching">Teaching</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -421,6 +428,17 @@
                 navbar.classList.remove('scrolled');
             }
         });
+
+        // Mobile dropdown toggle
+        const dropdownToggle = document.querySelector('.nav-dropdown-toggle');
+        if (dropdownToggle) {
+            dropdownToggle.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdownToggle.parentElement.classList.toggle('active');
+                }
+            });
+        }
     </script>
 </body>
 </html>
