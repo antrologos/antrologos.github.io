@@ -1,446 +1,931 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transcritorio | Local Interview Transcription</title>
-    <meta name="description" content="Transcritorio — a standalone desktop app for local, GPU-accelerated transcription of qualitative interviews in Brazilian Portuguese.">
+    <title>Transcritorio — Transcricao local de entrevistas</title>
+    <meta name="description" content="Transcritorio: aplicativo desktop gratuito para transcricao local de entrevistas qualitativas com GPU. Sem cloud, sem risco, sem espera.">
     <link rel="stylesheet" href="../style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
-        /* Page-specific styles */
-        .page-hero {
-            padding: calc(var(--nav-height) + 3rem) 0 3rem;
-            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-            text-align: center;
-        }
-        .page-hero h1 { font-size: 2.75rem; margin-bottom: 0.5rem; }
-        .page-hero .subtitle {
-            font-size: 1.2rem;
-            color: var(--color-text-light);
-            max-width: 700px;
-            margin: 0 auto 0.5rem;
-        }
-        .page-hero .subtitle-pt {
-            font-size: 1rem;
-            color: var(--color-text-muted);
-            font-style: italic;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-        }
-        .download-btn {
-            display: inline-block;
-            padding: 0.9rem 2rem;
-            background: var(--color-primary);
-            color: white;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1.05rem;
-            transition: background 0.2s;
-            margin: 0.5rem;
-        }
-        .download-btn:hover { background: var(--color-primary-light); color: white; }
-        .download-btn-secondary {
-            display: inline-block;
-            padding: 0.9rem 2rem;
-            background: white;
-            color: var(--color-primary);
-            border: 2px solid var(--color-primary);
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1.05rem;
-            transition: all 0.2s;
-            margin: 0.5rem;
-        }
-        .download-btn-secondary:hover { background: var(--color-bg-alt); color: var(--color-primary); }
-        .download-note {
-            font-size: 0.85rem;
-            color: var(--color-text-muted);
-            margin-top: 1rem;
-        }
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-        .feature-card {
-            background: var(--color-bg);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--color-border);
-        }
-        .feature-card h3 { margin-bottom: 0.75rem; font-family: var(--font-sans); }
-        .feature-card p { color: var(--color-text-light); font-size: 0.95rem; margin-bottom: 0; }
-        .steps-list { counter-reset: step-counter; list-style: none; padding: 0; max-width: 800px; }
-        .steps-list li {
-            counter-increment: step-counter;
-            padding: 1.25rem 1.25rem 1.25rem 3.5rem;
-            margin-bottom: 1rem;
-            background: var(--color-bg);
-            border-radius: 8px;
-            border: 1px solid var(--color-border);
-            position: relative;
-        }
-        .section-alt .steps-list li { background: var(--color-bg); }
-        .section:not(.section-alt) .steps-list li { background: var(--color-bg-alt); }
-        .steps-list li::before {
-            content: counter(step-counter);
-            position: absolute;
-            left: 1rem;
-            top: 1.25rem;
-            width: 1.75rem;
-            height: 1.75rem;
-            background: var(--color-accent);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.85rem;
-        }
-        .steps-list li strong { color: var(--color-primary); }
-        .req-table { width: 100%; border-collapse: collapse; max-width: 700px; }
-        .req-table th, .req-table td {
-            text-align: left;
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid var(--color-border);
-        }
-        .req-table th {
-            font-family: var(--font-sans);
-            font-weight: 600;
-            color: var(--color-primary);
-            font-size: 0.9rem;
-        }
-        .req-table td { color: var(--color-text-light); font-size: 0.95rem; }
-        .format-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1rem;
-        }
-        .format-item {
-            text-align: center;
-            padding: 1rem;
-            background: var(--color-bg);
-            border-radius: 8px;
-            border: 1px solid var(--color-border);
-        }
-        .format-item strong { display: block; color: var(--color-primary); font-size: 1rem; margin-bottom: 0.25rem; }
-        .format-item span { font-size: 0.8rem; color: var(--color-text-muted); }
-        .faq-item { margin-bottom: 1.5rem; }
-        .faq-item h4 { font-family: var(--font-sans); margin-bottom: 0.5rem; }
-        .faq-item p { color: var(--color-text-light); font-size: 0.95rem; }
-        .back-link {
-            font-size: 0.85rem;
-            color: var(--color-text-muted);
-            margin-bottom: 0;
-        }
-        code {
-            background: var(--color-bg-alt);
-            padding: 0.15rem 0.4rem;
-            border-radius: 3px;
-            font-size: 0.9em;
-            color: var(--color-primary);
-        }
-        .section-alt code { background: var(--color-bg); }
-        @media (max-width: 768px) {
-            .page-hero h1 { font-size: 2rem; }
-            .feature-grid { grid-template-columns: 1fr; }
-            .format-grid { grid-template-columns: repeat(3, 1fr); }
-        }
+    /* ── Design tokens ── */
+    :root {
+        --warm: #c05621;
+        --warm-hover: #a84b1c;
+        --warm-bg: #fffaf0;
+        --warm-border: #feebc8;
+        --dark: #101820;
+        --dark-card: #1a2332;
+        --teal: #44d7b6;
+        --green: #276749;
+        --green-bg: #f0fff4;
+        --green-border: #c6f6d5;
+        --red: #c53030;
+        --red-bg: #fff5f5;
+        --red-border: #fed7d7;
+    }
+
+    /* ── Global overrides ── */
+    body { background: #fafaf9; }
+
+    .section > .container > h2 {
+        position: relative;
+        display: inline-block;
+    }
+    .section > .container > h2::after {
+        content: '';
+        display: block;
+        width: 3rem;
+        height: 3px;
+        background: var(--warm);
+        margin-top: 0.5rem;
+        border-radius: 2px;
+    }
+    .section-centered { text-align: center; }
+    .section-centered > .container > h2 { display: block; }
+    .section-centered > .container > h2::after { margin-left: auto; margin-right: auto; }
+
+    /* ── Language toggle ── */
+    html[lang="en"] [data-lang="pt"] { display: none !important; }
+    html[lang="pt"] [data-lang="en"] { display: none !important; }
+    .lang-toggle {
+        background: none;
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        padding: 0.25rem 0.6rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--color-text-muted);
+        cursor: pointer;
+        font-family: var(--font-sans);
+    }
+    .lang-toggle:hover { background: var(--color-bg-alt); }
+
+    /* ── Navbar ── */
+    .page-nav { position: sticky; top: 0; z-index: 100; }
+    .page-nav .nav-container { display: flex; align-items: center; justify-content: space-between; }
+    .page-nav-links { display: flex; align-items: center; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
+    .page-nav-links a { font-size: 0.85rem; font-weight: 500; color: var(--color-text-light); }
+    .page-nav-links a:hover { color: var(--color-accent); }
+
+    /* ── Hero ── */
+    .hero {
+        padding: calc(var(--nav-height) + 3rem) 0 0;
+        background: linear-gradient(145deg, #f7fafc 0%, #ebf4ff 50%, var(--warm-bg) 100%);
+        overflow: hidden;
+    }
+    .hero-inner {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: grid;
+        grid-template-columns: 1fr 1.1fr;
+        gap: 3rem;
+        align-items: end;
+    }
+    .hero-text { padding-bottom: 3rem; }
+    .hero-text h1 {
+        font-family: var(--font-serif);
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--color-primary);
+        line-height: 1.15;
+        margin-bottom: 1rem;
+    }
+    .hero-sub {
+        font-size: 1.1rem;
+        color: var(--color-text-light);
+        line-height: 1.7;
+        max-width: 520px;
+        margin-bottom: 1.5rem;
+    }
+    .trust-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .trust-badge {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.3rem 0.7rem;
+        background: white;
+        border: 1px solid var(--color-border);
+        border-radius: 20px;
+        color: var(--color-text-muted);
+    }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
+    .btn-primary {
+        display: inline-block;
+        padding: 0.85rem 2rem;
+        background: var(--warm);
+        color: white;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--warm-hover); color: white; transform: translateY(-1px); }
+    .btn-secondary {
+        display: inline-block;
+        padding: 0.85rem 2rem;
+        background: white;
+        color: var(--color-primary);
+        border: 2px solid var(--color-primary);
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: var(--color-primary); color: white; }
+    .hero-meta { font-size: 0.8rem; color: var(--color-text-muted); }
+
+    /* Window frame for screenshots */
+    .window-frame {
+        background: var(--color-primary);
+        border-radius: 10px 10px 0 0;
+        padding: 6px 6px 0;
+        box-shadow: 0 20px 60px rgba(26, 54, 93, 0.2);
+    }
+    .window-dots {
+        display: flex;
+        gap: 6px;
+        padding: 6px 8px;
+    }
+    .window-dots span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+    .window-dots span:nth-child(1) { background: #fc8181; }
+    .window-dots span:nth-child(2) { background: #f6e05e; }
+    .window-dots span:nth-child(3) { background: #68d391; }
+    .window-frame img {
+        display: block;
+        width: 100%;
+        border-radius: 4px 4px 0 0;
+    }
+    .screenshot-placeholder {
+        background: linear-gradient(135deg, #edf2f7, #e2e8f0);
+        min-height: 280px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        color: var(--color-text-muted);
+        font-size: 0.85rem;
+        text-align: center;
+        font-style: italic;
+        border-radius: 4px 4px 0 0;
+    }
+
+    /* ── Comparison cards ── */
+    .comparison-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        max-width: 900px;
+    }
+    .cmp-card {
+        border-radius: 10px;
+        border: 1px solid var(--color-border);
+        overflow: hidden;
+    }
+    .cmp-card--problem { border-top: 3px solid var(--red); }
+    .cmp-card--solution { border-top: 3px solid var(--teal); box-shadow: 0 4px 20px rgba(68, 215, 182, 0.08); }
+    .cmp-header {
+        padding: 0.9rem 1.25rem;
+        font-family: var(--font-sans);
+        font-weight: 700;
+        font-size: 1rem;
+    }
+    .cmp-card--problem .cmp-header { background: var(--red-bg); color: var(--red); }
+    .cmp-card--solution .cmp-header { background: var(--green-bg); color: var(--green); }
+    .cmp-body { padding: 0; }
+    .cmp-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.65rem 1.25rem;
+        border-bottom: 1px solid var(--color-border);
+        font-size: 0.9rem;
+        color: var(--color-text-light);
+    }
+    .cmp-row:last-child { border-bottom: none; }
+    .cmp-icon {
+        flex-shrink: 0;
+        width: 1.2rem;
+        height: 1.2rem;
+        border-radius: 50%;
+        position: relative;
+        margin-top: 2px;
+    }
+    .cmp-icon--no { background: var(--red-bg); }
+    .cmp-icon--no::before, .cmp-icon--no::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 8px;
+        height: 2px;
+        background: var(--red);
+        border-radius: 1px;
+    }
+    .cmp-icon--no::before { transform: translate(-50%, -50%) rotate(45deg); }
+    .cmp-icon--no::after { transform: translate(-50%, -50%) rotate(-45deg); }
+    .cmp-icon--yes { background: var(--green-bg); }
+    .cmp-icon--yes::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 4px;
+        width: 4px;
+        height: 8px;
+        border: solid var(--green);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+
+    /* ── Bento grid ── */
+    .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.25rem;
+    }
+    .bento-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        border: 1px solid var(--color-border);
+        border-left: 4px solid var(--color-accent);
+        transition: box-shadow 0.2s;
+    }
+    .bento-card:hover { box-shadow: 0 4px 20px rgba(26, 54, 93, 0.08); }
+    .bento-large { grid-column: span 2; }
+    .bento-small { grid-column: span 1; }
+    .bento-card h3 { font-family: var(--font-sans); font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .bento-card p { color: var(--color-text-light); font-size: 0.9rem; margin-bottom: 0.75rem; }
+    .bento-card:nth-child(1) { border-left-color: #553c9a; }
+    .bento-card:nth-child(2) { border-left-color: #285e61; }
+    .bento-card:nth-child(3) { border-left-color: #2a4365; }
+    .bento-card:nth-child(4) { border-left-color: var(--warm); }
+    .bento-card:nth-child(5) { border-left-color: #276749; }
+    .bento-card:nth-child(6) { border-left-color: #2c5282; }
+    .bento-visual {
+        margin-top: 0.75rem;
+    }
+    .bento-visual .screenshot-placeholder { min-height: 160px; border-radius: 6px; }
+    .tag {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.2rem 0.5rem;
+        background: var(--color-bg-alt);
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        color: var(--color-text-muted);
+        margin: 0.15rem;
+    }
+
+    /* ── Privacy (dark) ── */
+    .privacy {
+        background: var(--dark);
+        color: #f7f7f2;
+        padding: 5rem 0;
+    }
+    .privacy h2 { color: white; }
+    .privacy h2::after { background: var(--teal); }
+    .privacy-lead {
+        font-size: 1.05rem;
+        color: rgba(255,255,255,0.7);
+        max-width: 700px;
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+    }
+    .privacy-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.25rem;
+    }
+    .privacy-item {
+        background: var(--dark-card);
+        padding: 1.5rem;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+    .privacy-item h3 { color: var(--teal); font-family: var(--font-sans); font-size: 1rem; margin-bottom: 0.5rem; }
+    .privacy-item p { color: rgba(255,255,255,0.65); font-size: 0.9rem; margin: 0; }
+
+    /* ── Timeline ── */
+    .timeline { max-width: 800px; counter-reset: step; position: relative; padding-left: 3.5rem; }
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 1.25rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--color-border);
+    }
+    .timeline-phase {
+        position: relative;
+        margin: 2rem 0 1rem -3.5rem;
+        padding-left: 3.5rem;
+    }
+    .timeline-phase-label {
+        font-family: var(--font-sans);
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--color-text-muted);
+        background: var(--color-bg-alt);
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 4px;
+    }
+    .timeline-phase-label .time-est { font-weight: 400; color: var(--color-accent); }
+    .timeline-step {
+        counter-increment: step;
+        position: relative;
+        padding-bottom: 2rem;
+    }
+    .timeline-step:last-child { padding-bottom: 0; }
+    .timeline-step::before {
+        content: counter(step);
+        position: absolute;
+        left: -3.5rem;
+        top: 0;
+        width: 2.5rem;
+        height: 2.5rem;
+        background: var(--color-accent);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-sans);
+        font-weight: 700;
+        font-size: 0.9rem;
+        z-index: 1;
+        box-shadow: 0 0 0 4px white;
+    }
+    .section-alt .timeline-step::before { box-shadow: 0 0 0 4px var(--color-bg-alt); }
+    .timeline-step h4 { font-family: var(--font-sans); font-weight: 700; margin-bottom: 0.3rem; }
+    .timeline-step p { color: var(--color-text-light); font-size: 0.95rem; }
+    .time-note { font-size: 0.85rem; color: var(--color-accent); font-weight: 600; }
+
+    /* Callout boxes */
+    .callout {
+        padding: 0.9rem 1.2rem;
+        border-radius: 8px;
+        margin: 0.75rem 0;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        border-left: 4px solid;
+    }
+    .callout--info { background: #ebf8ff; border-left-color: var(--color-accent); color: #2a4365; }
+    .callout--warn { background: var(--warm-bg); border-left-color: var(--warm); color: #7b341e; }
+
+    /* Time summary card */
+    .time-card {
+        background: var(--color-bg-alt);
+        border: 1px solid var(--color-border);
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-top: 2rem;
+        max-width: 700px;
+    }
+    .time-card h4 { font-family: var(--font-sans); margin-bottom: 1rem; }
+    .time-grid { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .time-item { text-align: center; flex: 1; min-width: 140px; }
+    .time-value { display: block; font-size: 1.5rem; font-weight: 700; color: var(--color-primary); font-family: var(--font-sans); }
+    .time-label { font-size: 0.8rem; color: var(--color-text-muted); }
+
+    /* ── Requirements cards ── */
+    .req-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.25rem;
+        max-width: 900px;
+    }
+    .req-card {
+        padding: 1.25rem;
+        background: white;
+        border-radius: 8px;
+        border: 1px solid var(--color-border);
+        border-top: 3px solid var(--teal);
+    }
+    .req-card h3 { font-family: var(--font-sans); font-size: 0.9rem; margin-bottom: 0.3rem; }
+    .req-card p { font-size: 1rem; font-weight: 600; color: var(--color-primary); margin-bottom: 0.2rem; }
+    .req-note { font-size: 0.8rem; color: var(--color-text-muted); }
+
+    /* ── FAQ ── */
+    .faq-list { max-width: 800px; }
+    .faq-list details { border-bottom: 1px solid var(--color-border); }
+    .faq-list summary {
+        padding: 1rem 0;
+        font-family: var(--font-sans);
+        font-weight: 600;
+        font-size: 1rem;
+        color: var(--color-primary);
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .faq-list summary::after {
+        content: '+';
+        font-size: 1.3rem;
+        color: var(--color-text-muted);
+        transition: transform 0.2s;
+    }
+    .faq-list details[open] summary::after { content: '-'; }
+    .faq-list summary::-webkit-details-marker { display: none; }
+    .faq-list details p { padding: 0 0 1rem; color: var(--color-text-light); font-size: 0.95rem; }
+
+    /* ── CTA footer ── */
+    .cta-footer {
+        background: var(--dark);
+        padding: 5rem 0 2rem;
+        text-align: center;
+        color: #f7f7f2;
+    }
+    .cta-footer h2 { color: white; font-size: 2rem; }
+    .cta-footer h2::after { display: none; }
+    .cta-footer p { color: rgba(255,255,255,0.65); max-width: 600px; margin: 0 auto 2rem; }
+    .btn-primary--large { padding: 1rem 2.5rem; font-size: 1.1rem; }
+    .cta-version { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 1rem; }
+    .page-footer {
+        background: var(--dark);
+        border-top: 1px solid rgba(255,255,255,0.06);
+        padding: 1.5rem 0;
+        text-align: center;
+    }
+    .page-footer p { color: rgba(255,255,255,0.4); font-size: 0.8rem; margin: 0; }
+    .page-footer a { color: var(--teal); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+        .hero-inner { grid-template-columns: 1fr; text-align: center; }
+        .hero-text { padding-bottom: 2rem; }
+        .hero-text h1 { font-size: 1.8rem; }
+        .hero-sub { margin-left: auto; margin-right: auto; }
+        .trust-badges { justify-content: center; }
+        .hero-cta { justify-content: center; }
+        .hero-visual { order: -1; }
+        .comparison-grid { grid-template-columns: 1fr; }
+        .bento-grid { grid-template-columns: 1fr; }
+        .bento-large, .bento-small { grid-column: span 1; }
+        .privacy-grid { grid-template-columns: 1fr; }
+        .page-nav-links { gap: 0.8rem; }
+        .page-nav-links a { font-size: 0.75rem; }
+        .time-grid { flex-direction: column; gap: 1rem; }
+    }
+    @media (max-width: 480px) {
+        .hero-text h1 { font-size: 1.5rem; }
+        .btn-primary, .btn-secondary { display: block; text-align: center; }
+        .req-cards { grid-template-columns: 1fr; }
+    }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="../" class="nav-brand">Rogério Barbosa</a>
-            <ul class="nav-menu">
-                <li><a href="../#about">About</a></li>
-                <li><a href="../#software">Software</a></li>
-                <li><a href="https://github.com/antrologos/Transcritorio" target="_blank">GitHub</a></li>
-            </ul>
+
+<!-- ═══ 1. NAVBAR ═══ -->
+<nav class="navbar page-nav">
+    <div class="nav-container">
+        <a href="../" class="nav-brand">Transcritorio</a>
+        <ul class="page-nav-links">
+            <li><a href="#features" data-lang="pt">Recursos</a><a href="#features" data-lang="en">Features</a></li>
+            <li><a href="#how-it-works" data-lang="pt">Como usar</a><a href="#how-it-works" data-lang="en">How to use</a></li>
+            <li><a href="#requirements" data-lang="pt">Requisitos</a><a href="#requirements" data-lang="en">Requirements</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="https://github.com/antrologos/Transcritorio" target="_blank">GitHub</a></li>
+            <li><button class="lang-toggle" onclick="toggleLang()">EN</button></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ═══ 2. HERO ═══ -->
+<header class="hero">
+    <div class="hero-inner">
+        <div class="hero-text">
+            <h1 data-lang="pt">Transcreva entrevistas no seu computador.<br>Sem enviar audio para ninguem.</h1>
+            <h1 data-lang="en">Transcribe interviews on your computer.<br>No cloud. No risk. No waiting.</h1>
+
+            <p class="hero-sub" data-lang="pt">
+                Transcricao automatica com separacao de falantes, editor sincronizado com audio
+                e exportacao em multiplos formatos &mdash; tudo local, na sua propria GPU.
+            </p>
+            <p class="hero-sub" data-lang="en">
+                Automatic transcription with speaker separation, audio-synced editor,
+                and multi-format export &mdash; fully local, GPU-accelerated.
+            </p>
+
+            <div class="trust-badges">
+                <span class="trust-badge">100% offline</span>
+                <span class="trust-badge" data-lang="pt">Codigo aberto</span>
+                <span class="trust-badge" data-lang="en">Open source</span>
+                <span class="trust-badge">GPU NVIDIA (CUDA)</span>
+                <span class="trust-badge">WhisperX + pyannote</span>
+            </div>
+
+            <div class="hero-cta">
+                <a href="https://github.com/antrologos/Transcritorio/releases/tag/v0.1.0" class="btn-primary" data-lang="pt">Baixar para Windows</a>
+                <a href="https://github.com/antrologos/Transcritorio/releases/tag/v0.1.0" class="btn-primary" data-lang="en">Download for Windows</a>
+                <a href="#how-it-works" class="btn-secondary" data-lang="pt">Como funciona</a>
+                <a href="#how-it-works" class="btn-secondary" data-lang="en">How it works</a>
+            </div>
+            <p class="hero-meta">v0.1.0 &middot; Windows 10+ &middot; ~2 GB download &middot; ~5 GB instalado</p>
         </div>
-    </nav>
-
-    <header class="page-hero">
-        <div class="container">
-            <p class="back-link"><a href="../">&larr; Back to main site</a></p>
-            <h1>Transcritorio</h1>
-            <p class="subtitle">
-                A standalone desktop app for local, GPU-accelerated transcription of qualitative interviews.
-            </p>
-            <p class="subtitle-pt">
-                Aplicativo desktop para transcrição local de entrevistas qualitativas com aceleração GPU.
-            </p>
-            <a href="https://github.com/antrologos/Transcritorio/releases/tag/v0.1.0" class="download-btn">
-                Download v0.1.0 (Windows)
-            </a>
-            <a href="https://github.com/antrologos/Transcritorio" class="download-btn-secondary" target="_blank">
-                View on GitHub
-            </a>
-            <p class="download-note">
-                Windows 10+ &middot; ~2 GB download &middot; ~5 GB installed &middot; NVIDIA GPU recommended
-            </p>
+        <div class="hero-visual">
+            <div class="window-frame">
+                <div class="window-dots"><span></span><span></span><span></span></div>
+                <div class="screenshot-placeholder" data-lang="pt">
+                    Screenshot: Estudio de Revisao &mdash; painel de arquivos, waveform, tabela de turnos sincronizada, player de audio
+                </div>
+                <div class="screenshot-placeholder" data-lang="en">
+                    Screenshot: Review Studio &mdash; file panel, waveform, synchronized turn table, audio player
+                </div>
+            </div>
         </div>
-    </header>
+    </div>
+</header>
 
-    <main>
-        <section class="section">
-            <div class="container">
-                <h2>About / Sobre</h2>
-                <div class="about-content">
-                    <p>
-                        <strong>Transcritorio</strong> is a desktop application for transcribing research interviews
-                        entirely on your local machine. It was built for the
-                        <a href="https://www.infocitizen.eu/" target="_blank">InfoCitizen project</a>
-                        (ERC, 2022 Brazilian Census) but works with any audio/video interview.
-                    </p>
-                    <p>
-                        All processing happens locally — no audio is sent to the cloud.
-                        This is critical for research involving sensitive data (informed consent forms,
-                        vulnerable populations, confidential interviews).
-                    </p>
-                    <p style="color: var(--color-text-muted); font-style: italic;">
-                        O Transcritorio é um aplicativo desktop para transcrição de entrevistas de pesquisa
-                        inteiramente no computador local. Nenhum áudio é enviado para a nuvem —
-                        essencial para pesquisas com dados sensíveis.
-                    </p>
+<main>
+
+<!-- ═══ 3. COMPARACAO ═══ -->
+<section class="section">
+    <div class="container">
+        <h2 data-lang="pt">Transcricao de entrevistas sem dor de cabeca</h2>
+        <h2 data-lang="en">Interview transcription without the headache</h2>
+
+        <div class="comparison-grid">
+            <div class="cmp-card cmp-card--problem">
+                <div class="cmp-header" data-lang="pt">Sem o Transcritorio</div>
+                <div class="cmp-header" data-lang="en">Without Transcritorio</div>
+                <div class="cmp-body">
+                    <div class="cmp-row"><span class="cmp-icon cmp-icon--no"></span><span data-lang="pt">Servicos online exigem upload de material sensivel</span><span data-lang="en">Cloud services require uploading sensitive material</span></div>
+                    <div class="cmp-row"><span class="cmp-icon cmp-icon--no"></span><span data-lang="pt">Transcricao manual leva 4-6x o tempo do audio</span><span data-lang="en">Manual transcription takes 4-6x the audio length</span></div>
+                    <div class="cmp-row"><span class="cmp-icon cmp-icon--no"></span><span data-lang="pt">Ferramentas genericas nao separam entrevistador de entrevistado</span><span data-lang="en">Generic tools don't separate interviewer from interviewee</span></div>
+                    <div class="cmp-row"><span class="cmp-icon cmp-icon--no"></span><span data-lang="pt">Revisao em arquivo separado, sem sincronia com audio</span><span data-lang="en">Review in a separate file, no audio sync</span></div>
+                    <div class="cmp-row"><span class="cmp-icon cmp-icon--no"></span><span data-lang="pt">Exportar para DOCX, SRT, NVivo: trabalho manual</span><span data-lang="en">Exporting to DOCX, SRT, NVivo: manual work</span></div>
                 </div>
             </div>
-        </section>
-
-        <section class="section section-alt">
-            <div class="container">
-                <h2>Features</h2>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <h3>WhisperX ASR</h3>
-                        <p>State-of-the-art speech recognition using OpenAI's Whisper large-v3 model with word-level timestamps and forced alignment.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Speaker Diarization</h3>
-                        <p>Automatic speaker identification using pyannote.audio. Distinguishes interviewer from interviewee with exclusive speaker assignment.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>GPU Acceleration</h3>
-                        <p>CUDA-accelerated processing on NVIDIA GPUs. A 1-hour interview transcribes in ~5 minutes on an RTX 4060. CPU fallback available.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Review Studio</h3>
-                        <p>Built-in GUI for reviewing and editing transcriptions. Audio player synced with text, waveform visualization, and keyboard shortcuts.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Multiple Formats</h3>
-                        <p>Export to Markdown, DOCX, JSON, SRT subtitles, VTT, and TSV. Auditable canonical JSON preserves all metadata.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>100% Local</h3>
-                        <p>No internet required after initial setup. Audio never leaves your machine. Models cached locally. DPAPI-encrypted tokens.</p>
-                    </div>
+            <div class="cmp-card cmp-card--solution">
+                <div class="cmp-header" data-lang="pt">Com o Transcritorio</div>
+                <div class="cmp-header" data-lang="en">With Transcritorio</div>
+                <div class="cmp-body">
+                    <div class="cmp-row"><span class="cmp-icon cmp-icon--yes"></span><span data-lang="pt">Nenhum dado sai do seu computador</span><span data-lang="en">No data leaves your computer</span></div>
+                    <div class="cmp-row"><span class="cmp-icon cmp-icon--yes"></span><span data-lang="pt">1 hora de audio transcrita em ~8 minutos</span><span data-lang="en">1 hour of audio transcribed in ~8 minutes</span></div>
+                    <div class="cmp-row"><span class="cmp-icon cmp-icon--yes"></span><span data-lang="pt">Separacao automatica: Entrevistador / Entrevistado</span><span data-lang="en">Automatic separation: Interviewer / Interviewee</span></div>
+                    <div class="cmp-row"><span class="cmp-icon cmp-icon--yes"></span><span data-lang="pt">Editor sincronizado: clique no texto, ouca o trecho</span><span data-lang="en">Synced editor: click text, hear the audio</span></div>
+                    <div class="cmp-row"><span class="cmp-icon cmp-icon--yes"></span><span data-lang="pt">Um clique para exportar em 7 formatos</span><span data-lang="en">One click to export in 7 formats</span></div>
                 </div>
             </div>
-        </section>
-
-        <section class="section">
-            <div class="container">
-                <h2>Requirements / Requisitos</h2>
-                <table class="req-table">
-                    <tr><th>Component</th><th>Minimum</th><th>Recommended</th></tr>
-                    <tr><td>OS</td><td>Windows 10 (64-bit)</td><td>Windows 11</td></tr>
-                    <tr><td>GPU</td><td>CPU-only (slower)</td><td>NVIDIA RTX 3060+ with 8 GB VRAM</td></tr>
-                    <tr><td>RAM</td><td>8 GB</td><td>16 GB</td></tr>
-                    <tr><td>Disk</td><td>~8 GB (app + models)</td><td>SSD recommended</td></tr>
-                    <tr><td>CUDA</td><td>&mdash;</td><td>CUDA 12.x drivers (bundled runtime)</td></tr>
-                </table>
-                <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-muted);">
-                    The installer bundles Python, PyTorch, FFmpeg, and all dependencies. No pre-installation required.<br>
-                    <em>O instalador inclui Python, PyTorch, FFmpeg e todas as dependências. Nenhuma pré-instalação necessária.</em>
-                </p>
-            </div>
-        </section>
-
-        <section class="section section-alt">
-            <div class="container">
-                <h2>Installation / Instalação</h2>
-                <ol class="steps-list">
-                    <li>
-                        <strong>Download both files</strong> from the
-                        <a href="https://github.com/antrologos/Transcritorio/releases/tag/v0.1.0" target="_blank">GitHub Release page</a>
-                        (scroll down to "Assets"):<br>
-                        &bull; <code>Transcritorio-0.1.0-Setup.exe</code> (2.7 MB — the installer)<br>
-                        &bull; <code>Transcritorio-0.1.0-Setup-1.bin</code> (1.9 GB — the data)<br>
-                        <strong style="color: #e53e3e;">Both files are required.</strong> The installer will not work without the <code>.bin</code> file.
-                        Keep both in the same folder (e.g., Downloads).<br>
-                        <em style="color: var(--color-text-muted);">Ambos os arquivos são necessários. O instalador não funciona sem o arquivo .bin. Mantenha os dois na mesma pasta.</em>
-                    </li>
-                    <li>
-                        <strong>Run the installer</strong> — double-click <code>Transcritorio-0.1.0-Setup.exe</code>.
-                        No admin rights required — installs per-user.
-                    </li>
-                    <li>
-                        <strong>First launch:</strong> The app will ask for your Hugging Face token
-                        (free account at <a href="https://huggingface.co/" target="_blank">huggingface.co</a>)
-                        to download ASR and diarization models (~3 GB, one-time only). The token is
-                        stored securely via Windows DPAPI and never sent anywhere.
-                    </li>
-                    <li>
-                        <strong>Verify installation:</strong> Open a terminal and run
-                        <code>transcritorio-cli.exe self-test</code> to check CUDA, FFmpeg, and dependencies.
-                    </li>
-                </ol>
-            </div>
-        </section>
-
-        <section class="section">
-            <div class="container">
-                <h2>Quick Start / Primeiro Uso</h2>
-                <ol class="steps-list">
-                    <li>
-                        <strong>Open Transcritorio</strong> from the Start Menu or desktop shortcut.
-                    </li>
-                    <li>
-                        <strong>Create or open a project</strong> — point to a folder containing your audio/video files.
-                        The app creates a <code>Transcricoes/</code> subfolder for all outputs.
-                    </li>
-                    <li>
-                        <strong>Build the manifest</strong> — the app scans for media files and lists them.
-                        Select which interviews to transcribe.
-                    </li>
-                    <li>
-                        <strong>Transcribe</strong> — click the Transcribe button. The pipeline runs:
-                        audio preparation &rarr; ASR (WhisperX) &rarr; diarization (pyannote) &rarr; rendering.
-                    </li>
-                    <li>
-                        <strong>Review &amp; edit</strong> — use the Review Studio to play audio synced with
-                        the transcript, correct errors, merge/split turns, and reassign speakers.
-                    </li>
-                    <li>
-                        <strong>Export</strong> — save final transcriptions as Markdown, DOCX, or other formats.
-                    </li>
-                </ol>
-            </div>
-        </section>
-
-        <section class="section section-alt">
-            <div class="container">
-                <h2>Configuration</h2>
-                <div class="about-content">
-                    <p>
-                        The pipeline is configured via <code>Transcricoes/00_config/run_config.yaml</code>
-                        inside each project. Key settings:
-                    </p>
-                    <table class="req-table">
-                        <tr><th>Setting</th><th>Default</th><th>Description</th></tr>
-                        <tr><td><code>asr_model</code></td><td>large-v3</td><td>WhisperX model size</td></tr>
-                        <tr><td><code>asr_language</code></td><td>pt</td><td>Language code</td></tr>
-                        <tr><td><code>asr_device</code></td><td>cuda</td><td>GPU (<code>cuda</code>) or CPU (<code>cpu</code>)</td></tr>
-                        <tr><td><code>asr_compute_type</code></td><td>float16</td><td>Precision (float16, int8, float32)</td></tr>
-                        <tr><td><code>asr_batch_size</code></td><td>4</td><td>Batch size (reduce if out of VRAM)</td></tr>
-                        <tr><td><code>diarization_num_speakers</code></td><td>2</td><td>Expected number of speakers</td></tr>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <div class="container">
-                <h2>Output Formats / Formatos de Saída</h2>
-                <div class="format-grid">
-                    <div class="format-item"><strong>Markdown</strong><span>Human-readable</span></div>
-                    <div class="format-item"><strong>DOCX</strong><span>Microsoft Word</span></div>
-                    <div class="format-item"><strong>JSON</strong><span>Canonical / audit</span></div>
-                    <div class="format-item"><strong>SRT</strong><span>Subtitles</span></div>
-                    <div class="format-item"><strong>VTT</strong><span>Web subtitles</span></div>
-                    <div class="format-item"><strong>TSV</strong><span>Tabular data</span></div>
-                </div>
-                <p style="margin-top: 1.5rem; font-size: 0.95rem; color: var(--color-text-light);">
-                    Markdown and DOCX group consecutive turns by the same speaker with timestamps.
-                    JSON preserves word-level timing and confidence scores for auditing.
-                </p>
-            </div>
-        </section>
-
-        <section class="section section-alt">
-            <div class="container">
-                <h2>Privacy &amp; Security</h2>
-                <div class="about-content">
-                    <p>
-                        Transcritorio was designed for research with <strong>sensitive data</strong>.
-                        Key privacy guarantees:
-                    </p>
-                    <ul>
-                        <li><strong>100% local processing</strong> — no audio, video, or transcript ever leaves your machine.</li>
-                        <li><strong>No cloud dependency</strong> — after initial model download, the app works fully offline.</li>
-                        <li><strong>Secure token storage</strong> — Hugging Face tokens are encrypted via Windows DPAPI (never stored in plain text).</li>
-                        <li><strong>Original files untouched</strong> — the app writes all outputs to a <code>Transcricoes/</code> folder; original audio/video/TCLE files are read-only.</li>
-                        <li><strong>No telemetry</strong> — no analytics, no tracking, no phone-home behavior.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <div class="container">
-                <h2>FAQ / Troubleshooting</h2>
-
-                <div class="faq-item">
-                    <h4>Do I need an NVIDIA GPU?</h4>
-                    <p>No, but it's strongly recommended. With a GPU (e.g., RTX 4060, 8 GB VRAM), a 1-hour interview transcribes in ~5 minutes. On CPU, it may take 30-60 minutes.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h4>What is the Hugging Face token for?</h4>
-                    <p>The diarization model (pyannote) requires accepting a license on Hugging Face. The token authenticates the one-time model download. It is stored locally via DPAPI and never sent elsewhere.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h4>Can I use it for languages other than Portuguese?</h4>
-                    <p>Yes. WhisperX supports 90+ languages. Change <code>asr_language</code> in the config file (e.g., <code>en</code> for English, <code>es</code> for Spanish).</p>
-                </div>
-
-                <div class="faq-item">
-                    <h4>CUDA not detected / CPU fallback</h4>
-                    <p>Run <code>transcritorio-cli.exe self-test</code> to diagnose. Common causes: outdated NVIDIA drivers, GPU without CUDA support, or insufficient VRAM. The app works on CPU as fallback.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h4>How do I verify my installation?</h4>
-                    <p>Run <code>transcritorio-cli.exe self-test</code> in a terminal. It checks CUDA availability, FFmpeg, and all dependencies.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h4>Where are the models stored?</h4>
-                    <p>In <code>%LOCALAPPDATA%\Transcritorio\models\huggingface\</code>. They take about 3 GB and are downloaded once.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h4>Is macOS / Linux supported?</h4>
-                    <p>Not yet. The standalone installer is Windows-only for now. The Python package can be installed from source on any platform.</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <p>
-                Transcritorio &middot; Created by <a href="../" style="color: rgba(255,255,255,0.9);">Rogério Barbosa</a>
-                &middot; <a href="https://github.com/antrologos/Transcritorio" target="_blank" style="color: rgba(255,255,255,0.9);">GitHub</a>
-            </p>
         </div>
-    </footer>
+    </div>
+</section>
 
-    <script>
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-    </script>
+<!-- ═══ 4. FEATURES (bento) ═══ -->
+<section id="features" class="section section-alt">
+    <div class="container">
+        <h2 data-lang="pt">Tudo que um pesquisador precisa</h2>
+        <h2 data-lang="en">Everything a researcher needs</h2>
+
+        <div class="bento-grid">
+            <div class="bento-card bento-large">
+                <h3 data-lang="pt">Estudio de Revisao</h3>
+                <h3 data-lang="en">Review Studio</h3>
+                <p data-lang="pt">Player de audio sincronizado com a transcricao. Clique em qualquer trecho para ouvir. Edite texto, corrija falantes, junte ou divida turnos &mdash; tudo na mesma tela.</p>
+                <p data-lang="en">Audio player synced with transcript. Click any passage to listen. Edit text, fix speakers, merge or split turns &mdash; all in one screen.</p>
+                <div class="bento-visual">
+                    <div class="screenshot-placeholder" data-lang="pt">Screenshot: editor de turnos com waveform e bloco selecionado</div>
+                    <div class="screenshot-placeholder" data-lang="en">Screenshot: turn editor with waveform and selected block</div>
+                </div>
+            </div>
+
+            <div class="bento-card bento-large">
+                <h3 data-lang="pt">Separacao de falantes</h3>
+                <h3 data-lang="en">Speaker diarization</h3>
+                <p data-lang="pt">Identifica automaticamente quem fala em cada trecho. Entrevistador e entrevistado recebem rotulos distintos &mdash; corrigiveis com um clique.</p>
+                <p data-lang="en">Automatically identifies who speaks in each segment. Interviewer and interviewee get distinct labels &mdash; correctable with one click.</p>
+                <div class="bento-visual">
+                    <div class="screenshot-placeholder" data-lang="pt">Screenshot: tabela de turnos mostrando alternancia Entrevistador/Entrevistado</div>
+                    <div class="screenshot-placeholder" data-lang="en">Screenshot: turn table showing Interviewer/Interviewee alternation</div>
+                </div>
+            </div>
+
+            <div class="bento-card bento-small">
+                <h3 data-lang="pt">7 formatos de exportacao</h3>
+                <h3 data-lang="en">7 export formats</h3>
+                <p data-lang="pt">Um clique para gerar o que voce precisar.</p>
+                <p data-lang="en">One click to generate what you need.</p>
+                <div><span class="tag">DOCX</span><span class="tag">MD</span><span class="tag">SRT</span><span class="tag">VTT</span><span class="tag">CSV</span><span class="tag">TSV</span><span class="tag">JSON</span></div>
+            </div>
+
+            <div class="bento-card bento-small">
+                <h3 data-lang="pt">Rapido com GPU</h3>
+                <h3 data-lang="en">GPU accelerated</h3>
+                <p data-lang="pt">~8 minutos por hora de audio com NVIDIA. Funciona sem GPU tambem (mais lento).</p>
+                <p data-lang="en">~8 minutes per audio hour with NVIDIA. Works on CPU too (slower).</p>
+            </div>
+
+            <div class="bento-card bento-small">
+                <h3 data-lang="pt">Waveform interativa</h3>
+                <h3 data-lang="en">Interactive waveform</h3>
+                <p data-lang="pt">Zoom com scroll, arraste para navegar, regua de tempo, cursor sincronizado com o audio.</p>
+                <p data-lang="en">Scroll to zoom, drag to navigate, time ruler, cursor synced with audio.</p>
+            </div>
+
+            <div class="bento-card bento-small">
+                <h3 data-lang="pt">Transcricao de referencia</h3>
+                <h3 data-lang="en">State-of-the-art ASR</h3>
+                <p data-lang="pt">Motor Whisper large-v3 com alinhamento temporal palavra por palavra. Portugues brasileiro nativo, 90+ idiomas.</p>
+                <p data-lang="en">Whisper large-v3 engine with word-level alignment. Native Brazilian Portuguese, 90+ languages.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ 5. PRIVACIDADE (dark) ═══ -->
+<section id="privacy" class="privacy">
+    <div class="container">
+        <h2 data-lang="pt">Seus dados de pesquisa ficam onde devem ficar: com voce</h2>
+        <h2 data-lang="en">Your research data stays where it belongs: with you</h2>
+
+        <p class="privacy-lead" data-lang="pt">
+            O Transcritorio foi projetado para pesquisadores que trabalham com material sensivel:
+            entrevistas, TCLEs, gravacoes confidenciais. Nenhum audio, video ou transcricao
+            e enviado para a internet.
+        </p>
+        <p class="privacy-lead" data-lang="en">
+            Transcritorio was designed for researchers working with sensitive material:
+            interviews, consent forms, confidential recordings. No audio, video, or transcript
+            is ever sent to the internet.
+        </p>
+
+        <div class="privacy-grid">
+            <div class="privacy-item">
+                <h3 data-lang="pt">100% offline</h3>
+                <h3 data-lang="en">100% offline</h3>
+                <p data-lang="pt">Modelos baixados uma vez, tudo roda sem internet. Telemetria desabilitada por padrao.</p>
+                <p data-lang="en">Models downloaded once, everything runs without internet. Telemetry disabled by default.</p>
+            </div>
+            <div class="privacy-item">
+                <h3 data-lang="pt">Modelos locais</h3>
+                <h3 data-lang="en">Local models</h3>
+                <p data-lang="pt">WhisperX e pyannote rodam na sua GPU. Sem APIs externas, sem servidores intermediarios.</p>
+                <p data-lang="en">WhisperX and pyannote run on your GPU. No external APIs, no intermediary servers.</p>
+            </div>
+            <div class="privacy-item">
+                <h3 data-lang="pt">Originais intocados</h3>
+                <h3 data-lang="en">Originals untouched</h3>
+                <p data-lang="pt">Arquivos originais nunca sao alterados. Saidas vao para a pasta Transcricoes/, separada dos originais.</p>
+                <p data-lang="en">Original files are never modified. Outputs go to a separate Transcricoes/ folder.</p>
+            </div>
+            <div class="privacy-item">
+                <h3 data-lang="pt">Compativel com comites de etica</h3>
+                <h3 data-lang="en">Ethics committee compliant</h3>
+                <p data-lang="pt">Se o seu TCLE garante que gravacoes nao serao compartilhadas, o Transcritorio permite cumprir essa promessa.</p>
+                <p data-lang="en">If your consent form guarantees recordings won't be shared, Transcritorio lets you keep that promise.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ 6. COMO FUNCIONA (timeline) ═══ -->
+<section id="how-it-works" class="section">
+    <div class="container">
+        <h2 data-lang="pt">Do instalador a transcricao pronta</h2>
+        <h2 data-lang="en">From installer to finished transcript</h2>
+
+        <div class="timeline">
+            <div class="timeline-phase">
+                <span class="timeline-phase-label" data-lang="pt">Preparacao <span class="time-est">&mdash; so uma vez, ~20 min</span></span>
+                <span class="timeline-phase-label" data-lang="en">Setup <span class="time-est">&mdash; one time only, ~20 min</span></span>
+            </div>
+
+            <div class="timeline-step">
+                <h4 data-lang="pt">Instale o Transcritorio</h4>
+                <h4 data-lang="en">Install Transcritorio</h4>
+                <p data-lang="pt">Baixe o instalador (2 arquivos, ~2 GB total), execute e siga as instrucoes. O app ja inclui tudo: motor de transcricao, conversor de audio e interface grafica.</p>
+                <p data-lang="en">Download the installer (2 files, ~2 GB total), run it and follow the prompts. The app includes everything: transcription engine, audio converter, and GUI.</p>
+                <div class="callout callout--info" data-lang="pt">
+                    <strong>Por que dois arquivos?</strong> O app inclui GPU, modelos de IA e editor completo &mdash; grande demais para um arquivo so. Baixe o <code>.exe</code> e o <code>.bin</code> para a mesma pasta.
+                </div>
+                <div class="callout callout--info" data-lang="en">
+                    <strong>Why two files?</strong> The app includes GPU libraries, AI models, and a full editor &mdash; too large for a single file. Download both <code>.exe</code> and <code>.bin</code> to the same folder.
+                </div>
+            </div>
+
+            <div class="timeline-step">
+                <h4 data-lang="pt">Baixe os modelos de reconhecimento de fala</h4>
+                <h4 data-lang="en">Download speech recognition models</h4>
+                <p data-lang="pt">No primeiro uso, o app guia voce para baixar os modelos de IA (~3 GB). Voce vai precisar de uma <strong>chave de acesso</strong> gratuita do Hugging Face &mdash; como um cartao de biblioteca digital.</p>
+                <p data-lang="en">On first launch, the app guides you through downloading AI models (~3 GB). You'll need a free <strong>access key</strong> from Hugging Face &mdash; like a digital library card.</p>
+                <div class="callout callout--warn" data-lang="pt">
+                    <strong>Chave de acesso:</strong> Crie uma conta gratuita em <a href="https://huggingface.co/" target="_blank" style="color: #7b341e;">huggingface.co</a>, aceite os termos do modelo pyannote, e gere um token. O assistente do app explica cada passo.
+                </div>
+                <div class="callout callout--warn" data-lang="en">
+                    <strong>Access key:</strong> Create a free account at <a href="https://huggingface.co/" target="_blank" style="color: #7b341e;">huggingface.co</a>, accept the pyannote model terms, and generate a token. The app wizard guides each step.
+                </div>
+            </div>
+
+            <div class="timeline-phase">
+                <span class="timeline-phase-label" data-lang="pt">Uso diario <span class="time-est">&mdash; minutos por entrevista</span></span>
+                <span class="timeline-phase-label" data-lang="en">Daily use <span class="time-est">&mdash; minutes per interview</span></span>
+            </div>
+
+            <div class="timeline-step">
+                <h4 data-lang="pt">Crie um projeto e adicione midias</h4>
+                <h4 data-lang="en">Create a project and add media</h4>
+                <p data-lang="pt"><em>Projeto > Novo projeto</em>, depois <em>Adicionar midia</em> para selecionar arquivos de audio ou video. Defina idioma e numero de falantes.</p>
+                <p data-lang="en"><em>Project > New project</em>, then <em>Add media</em> to select audio or video files. Set language and number of speakers.</p>
+            </div>
+
+            <div class="timeline-step">
+                <h4 data-lang="pt">Transcreva</h4>
+                <h4 data-lang="en">Transcribe</h4>
+                <p data-lang="pt">Selecione as entrevistas e clique <em>Transcrever</em>. O processamento completo roda automaticamente: preparacao de audio, transcricao, separacao de falantes e montagem.</p>
+                <p data-lang="en">Select interviews and click <em>Transcribe</em>. The full processing runs automatically: audio preparation, transcription, speaker separation, and assembly.</p>
+                <p class="time-note" data-lang="pt">~8 min para 1h de audio com GPU NVIDIA</p>
+                <p class="time-note" data-lang="en">~8 min per audio hour with NVIDIA GPU</p>
+            </div>
+
+            <div class="timeline-step">
+                <h4 data-lang="pt">Revise e exporte</h4>
+                <h4 data-lang="en">Review and export</h4>
+                <p data-lang="pt">Use o Estudio de Revisao para corrigir texto, ajustar falantes e marcar trechos duvidosos. Exporte em DOCX, SRT, NVivo ou 4 outros formatos com um clique.</p>
+                <p data-lang="en">Use the Review Studio to fix text, adjust speakers, and flag uncertain passages. Export to DOCX, SRT, NVivo or 4 other formats with one click.</p>
+            </div>
+        </div>
+
+        <div class="time-card">
+            <h4 data-lang="pt">Quanto tempo leva?</h4>
+            <h4 data-lang="en">How long does it take?</h4>
+            <div class="time-grid">
+                <div class="time-item">
+                    <span class="time-value">~20 min</span>
+                    <span class="time-label" data-lang="pt">Instalacao (uma vez)</span>
+                    <span class="time-label" data-lang="en">Installation (one time)</span>
+                </div>
+                <div class="time-item">
+                    <span class="time-value">~8 min</span>
+                    <span class="time-label" data-lang="pt">Transcricao (por hora de audio)</span>
+                    <span class="time-label" data-lang="en">Transcription (per audio hour)</span>
+                </div>
+                <div class="time-item">
+                    <span class="time-value">~15 min</span>
+                    <span class="time-label" data-lang="pt">Revisao humana (por entrevista)</span>
+                    <span class="time-label" data-lang="en">Human review (per interview)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ 7. REQUISITOS ═══ -->
+<section id="requirements" class="section section-alt">
+    <div class="container">
+        <h2 data-lang="pt">Requisitos do sistema</h2>
+        <h2 data-lang="en">System requirements</h2>
+
+        <div class="req-cards">
+            <div class="req-card">
+                <h3 data-lang="pt">Sistema</h3><h3 data-lang="en">OS</h3>
+                <p>Windows 10/11 (64-bit)</p>
+                <span class="req-note" data-lang="pt">macOS e Linux: em breve</span>
+                <span class="req-note" data-lang="en">macOS and Linux: coming soon</span>
+            </div>
+            <div class="req-card">
+                <h3>GPU</h3>
+                <p data-lang="pt">NVIDIA com 6+ GB VRAM</p>
+                <p data-lang="en">NVIDIA with 6+ GB VRAM</p>
+                <span class="req-note" data-lang="pt">Recomendado, nao obrigatorio</span>
+                <span class="req-note" data-lang="en">Recommended, not required</span>
+            </div>
+            <div class="req-card">
+                <h3>RAM</h3>
+                <p>16 GB</p>
+                <span class="req-note" data-lang="pt">8 GB minimo em modo CPU</span>
+                <span class="req-note" data-lang="en">8 GB minimum in CPU mode</span>
+            </div>
+            <div class="req-card">
+                <h3 data-lang="pt">Disco</h3><h3 data-lang="en">Disk</h3>
+                <p>~8 GB</p>
+                <span class="req-note" data-lang="pt">App (~5 GB) + modelos (~3 GB)</span>
+                <span class="req-note" data-lang="en">App (~5 GB) + models (~3 GB)</span>
+            </div>
+        </div>
+
+        <div class="callout callout--info" style="max-width: 700px; margin-top: 1.5rem;">
+            <span data-lang="pt"><strong>Sem GPU NVIDIA?</strong> O Transcritorio funciona em modo CPU. A transcricao e mais lenta (~30 min por hora de audio), mas a qualidade e a mesma.</span>
+            <span data-lang="en"><strong>No NVIDIA GPU?</strong> Transcritorio works in CPU mode. Transcription is slower (~30 min per audio hour) but quality is the same.</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ 8. FAQ ═══ -->
+<section id="faq" class="section">
+    <div class="container">
+        <h2>FAQ</h2>
+
+        <div class="faq-list">
+            <details>
+                <summary data-lang="pt">Preciso de internet para transcrever?</summary>
+                <summary data-lang="en">Do I need internet to transcribe?</summary>
+                <p data-lang="pt">Nao. Depois de baixar os modelos na instalacao (~3 GB), tudo funciona offline. A telemetria e desabilitada por padrao.</p>
+                <p data-lang="en">No. After downloading models during setup (~3 GB), everything works offline. Telemetry is disabled by default.</p>
+            </details>
+            <details>
+                <summary data-lang="pt">O que e a chave de acesso do Hugging Face?</summary>
+                <summary data-lang="en">What is the Hugging Face access key?</summary>
+                <p data-lang="pt">E uma chave gratuita para baixar modelos de IA. Funciona como um cartao de biblioteca: voce cria uma conta, gera a chave e usa apenas uma vez para baixar os modelos. A chave e protegida por criptografia local e nunca e gravada nos seus projetos.</p>
+                <p data-lang="en">It's a free key to download AI models. Like a library card: create an account, generate the key, use it once to download models. The key is protected by local encryption and never saved in your projects.</p>
+            </details>
+            <details>
+                <summary data-lang="pt">Funciona com video?</summary>
+                <summary data-lang="en">Does it work with video?</summary>
+                <p data-lang="pt">Sim. O Transcritorio aceita MP3, M4A, WAV, MP4, AVI, MKV, MOV e outros. O audio e extraido automaticamente.</p>
+                <p data-lang="en">Yes. Transcritorio accepts MP3, M4A, WAV, MP4, AVI, MKV, MOV and more. Audio is extracted automatically.</p>
+            </details>
+            <details>
+                <summary data-lang="pt">Posso usar para outros idiomas?</summary>
+                <summary data-lang="en">Can I use it for other languages?</summary>
+                <p data-lang="pt">Sim. O motor Whisper suporta 90+ idiomas. O portugues brasileiro e o padrao, mas voce pode configurar qualquer idioma nas propriedades de cada arquivo.</p>
+                <p data-lang="en">Yes. The Whisper engine supports 90+ languages. Brazilian Portuguese is the default, but you can configure any language per file.</p>
+            </details>
+            <details>
+                <summary data-lang="pt">A transcricao automatica e perfeita?</summary>
+                <summary data-lang="en">Is automatic transcription perfect?</summary>
+                <p data-lang="pt">Nao. Nenhuma transcricao automatica e perfeita. O Transcritorio gera um rascunho de alta qualidade que reduz drasticamente o trabalho de revisao. Trechos com ruido ou sobreposicao podem exigir correcao &mdash; o Estudio de Revisao foi feito para tornar essa etapa rapida.</p>
+                <p data-lang="en">No. No automatic transcription is perfect. Transcritorio generates a high-quality draft that drastically reduces review work. Noisy or overlapping sections may need correction &mdash; the Review Studio makes this fast.</p>
+            </details>
+            <details>
+                <summary data-lang="pt">E gratuito mesmo?</summary>
+                <summary data-lang="en">Is it really free?</summary>
+                <p data-lang="pt">Sim. Software livre, codigo aberto, sem versao paga, sem assinatura, sem limite de uso, sem marca d'agua. Desenvolvido em contexto academico para atender uma necessidade real de pesquisa.</p>
+                <p data-lang="en">Yes. Free software, open source, no paid version, no subscription, no usage limits, no watermarks. Developed in an academic context to address a real research need.</p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ 9. CTA + FOOTER ═══ -->
+<section class="cta-footer">
+    <div class="container">
+        <h2 data-lang="pt">Pare de enviar suas entrevistas para a nuvem</h2>
+        <h2 data-lang="en">Stop sending your interviews to the cloud</h2>
+        <p data-lang="pt">Baixe o Transcritorio gratuitamente e faca sua primeira transcricao em minutos.</p>
+        <p data-lang="en">Download Transcritorio for free and make your first transcription in minutes.</p>
+        <a href="https://github.com/antrologos/Transcritorio/releases/tag/v0.1.0" class="btn-primary btn-primary--large" data-lang="pt">Baixar para Windows</a>
+        <a href="https://github.com/antrologos/Transcritorio/releases/tag/v0.1.0" class="btn-primary btn-primary--large" data-lang="en">Download for Windows</a>
+        <p class="cta-version">v0.1.0 &middot; Windows 10/11 &middot; ~2 GB &middot; MIT License</p>
+    </div>
+</section>
+
+<footer class="page-footer">
+    <div class="container">
+        <p>
+            Transcritorio &middot;
+            <a href="../" data-lang="pt">Rogerio Jeronimo Barbosa</a>
+            <a href="../" data-lang="en">Rogerio Jeronimo Barbosa</a>
+            &middot; IESP-UERJ / CERES &middot;
+            <a href="https://github.com/antrologos/Transcritorio" target="_blank">GitHub</a>
+        </p>
+    </div>
+</footer>
+
+</main>
+
+<script>
+function toggleLang() {
+    const html = document.documentElement;
+    const btn = document.querySelector('.lang-toggle');
+    if (html.lang === 'pt') {
+        html.lang = 'en';
+        btn.textContent = 'PT';
+    } else {
+        html.lang = 'pt';
+        btn.textContent = 'EN';
+    }
+    localStorage.setItem('transcritorio-lang', html.lang);
+}
+// Restore language preference
+(function() {
+    const saved = localStorage.getItem('transcritorio-lang');
+    if (saved && saved !== document.documentElement.lang) {
+        document.documentElement.lang = saved;
+        const btn = document.querySelector('.lang-toggle');
+        if (btn) btn.textContent = saved === 'pt' ? 'EN' : 'PT';
+    }
+})();
+
+// Navbar scroll shadow
+window.addEventListener('scroll', function() {
+    var nb = document.querySelector('.navbar');
+    if (window.scrollY > 50) nb.classList.add('scrolled');
+    else nb.classList.remove('scrolled');
+});
+</script>
 </body>
 </html>
