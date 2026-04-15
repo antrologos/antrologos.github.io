@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcritorio | Local Interview Transcription</title>
+    <meta name="description" content="Transcritorio — a standalone desktop app for local, GPU-accelerated transcription of qualitative interviews in Brazilian Portuguese.">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* Page-specific styles */
+        .page-hero {
+            padding: calc(var(--nav-height) + 3rem) 0 3rem;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            text-align: center;
+        }
+        .page-hero h1 { font-size: 2.75rem; margin-bottom: 0.5rem; }
+        .page-hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--color-text-light);
+            max-width: 700px;
+            margin: 0 auto 0.5rem;
+        }
+        .page-hero .subtitle-pt {
+            font-size: 1rem;
+            color: var(--color-text-muted);
+            font-style: italic;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 0.9rem 2rem;
+            background: var(--color-primary);
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: background 0.2s;
+            margin: 0.5rem;
+        }
+        .download-btn:hover { background: var(--color-primary-light); color: white; }
+        .download-btn-secondary {
+            display: inline-block;
+            padding: 0.9rem 2rem;
+            background: white;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.2s;
+            margin: 0.5rem;
+        }
+        .download-btn-secondary:hover { background: var(--color-bg-alt); color: var(--color-primary); }
+        .download-note {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-top: 1rem;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .feature-card {
+            background: var(--color-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+        }
+        .feature-card h3 { margin-bottom: 0.75rem; font-family: var(--font-sans); }
+        .feature-card p { color: var(--color-text-light); font-size: 0.95rem; margin-bottom: 0; }
+        .steps-list { counter-reset: step-counter; list-style: none; padding: 0; max-width: 800px; }
+        .steps-list li {
+            counter-increment: step-counter;
+            padding: 1.25rem 1.25rem 1.25rem 3.5rem;
+            margin-bottom: 1rem;
+            background: var(--color-bg);
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+            position: relative;
+        }
+        .section-alt .steps-list li { background: var(--color-bg); }
+        .section:not(.section-alt) .steps-list li { background: var(--color-bg-alt); }
+        .steps-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 1rem;
+            top: 1.25rem;
+            width: 1.75rem;
+            height: 1.75rem;
+            background: var(--color-accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        .steps-list li strong { color: var(--color-primary); }
+        .req-table { width: 100%; border-collapse: collapse; max-width: 700px; }
+        .req-table th, .req-table td {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .req-table th {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            color: var(--color-primary);
+            font-size: 0.9rem;
+        }
+        .req-table td { color: var(--color-text-light); font-size: 0.95rem; }
+        .format-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+        .format-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--color-bg);
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+        }
+        .format-item strong { display: block; color: var(--color-primary); font-size: 1rem; margin-bottom: 0.25rem; }
+        .format-item span { font-size: 0.8rem; color: var(--color-text-muted); }
+        .faq-item { margin-bottom: 1.5rem; }
+        .faq-item h4 { font-family: var(--font-sans); margin-bottom: 0.5rem; }
+        .faq-item p { color: var(--color-text-light); font-size: 0.95rem; }
+        .back-link {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-bottom: 0;
+        }
+        code {
+            background: var(--color-bg-alt);
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9em;
+            color: var(--color-primary);
+        }
+        .section-alt code { background: var(--color-bg); }
+        @media (max-width: 768px) {
+            .page-hero h1 { font-size: 2rem; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .format-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../" class="nav-brand">Rogério Barbosa</a>
+            <ul class="nav-menu">
+                <li><a href="../#about">About</a></li>
+                <li><a href="../#software">Software</a></li>
+                <li><a href="https://github.com/antrologos/Transcritorio" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-hero">
+        <div class="container">
+            <p class="back-link"><a href="../">&larr; Back to main site</a></p>
+            <h1>Transcritorio</h1>
+            <p class="subtitle">
+                A standalone desktop app for local, GPU-accelerated transcription of qualitative interviews.
+            </p>
+            <p class="subtitle-pt">
+                Aplicativo desktop para transcrição local de entrevistas qualitativas com aceleração GPU.
+            </p>
+            <a href="https://github.com/antrologos/Transcritorio/releases/tag/v0.1.0" class="download-btn">
+                Download v0.1.0 (Windows)
+            </a>
+            <a href="https://github.com/antrologos/Transcritorio" class="download-btn-secondary" target="_blank">
+                View on GitHub
+            </a>
+            <p class="download-note">
+                Windows 10+ &middot; ~2 GB download &middot; ~5 GB installed &middot; NVIDIA GPU recommended
+            </p>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <h2>About / Sobre</h2>
+                <div class="about-content">
+                    <p>
+                        <strong>Transcritorio</strong> is a desktop application for transcribing research interviews
+                        entirely on your local machine. It was built for the
+                        <a href="https://www.infocitizen.eu/" target="_blank">InfoCitizen project</a>
+                        (ERC, 2022 Brazilian Census) but works with any audio/video interview.
+                    </p>
+                    <p>
+                        All processing happens locally — no audio is sent to the cloud.
+                        This is critical for research involving sensitive data (informed consent forms,
+                        vulnerable populations, confidential interviews).
+                    </p>
+                    <p style="color: var(--color-text-muted); font-style: italic;">
+                        O Transcritorio é um aplicativo desktop para transcrição de entrevistas de pesquisa
+                        inteiramente no computador local. Nenhum áudio é enviado para a nuvem —
+                        essencial para pesquisas com dados sensíveis.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-alt">
+            <div class="container">
+                <h2>Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>WhisperX ASR</h3>
+                        <p>State-of-the-art speech recognition using OpenAI's Whisper large-v3 model with word-level timestamps and forced alignment.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Speaker Diarization</h3>
+                        <p>Automatic speaker identification using pyannote.audio. Distinguishes interviewer from interviewee with exclusive speaker assignment.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>GPU Acceleration</h3>
+                        <p>CUDA-accelerated processing on NVIDIA GPUs. A 1-hour interview transcribes in ~5 minutes on an RTX 4060. CPU fallback available.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Review Studio</h3>
+                        <p>Built-in GUI for reviewing and editing transcriptions. Audio player synced with text, waveform visualization, and keyboard shortcuts.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Multiple Formats</h3>
+                        <p>Export to Markdown, DOCX, JSON, SRT subtitles, VTT, and TSV. Auditable canonical JSON preserves all metadata.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>100% Local</h3>
+                        <p>No internet required after initial setup. Audio never leaves your machine. Models cached locally. DPAPI-encrypted tokens.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2>Requirements / Requisitos</h2>
+                <table class="req-table">
+                    <tr><th>Component</th><th>Minimum</th><th>Recommended</th></tr>
+                    <tr><td>OS</td><td>Windows 10 (64-bit)</td><td>Windows 11</td></tr>
+                    <tr><td>GPU</td><td>CPU-only (slower)</td><td>NVIDIA RTX 3060+ with 8 GB VRAM</td></tr>
+                    <tr><td>RAM</td><td>8 GB</td><td>16 GB</td></tr>
+                    <tr><td>Disk</td><td>~8 GB (app + models)</td><td>SSD recommended</td></tr>
+                    <tr><td>CUDA</td><td>&mdash;</td><td>CUDA 12.x drivers (bundled runtime)</td></tr>
+                </table>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-muted);">
+                    The installer bundles Python, PyTorch, FFmpeg, and all dependencies. No pre-installation required.<br>
+                    <em>O instalador inclui Python, PyTorch, FFmpeg e todas as dependências. Nenhuma pré-instalação necessária.</em>
+                </p>
+            </div>
+        </section>
+
+        <section class="section section-alt">
+            <div class="container">
+                <h2>Installation / Instalação</h2>
+                <ol class="steps-list">
+                    <li>
+                        <strong>Download</strong> both files from the
+                        <a href="https://github.com/antrologos/Transcritorio/releases/tag/v0.1.0" target="_blank">GitHub Release page</a>:
+                        <code>Transcritorio-0.1.0-Setup.exe</code> and <code>Transcritorio-0.1.0-Setup-1.bin</code>.
+                        Place them in the same folder.
+                    </li>
+                    <li>
+                        <strong>Run the installer</strong> (<code>Transcritorio-0.1.0-Setup.exe</code>).
+                        No admin rights required — installs per-user.
+                    </li>
+                    <li>
+                        <strong>First launch:</strong> The app will ask for your Hugging Face token
+                        (free account at <a href="https://huggingface.co/" target="_blank">huggingface.co</a>)
+                        to download ASR and diarization models (~3 GB, one-time only). The token is
+                        stored securely via Windows DPAPI and never sent anywhere.
+                    </li>
+                    <li>
+                        <strong>Verify installation:</strong> Open a terminal and run
+                        <code>transcritorio-cli.exe self-test</code> to check CUDA, FFmpeg, and dependencies.
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2>Quick Start / Primeiro Uso</h2>
+                <ol class="steps-list">
+                    <li>
+                        <strong>Open Transcritorio</strong> from the Start Menu or desktop shortcut.
+                    </li>
+                    <li>
+                        <strong>Create or open a project</strong> — point to a folder containing your audio/video files.
+                        The app creates a <code>Transcricoes/</code> subfolder for all outputs.
+                    </li>
+                    <li>
+                        <strong>Build the manifest</strong> — the app scans for media files and lists them.
+                        Select which interviews to transcribe.
+                    </li>
+                    <li>
+                        <strong>Transcribe</strong> — click the Transcribe button. The pipeline runs:
+                        audio preparation &rarr; ASR (WhisperX) &rarr; diarization (pyannote) &rarr; rendering.
+                    </li>
+                    <li>
+                        <strong>Review &amp; edit</strong> — use the Review Studio to play audio synced with
+                        the transcript, correct errors, merge/split turns, and reassign speakers.
+                    </li>
+                    <li>
+                        <strong>Export</strong> — save final transcriptions as Markdown, DOCX, or other formats.
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="section section-alt">
+            <div class="container">
+                <h2>Configuration</h2>
+                <div class="about-content">
+                    <p>
+                        The pipeline is configured via <code>Transcricoes/00_config/run_config.yaml</code>
+                        inside each project. Key settings:
+                    </p>
+                    <table class="req-table">
+                        <tr><th>Setting</th><th>Default</th><th>Description</th></tr>
+                        <tr><td><code>asr_model</code></td><td>large-v3</td><td>WhisperX model size</td></tr>
+                        <tr><td><code>asr_language</code></td><td>pt</td><td>Language code</td></tr>
+                        <tr><td><code>asr_device</code></td><td>cuda</td><td>GPU (<code>cuda</code>) or CPU (<code>cpu</code>)</td></tr>
+                        <tr><td><code>asr_compute_type</code></td><td>float16</td><td>Precision (float16, int8, float32)</td></tr>
+                        <tr><td><code>asr_batch_size</code></td><td>4</td><td>Batch size (reduce if out of VRAM)</td></tr>
+                        <tr><td><code>diarization_num_speakers</code></td><td>2</td><td>Expected number of speakers</td></tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2>Output Formats / Formatos de Saída</h2>
+                <div class="format-grid">
+                    <div class="format-item"><strong>Markdown</strong><span>Human-readable</span></div>
+                    <div class="format-item"><strong>DOCX</strong><span>Microsoft Word</span></div>
+                    <div class="format-item"><strong>JSON</strong><span>Canonical / audit</span></div>
+                    <div class="format-item"><strong>SRT</strong><span>Subtitles</span></div>
+                    <div class="format-item"><strong>VTT</strong><span>Web subtitles</span></div>
+                    <div class="format-item"><strong>TSV</strong><span>Tabular data</span></div>
+                </div>
+                <p style="margin-top: 1.5rem; font-size: 0.95rem; color: var(--color-text-light);">
+                    Markdown and DOCX group consecutive turns by the same speaker with timestamps.
+                    JSON preserves word-level timing and confidence scores for auditing.
+                </p>
+            </div>
+        </section>
+
+        <section class="section section-alt">
+            <div class="container">
+                <h2>Privacy &amp; Security</h2>
+                <div class="about-content">
+                    <p>
+                        Transcritorio was designed for research with <strong>sensitive data</strong>.
+                        Key privacy guarantees:
+                    </p>
+                    <ul>
+                        <li><strong>100% local processing</strong> — no audio, video, or transcript ever leaves your machine.</li>
+                        <li><strong>No cloud dependency</strong> — after initial model download, the app works fully offline.</li>
+                        <li><strong>Secure token storage</strong> — Hugging Face tokens are encrypted via Windows DPAPI (never stored in plain text).</li>
+                        <li><strong>Original files untouched</strong> — the app writes all outputs to a <code>Transcricoes/</code> folder; original audio/video/TCLE files are read-only.</li>
+                        <li><strong>No telemetry</strong> — no analytics, no tracking, no phone-home behavior.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2>FAQ / Troubleshooting</h2>
+
+                <div class="faq-item">
+                    <h4>Do I need an NVIDIA GPU?</h4>
+                    <p>No, but it's strongly recommended. With a GPU (e.g., RTX 4060, 8 GB VRAM), a 1-hour interview transcribes in ~5 minutes. On CPU, it may take 30-60 minutes.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>What is the Hugging Face token for?</h4>
+                    <p>The diarization model (pyannote) requires accepting a license on Hugging Face. The token authenticates the one-time model download. It is stored locally via DPAPI and never sent elsewhere.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Can I use it for languages other than Portuguese?</h4>
+                    <p>Yes. WhisperX supports 90+ languages. Change <code>asr_language</code> in the config file (e.g., <code>en</code> for English, <code>es</code> for Spanish).</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>CUDA not detected / CPU fallback</h4>
+                    <p>Run <code>transcritorio-cli.exe self-test</code> to diagnose. Common causes: outdated NVIDIA drivers, GPU without CUDA support, or insufficient VRAM. The app works on CPU as fallback.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>How do I verify my installation?</h4>
+                    <p>Run <code>transcritorio-cli.exe self-test</code> in a terminal. It checks CUDA availability, FFmpeg, and all dependencies.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Where are the models stored?</h4>
+                    <p>In <code>%LOCALAPPDATA%\Transcritorio\models\huggingface\</code>. They take about 3 GB and are downloaded once.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Is macOS / Linux supported?</h4>
+                    <p>Not yet. The standalone installer is Windows-only for now. The Python package can be installed from source on any platform.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>
+                Transcritorio &middot; Created by <a href="../" style="color: rgba(255,255,255,0.9);">Rogério Barbosa</a>
+                &middot; <a href="https://github.com/antrologos/Transcritorio" target="_blank" style="color: rgba(255,255,255,0.9);">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
