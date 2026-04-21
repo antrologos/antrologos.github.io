@@ -1,0 +1,35 @@
+---
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const target = `${BASE}/pt/`;
+---
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Transcritório</title>
+  <meta http-equiv="refresh" content={`0; url=${target}`} />
+  <link rel="canonical" href="https://antrologos.github.io/Transcritorio/pt/" />
+  <link rel="alternate" hreflang="pt-BR" href="https://antrologos.github.io/Transcritorio/pt/" />
+  <link rel="alternate" hreflang="en-US" href="https://antrologos.github.io/Transcritorio/en/" />
+  <link rel="alternate" hreflang="x-default" href="https://antrologos.github.io/Transcritorio/pt/" />
+  <script define:vars={{ target }}>
+    window.location.replace(target);
+  </script>
+  <style>
+    body {
+      background: #0b111a;
+      color: #f7f7f2;
+      font-family: -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    a { color: #44d7b6; }
+  </style>
+</head>
+<body>
+  <p>Redirecionando... <a href={target}>Clique aqui se nada acontecer.</a></p>
+</body>
+</html>

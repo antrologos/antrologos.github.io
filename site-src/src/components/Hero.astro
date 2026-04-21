@@ -1,0 +1,130 @@
+---
+import version from '../data/version.json';
+import OsSwitcher from './OsSwitcher.astro';
+
+interface Props {
+  lang: 'pt' | 'en';
+}
+const { lang } = Astro.props;
+const isPt = lang === 'pt';
+
+const eyebrow = isPt
+  ? `Software livre e gratuito — v${version.version}`
+  : `Free and open-source software — v${version.version}`;
+
+const h1 = isPt
+  ? 'Transcreva entrevistas sem enviar seu áudio pra nuvem.'
+  : 'Transcribe interviews without sending your audio to the cloud.';
+
+const subtitle = isPt
+  ? 'Transcritório é um aplicativo de desktop para transcrição automática e separação de falantes em português brasileiro. Roda 100% na sua máquina — sem login, sem assinatura, sem envio de dados.'
+  : 'Transcritório is a desktop app for automatic transcription and speaker separation in Brazilian Portuguese. Runs 100% on your machine — no login, no subscription, no data upload.';
+
+const stillEval = isPt
+  ? 'Ainda avaliando? Role a página e veja em 30 segundos por que pesquisadores estão migrando de serviços na nuvem.'
+  : 'Still evaluating? Keep scrolling — 30 seconds to see why researchers are moving away from cloud services.';
+
+const imgAlt = isPt
+  ? 'Tela principal do Transcritório mostrando forma de onda, tabela de turnos com entrevistadora e entrevistado, e editor de bloco.'
+  : 'Transcritório main screen showing waveform, turn table with interviewer and respondent, and block editor.';
+---
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <span class="eyebrow">{eyebrow}</span>
+      <h1 class="hero-title">{h1}</h1>
+      <p class="hero-sub">{subtitle}</p>
+      <OsSwitcher lang={lang} />
+      <p class="still-eval">{stillEval}</p>
+    </div>
+    <figure class="hero-mockup">
+      <div class="mac-frame">
+        <div class="mac-bar">
+          <span class="mac-dot r"></span>
+          <span class="mac-dot y"></span>
+          <span class="mac-dot g"></span>
+        </div>
+        <img src={`${import.meta.env.BASE_URL}/img/hero-review-studio.png`} alt={imgAlt} loading="eager" width="1200" height="750" />
+      </div>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: var(--spacing-2xl) 0;
+    background: radial-gradient(ellipse at top left, rgba(68, 215, 182, 0.08), transparent 60%),
+                linear-gradient(180deg, var(--bg-0), var(--bg-1));
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--spacing-xl);
+    align-items: center;
+  }
+  .hero-text { min-width: 0; }
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    padding: 4px 10px;
+    border: 1px solid rgba(68, 215, 182, 0.3);
+    border-radius: 999px;
+    background: var(--accent-soft);
+    margin-bottom: var(--spacing-m);
+  }
+  .hero-title {
+    margin-bottom: var(--spacing-m);
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 56ch;
+    margin-bottom: var(--spacing-l);
+  }
+  .still-eval {
+    margin-top: var(--spacing-l);
+    font-size: 14px;
+    color: var(--text-faint);
+    max-width: 60ch;
+  }
+  .hero-mockup {
+    margin: 0;
+  }
+  .mac-frame {
+    background: var(--bg-1);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-hero);
+    box-shadow: var(--shadow-hero);
+    overflow: hidden;
+  }
+  .mac-bar {
+    display: flex;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .mac-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+  }
+  .mac-dot.r { background: #ff5f57; }
+  .mac-dot.y { background: #febc2e; }
+  .mac-dot.g { background: #28c840; }
+  .mac-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  @media (max-width: 960px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-l);
+    }
+    .hero-sub { font-size: 16px; }
+  }
+</style>

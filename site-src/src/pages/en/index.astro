@@ -1,0 +1,369 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import CopyButton from '../../components/CopyButton.astro';
+import version from '../../data/version.json';
+
+const v = version.version;
+const BASE = import.meta.env.BASE_URL;
+
+const title = 'Transcritório — Local interview transcription';
+const description = 'Free desktop app for automatic transcription and speaker separation in Brazilian Portuguese. Runs 100% on your machine — no cloud, no login, no subscription.';
+
+const ethicsText = `Transcription and speaker separation of the audio collected in this research will be performed using Transcritório (Barbosa, 2026), a free and open-source desktop application (MIT license) developed at IESP-UERJ/CERES. All processing runs locally on the researcher's machine, with no upload of material to external servers, in compliance with Brazilian Law 13,709/2018 (LGPD) and the informed consent signed by participants. The software uses the Whisper model (Radford et al., 2022) for transcription and pyannote.audio (Bredin et al., 2020) for speaker separation, both executed offline.`;
+
+const bibtex = `@software{barbosa2026transcritorio,
+  author    = {Barbosa, Rog{\\'e}rio Jer{\\^o}nimo},
+  title     = {Transcrit{\\'o}rio: transcri{\\c{c}}{\\~a}o local de entrevistas em portugu{\\^e}s brasileiro},
+  year      = {2026},
+  version   = {${v}},
+  publisher = {IESP-UERJ/CERES},
+  license   = {MIT},
+  url       = {https://github.com/antrologos/Transcritorio}
+}`;
+---
+
+<Base lang="en" title={title} description={description} path="en/">
+
+  <Hero lang="en" />
+
+  <section class="pills-section">
+    <div class="container">
+      <ul class="pills">
+        <li><span class="pill-icon">🔒</span> 100% local, no cloud</li>
+        <li><span class="pill-icon">🗣️</span> Automatic speaker separation</li>
+        <li><span class="pill-icon">🇧🇷</span> Native Brazilian Portuguese</li>
+        <li><span class="pill-icon">〰️</span> Waveform-synced editor</li>
+        <li><span class="pill-icon">📄</span> Multi-format export</li>
+        <li><span class="pill-icon">🆓</span> Free and open-source</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="compare" class="compare-section">
+    <div class="container">
+      <h2>How your working hours change</h2>
+      <div class="compare">
+        <div class="compare-col bad">
+          <h3>Without Transcritório</h3>
+          <ul>
+            <li>8–10 hours manually transcribing a 1-hour interview.</li>
+            <li>Uploading confidential audio to foreign company servers.</li>
+            <li>R$ 100–300/month for online transcription services.</li>
+            <li>Labeling speakers by hand, line by line.</li>
+            <li>Explaining to the ethics board why audio went to the cloud.</li>
+          </ul>
+        </div>
+        <div class="compare-col good">
+          <h3>With Transcritório</h3>
+          <ul>
+            <li>15–30 minutes of processing, then just review.</li>
+            <li>Audio never leaves your computer.</li>
+            <li>Zero cost, forever. Open-source under MIT license.</li>
+            <li>Speakers auto-identified and renamable in one click.</li>
+            <li>Ready-to-paste text for your research protocol (right below).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy" class="privacy-section">
+    <div class="container">
+      <h2>Privacy by design, not by promise</h2>
+      <div class="privacy-grid">
+        <ul class="privacy-points">
+          <li><strong>100% local processing:</strong> interview audio never reaches external servers.</li>
+          <li><strong>No data collection, no telemetry:</strong> no signup or login required.</li>
+          <li><strong>Open-source under MIT license:</strong> auditable by anyone.</li>
+          <li><strong>Compatible with GDPR/LGPD and IRB requirements:</strong> full control over informant's audio.</li>
+        </ul>
+        <aside class="ethics-box">
+          <h3>For ethics boards and research methods</h3>
+          <p class="ethics-text">{ethicsText}</p>
+          <CopyButton
+            text={ethicsText}
+            label="Copy text for research protocol"
+            labelSuccess="Copied ✓"
+          />
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="features-section">
+    <div class="container">
+      <h2>Everything a qualitative researcher needs</h2>
+
+      <div class="feature-card">
+        <figure class="feature-img">
+          <img src={`${BASE}/img/feature-player.png`} alt="Audio player synced with waveform, showing current position in the interview." width="900" height="560" />
+        </figure>
+        <div class="feature-body">
+          <h3>Side-by-side audio review</h3>
+          <p>Listen and correct at the same time. Each transcribed segment is anchored to the exact audio timestamp, and one click takes you there. Researchers review in about a third of the time it would take in a plain text editor.</p>
+        </div>
+      </div>
+
+      <div class="feature-card reversed">
+        <figure class="feature-img">
+          <img src={`${BASE}/img/feature-merge-turns.png`} alt="Turn editor showing options to merge and split transcript blocks." width="900" height="560" />
+        </figure>
+        <div class="feature-body">
+          <h3>Turn editor with waveform</h3>
+          <p>The waveform visually shows silences, overlaps, and speaker changes. Adjust segment boundaries, merge or split blocks with a click — useful for fast-paced or frequently interrupted interviews.</p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <figure class="feature-img">
+          <img src={`${BASE}/img/feature-context-menu.png`} alt="Context menu on the turn table showing advanced editing options." width="900" height="560" />
+        </figure>
+        <div class="feature-body">
+          <h3>Analysis-ready turn table</h3>
+          <p>Your transcript is organized into speaking turns with time and speaker metadata. Export to DOCX, MD, SRT, VTT, CSV, TSV or NVivo — and import straight into NVivo, Atlas.ti, MAXQDA, or an R/Python script.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="how-section">
+    <div class="container">
+      <h2>How to use it, in four steps</h2>
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <div class="step-body">
+            <h3>Create a project</h3>
+            <p>Pick a folder where files will be organized. Transcritório creates the folder structure for you.</p>
+            <img src={`${BASE}/img/step-1-new-project.png`} alt="New project dialog." loading="lazy" />
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div class="step-body">
+            <h3>Add audio or video files</h3>
+            <p>Drag your files into the window. MP3, WAV, M4A, MP4 and other common formats are supported.</p>
+            <img src={`${BASE}/img/step-3-add-files.png`} alt="Media file addition screen." loading="lazy" />
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div class="step-body">
+            <h3>Click transcribe</h3>
+            <p>Pick the language (Brazilian Portuguese) and number of speakers. Transcritório does the rest — on a typical laptop, it runs in about a third to half of the audio length.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <div class="step-body">
+            <h3>Review in the Studio and export</h3>
+            <p>Open the transcript, adjust segments, rename speakers (Interviewer, Joana, Pedro…) and export in your preferred format.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="install" class="install-section">
+    <div class="container">
+      <h2>Installing on your system</h2>
+      <div class="install-tabs">
+        <details class="install-tab" open>
+          <summary>🪟 Windows 10/11</summary>
+          <ol>
+            <li>Download <code>Transcritorio-{v}-Setup.exe</code> <strong>and</strong> <code>Transcritorio-{v}-Setup-1.bin</code> from the <a href="https://github.com/antrologos/Transcritorio/releases/latest" target="_blank" rel="noopener">latest release</a>. Both files must be in the same folder.</li>
+            <li>Run the installer. Windows Defender may show a blue warning — click "More info", then "Run anyway".</li>
+            <li>Open Transcritório from the Start menu.</li>
+            <li><strong>Optional:</strong> if you have an NVIDIA graphics card, the app auto-detects it and offers to download GPU acceleration (~1 GB), making transcription up to 9× faster.</li>
+          </ol>
+        </details>
+        <details class="install-tab">
+          <summary>🍎 macOS (Apple Silicon)</summary>
+          <ol>
+            <li>Download <code>Transcritorio.dmg</code> from the <a href="https://github.com/antrologos/Transcritorio/releases/latest" target="_blank" rel="noopener">latest release</a>.</li>
+            <li>Drag Transcritório to the Applications folder.</li>
+            <li><strong>First launch:</strong> right-click the app icon and choose "Open". Then click "Open" in the security dialog. macOS remembers — opens normally afterward.</li>
+            <li>Compatible with M1/M2/M3/M4 Macs. Requires <code>ffmpeg</code> installed via <code>brew install ffmpeg</code>.</li>
+          </ol>
+        </details>
+        <details class="install-tab">
+          <summary>🐧 Linux</summary>
+          <ol>
+            <li>Download <code>Transcritorio-x86_64.AppImage</code> from the <a href="https://github.com/antrologos/Transcritorio/releases/latest" target="_blank" rel="noopener">latest release</a>.</li>
+            <li>In the terminal, grant execute permission: <code>chmod +x Transcritorio-*.AppImage</code></li>
+            <li>Install required libs: <code>sudo apt install ffmpeg libfuse2 libxcb-cursor0 libxcb-xinerama0 libxkbcommon-x11-0</code> (Ubuntu/Debian).</li>
+            <li>Run by double-clicking or <code>./Transcritorio-x86_64.AppImage</code>. Tested on Ubuntu 22.04+ and Fedora 40+.</li>
+          </ol>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="requirements" class="req-section">
+    <div class="container">
+      <h2>System requirements</h2>
+      <div class="req-grid">
+        <div class="req-card">
+          <span class="req-tier">Minimum</span>
+          <ul>
+            <li><strong>CPU:</strong> 4 cores</li>
+            <li><strong>RAM:</strong> 8 GB</li>
+            <li><strong>Disk:</strong> 5 GB free</li>
+            <li class="req-note">Works — 1h of audio takes ~40–60 min.</li>
+          </ul>
+        </div>
+        <div class="req-card recommended">
+          <span class="req-tier">Recommended</span>
+          <ul>
+            <li><strong>CPU:</strong> 8 cores</li>
+            <li><strong>RAM:</strong> 16 GB</li>
+            <li><strong>Disk:</strong> 10 GB free</li>
+            <li class="req-note">1h of audio in ~20–30 min.</li>
+          </ul>
+        </div>
+        <div class="req-card">
+          <span class="req-tier">Ideal</span>
+          <ul>
+            <li><strong>CPU:</strong> 8+ cores</li>
+            <li><strong>RAM:</strong> 16 GB or more</li>
+            <li><strong>GPU:</strong> NVIDIA 6 GB+ VRAM (or Apple Silicon)</li>
+            <li class="req-note">1h of audio in 5–10 min.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ai" class="ai-section">
+    <div class="container">
+      <details class="ai-details">
+        <summary><h2>The AI behind it</h2><span class="ai-hint">(technical details)</span></summary>
+        <div class="ai-grid">
+          <div class="ai-block">
+            <h3>Whisper (OpenAI, 2022)</h3>
+            <p>Speech recognition model trained on 680k hours of multilingual audio, including large amounts of Portuguese. Transcritório uses the <code>large-v3</code> variant by default, delivering high accuracy even on noisy audio or regional accents. Runs locally via <code>faster-whisper</code>.</p>
+          </div>
+          <div class="ai-block">
+            <h3>pyannote.audio (Bredin et al., 2020)</h3>
+            <p>Library handling automatic speaker separation — identifying who spoke when. Uses neural networks to cluster similar voices across the interview. Works well even with 6–8 distinct participants, and also runs offline.</p>
+          </div>
+          <div class="ai-block">
+            <h3>Local processing</h3>
+            <p>Both Whisper and pyannote run entirely on your computer via PyTorch. No audio, text, or metadata ever leaves your machine. First launch downloads model weights (~3 GB); after that, the app runs without an internet connection.</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section id="faq" class="faq-section">
+    <div class="container prose">
+      <h2>Frequently asked questions</h2>
+      <details><summary>Do I need the internet to use it?</summary><p>Only on first launch, to download models (~3 GB). After that, Transcritório works fully offline.</p></details>
+      <details><summary>How accurate is the transcription?</summary><p>On clean Brazilian Portuguese audio, accuracy ranges from 90% to 96% of words correct. Human review remains recommended, especially for technical terms, proper names and noisy passages.</p></details>
+      <details><summary>What about interviews with strong regional accents?</summary><p>Whisper large-v3 was trained with wide dialectal variation in Portuguese and handles Brazilian regional accents well. Accuracy drops are usually small (2–4 percentage points) compared to standard Sao Paulo/Rio speech.</p></details>
+      <details><summary>My institution's IT blocks software installs. What do I do?</summary><p>On Windows and Linux, Transcritório can run in portable mode from a user folder, without admin privileges (.AppImage on Linux; zipped build on Windows on request). As a last resort, request an IT exception citing the MIT license and public GitHub repo.</p></details>
+      <details>
+        <summary>How do I cite Transcritório in a paper or thesis?</summary>
+        <p>Barbosa, R. J. (2026). <em>Transcritório: transcrição local de entrevistas em português brasileiro</em> (v{v}) [Software]. IESP-UERJ/CERES.</p>
+        <pre><code>{bibtex}</code></pre>
+      </details>
+      <details><summary>Do I need a Hugging Face token for the models?</summary><p>Not in the standard flow. Transcritório ships with the required model components. A Hugging Face token is only required in advanced scenarios (e.g., manually using newer speaker-diarization models).</p></details>
+      <details><summary>Does it work with interviews in other languages?</summary><p>Yes. Whisper supports 90+ languages. Transcritório focuses on Brazilian Portuguese, but Spanish, English, French and others can be selected.</p></details>
+      <details><summary>Can I transcribe focus groups with many participants?</summary><p>Yes, up to about 8 speakers with good results. Beyond that, speaker separation starts mixing similar voices — manual label review in the editor is recommended.</p></details>
+      <details><summary>Is the code really open? Can I audit it?</summary><p>Yes. All source code is published on <a href="https://github.com/antrologos/Transcritorio" target="_blank" rel="noopener">GitHub under MIT license</a>. Anyone can read, modify, redistribute and verify the app's behavior.</p></details>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="container final-cta-inner">
+      <h2>Start today. Your audio stays with you.</h2>
+      <p>Free, no signup, open source.</p>
+      <a class="btn btn-primary" href="https://github.com/antrologos/Transcritorio/releases/latest" style="margin-top: var(--spacing-m);">See all releases on GitHub</a>
+    </div>
+  </section>
+
+</Base>
+
+<style>
+  /* Identico ao PT — mesmo CSS */
+  .pills-section { padding: var(--spacing-l) 0; background: var(--bg-1); border-bottom: 1px solid var(--border); }
+  .pills { display: flex; flex-wrap: wrap; gap: var(--spacing-s) var(--spacing-m); list-style: none; padding: 0; margin: 0; justify-content: center; }
+  .pills li { display: inline-flex; align-items: center; gap: 8px; background: var(--bg-2); border: 1px solid var(--border); padding: 8px 14px; border-radius: 999px; font-size: 13px; color: var(--text-muted); }
+  .pill-icon { font-size: 16px; }
+  .compare-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-l); }
+  .compare-col { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--radius-card); padding: var(--spacing-l); }
+  .compare-col.bad { border-left: 3px solid var(--err); }
+  .compare-col.good { border-left: 3px solid var(--accent); }
+  .compare-col h3 { margin-bottom: var(--spacing-m); }
+  .compare-col ul { padding-left: 20px; color: var(--text-muted); }
+  .compare-col li { margin-bottom: var(--spacing-s); }
+  @media (max-width: 760px) { .compare { grid-template-columns: 1fr; } }
+  .privacy-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
+  .privacy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-l); }
+  .privacy-points { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-m); }
+  .privacy-points li { padding-left: var(--spacing-l); position: relative; color: var(--text-muted); font-size: 15px; }
+  .privacy-points li::before { content: '✓'; position: absolute; left: 0; top: 2px; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; background: var(--accent-soft); color: var(--accent); border-radius: 50%; font-size: 14px; font-weight: 700; }
+  .ethics-box { background: var(--bg-1); border: 1px solid var(--border-strong); border-left: 3px solid var(--accent); border-radius: var(--radius-card); padding: var(--spacing-l); }
+  .ethics-box h3 { margin-bottom: var(--spacing-m); font-size: 16px; color: var(--accent); }
+  .ethics-text { font-size: 14px; line-height: 1.65; color: var(--text-primary); margin-bottom: var(--spacing-m); }
+  @media (max-width: 860px) { .privacy-grid { grid-template-columns: 1fr; } }
+  .features-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
+  .feature-card { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); align-items: center; margin-bottom: var(--spacing-xl); }
+  .feature-card.reversed { direction: rtl; }
+  .feature-card.reversed > * { direction: ltr; }
+  .feature-img { margin: 0; background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-card); }
+  .feature-img img { display: block; width: 100%; }
+  .feature-body h3 { margin-bottom: var(--spacing-m); }
+  @media (max-width: 860px) { .feature-card { grid-template-columns: 1fr; } .feature-card.reversed { direction: ltr; } }
+  .how-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
+  .steps { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-l); max-width: 900px; margin: 0 auto; }
+  .steps li { display: flex; gap: var(--spacing-l); align-items: flex-start; }
+  .step-num { font-family: var(--font-mono); font-size: 20px; font-weight: 700; width: 48px; height: 48px; flex-shrink: 0; background: var(--bg-1); border: 2px solid var(--accent); color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .step-body { flex: 1; min-width: 0; }
+  .step-body h3 { margin-bottom: 4px; }
+  .step-body img { margin-top: var(--spacing-m); max-width: 100%; border-radius: var(--radius-card); border: 1px solid var(--border); }
+  .install-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
+  .install-tabs { max-width: 800px; margin: 0 auto; }
+  .install-tab { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--radius-card); padding: var(--spacing-m) var(--spacing-l); margin-bottom: var(--spacing-m); }
+  .install-tab summary { cursor: pointer; font-family: var(--font-display); font-weight: 600; font-size: 18px; color: var(--text-primary); list-style: none; }
+  .install-tab summary::-webkit-details-marker { display: none; }
+  .install-tab[open] { border-color: var(--accent); }
+  .install-tab ol { padding-left: 20px; color: var(--text-muted); margin-top: var(--spacing-m); }
+  .install-tab li { margin-bottom: var(--spacing-s); line-height: 1.65; }
+  .install-tab code { background: var(--bg-2); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--accent); }
+  .req-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
+  .req-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-m); max-width: 1000px; margin: 0 auto; }
+  .req-card { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--radius-card); padding: var(--spacing-l); }
+  .req-card.recommended { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(68, 215, 182, 0.3); }
+  .req-tier { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: var(--spacing-m); }
+  .req-card ul { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--text-muted); }
+  .req-card li { padding: 6px 0; border-bottom: 1px dashed var(--border); }
+  .req-card li:last-child { border: 0; }
+  .req-card .req-note { color: var(--text-faint); font-style: italic; padding-top: var(--spacing-m); }
+  @media (max-width: 760px) { .req-grid { grid-template-columns: 1fr; } }
+  .ai-section { background: var(--bg-1); }
+  .ai-details summary { cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: var(--spacing-m); justify-content: center; }
+  .ai-details summary::-webkit-details-marker { display: none; }
+  .ai-details summary::after { content: '▸'; color: var(--accent); transition: transform 200ms; }
+  .ai-details[open] summary::after { transform: rotate(90deg); }
+  .ai-hint { font-size: 14px; color: var(--text-muted); font-family: var(--font-body); font-weight: 400; }
+  .ai-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-l); margin-top: var(--spacing-xl); }
+  .ai-block h3 { font-size: 17px; color: var(--accent); margin-bottom: var(--spacing-s); }
+  .ai-block p { font-size: 14px; line-height: 1.65; }
+  .ai-block code { background: var(--bg-2); padding: 1px 5px; border-radius: 3px; font-size: 12px; color: var(--accent); }
+  @media (max-width: 860px) { .ai-grid { grid-template-columns: 1fr; } }
+  .faq-section h2 { margin-bottom: var(--spacing-xl); }
+  .faq-section details { border-bottom: 1px solid var(--border); padding: var(--spacing-m) 0; }
+  .faq-section summary { cursor: pointer; list-style: none; font-weight: 500; color: var(--text-primary); display: flex; align-items: center; justify-content: space-between; }
+  .faq-section summary::-webkit-details-marker { display: none; }
+  .faq-section summary::after { content: '+'; font-size: 22px; color: var(--accent); transition: transform 200ms; }
+  .faq-section details[open] summary::after { content: '−'; }
+  .faq-section details p { margin-top: var(--spacing-s); color: var(--text-muted); }
+  .faq-section pre { margin-top: var(--spacing-m); background: var(--bg-2); border: 1px solid var(--border); border-radius: 8px; padding: var(--spacing-m); overflow-x: auto; font-size: 12px; color: var(--text-primary); }
+  .final-cta { text-align: center; background: radial-gradient(ellipse at center, rgba(68, 215, 182, 0.1), transparent 70%), linear-gradient(180deg, var(--bg-1), var(--bg-0)); padding: var(--spacing-2xl) 0; }
+  .final-cta h2 { margin-bottom: var(--spacing-s); }
+  .final-cta p { color: var(--text-muted); font-size: 16px; }
+</style>

@@ -1,0 +1,109 @@
+---
+import version from '../data/version.json';
+interface Props {
+  lang: 'pt' | 'en';
+}
+const { lang } = Astro.props;
+const isPt = lang === 'pt';
+const v = version.version;
+
+const releaseBase = `https://github.com/antrologos/Transcritorio/releases/download/v${v}`;
+const assets = {
+  win: { file: `Transcritorio-${v}-Setup.exe`, label: isPt ? 'Baixar para Windows' : 'Download for Windows' },
+  mac: { file: `Transcritorio.dmg`, label: isPt ? 'Baixar para macOS' : 'Download for macOS' },
+  linux: { file: `Transcritorio-x86_64.AppImage`, label: isPt ? 'Baixar AppImage (Linux)' : 'Download AppImage (Linux)' },
+};
+
+const allReleasesUrl = 'https://github.com/antrologos/Transcritorio/releases/latest';
+const otherLabel = isPt ? 'Outros sistemas' : 'Other systems';
+const allLabel = isPt ? 'Ver todas as versões no GitHub' : 'See all releases on GitHub';
+---
+
+<div class="os-switcher">
+  <a id="dl-primary" class="btn btn-primary" href={allReleasesUrl}>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+      <polyline points="7 10 12 15 17 10"></polyline>
+      <line x1="12" y1="15" x2="12" y2="3"></line>
+    </svg>
+    <span id="dl-primary-label">{isPt ? 'Baixar última versão' : 'Download latest'}</span>
+  </a>
+  <details class="dl-others">
+    <summary>{otherLabel}</summary>
+    <ul id="dl-list">
+      <li><a href={`${releaseBase}/${assets.win.file}`}>Windows (.exe + .bin)</a></li>
+      <li><a href={`${releaseBase}/${assets.mac.file}`}>macOS (.dmg)</a></li>
+      <li><a href={`${releaseBase}/${assets.linux.file}`}>Linux (.AppImage)</a></li>
+    </ul>
+  </details>
+  <a class="all-releases" href={allReleasesUrl}>{allLabel} →</a>
+</div>
+
+<script define:vars={{ v, assets, isPt }}>
+  (function () {
+    const ua = navigator.userAgent.toLowerCase();
+    const platform = (navigator.platform || '').toLowerCase();
+    let os = 'win';
+    if (/mac/i.test(platform) || /mac/i.test(ua)) os = 'mac';
+    else if (/linux/i.test(platform) && !/android/i.test(ua)) os = 'linux';
+    else if (/win/i.test(platform)) os = 'win';
+
+    const releaseBase = `https://github.com/antrologos/Transcritorio/releases/download/v${v}`;
+    const asset = assets[os];
+    const primary = document.getElementById('dl-primary');
+    const label = document.getElementById('dl-primary-label');
+    if (primary && asset) {
+      primary.href = `${releaseBase}/${asset.file}`;
+      if (label) label.textContent = asset.label;
+    }
+    // Esconde o link do SO detectado na lista de outros
+    const map = { win: 'Windows', mac: 'macOS', linux: 'Linux' };
+    const myLabel = map[os];
+    document.querySelectorAll('#dl-list li').forEach((li) => {
+      if (li.textContent && li.textContent.trim().startsWith(myLabel)) {
+        li.style.display = 'none';
+      }
+    });
+  })();
+</script>
+
+<style>
+  .os-switcher {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+    align-items: flex-start;
+  }
+  #dl-primary { min-width: 260px; justify-content: center; font-size: 16px; padding: 14px 24px; }
+  .dl-others {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .dl-others summary {
+    cursor: pointer;
+    color: var(--text-muted);
+    list-style: none;
+  }
+  .dl-others summary::-webkit-details-marker { display: none; }
+  .dl-others summary::before {
+    content: '▸';
+    display: inline-block;
+    margin-right: 6px;
+    transition: transform 180ms;
+  }
+  .dl-others[open] summary::before { transform: rotate(90deg); }
+  .dl-others ul {
+    list-style: none;
+    padding: 0;
+    margin: var(--spacing-s) 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .dl-others a { font-family: var(--font-mono); font-size: 13px; }
+  .all-releases {
+    font-size: 13px;
+    color: var(--text-faint);
+  }
+  .all-releases:hover { color: var(--link); }
+</style>

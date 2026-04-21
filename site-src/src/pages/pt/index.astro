@@ -1,0 +1,517 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import CopyButton from '../../components/CopyButton.astro';
+import version from '../../data/version.json';
+
+const v = version.version;
+const BASE = import.meta.env.BASE_URL;
+
+const title = 'Transcritório — Transcrição local de entrevistas';
+const description = 'Aplicativo desktop gratuito para transcrição automática e separação de falantes em português brasileiro. Roda 100% na sua máquina — sem nuvem, sem login, sem assinatura.';
+
+const ethicsText = `A transcrição e a separação automática de falantes dos áudios coletados nesta pesquisa serão realizadas por meio do software Transcritório (Barbosa, 2026), uma aplicação de desktop gratuita e de código aberto (licença MIT), desenvolvida no IESP-UERJ/CERES. Todo o processamento ocorre localmente na máquina do pesquisador, sem envio do material a servidores externos, em conformidade com a Lei nº 13.709/2018 (LGPD) e com o TCLE assinado pelos participantes. O software utiliza os modelos Whisper (Radford et al., 2022) para transcrição e pyannote.audio (Bredin et al., 2020) para separação de falantes, ambos executados offline.`;
+
+const bibtex = `@software{barbosa2026transcritorio,
+  author    = {Barbosa, Rog{\\'e}rio Jer{\\^o}nimo},
+  title     = {Transcrit{\\'o}rio: transcri{\\c{c}}{\\~a}o local de entrevistas em portugu{\\^e}s brasileiro},
+  year      = {2026},
+  version   = {${v}},
+  publisher = {IESP-UERJ/CERES},
+  license   = {MIT},
+  url       = {https://github.com/antrologos/Transcritorio}
+}`;
+---
+
+<Base lang="pt" title={title} description={description} path="pt/">
+
+  <Hero lang="pt" />
+
+  <!-- ==================== SECAO: FEATURES PILLS ==================== -->
+  <section class="pills-section">
+    <div class="container">
+      <ul class="pills">
+        <li><span class="pill-icon">🔒</span> 100% local, sem nuvem</li>
+        <li><span class="pill-icon">🗣️</span> Separação automática de falantes</li>
+        <li><span class="pill-icon">🇧🇷</span> Português brasileiro nativo</li>
+        <li><span class="pill-icon">〰️</span> Editor com forma de onda</li>
+        <li><span class="pill-icon">📄</span> Exporta em vários formatos</li>
+        <li><span class="pill-icon">🆓</span> Gratuito e código aberto</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ==================== SECAO: COMPARATIVO SEM/COM ==================== -->
+  <section id="compare" class="compare-section">
+    <div class="container">
+      <h2>Como mudam as suas horas de trabalho</h2>
+      <div class="compare">
+        <div class="compare-col bad">
+          <h3>Sem Transcritório</h3>
+          <ul>
+            <li>8 a 10 horas transcrevendo manualmente 1 hora de entrevista.</li>
+            <li>Enviar áudio sigiloso para servidores de empresas estrangeiras.</li>
+            <li>Mensalidade de R$ 100–300 por serviços de transcrição online.</li>
+            <li>Marcar falantes na mão, linha por linha.</li>
+            <li>Explicar ao comitê de ética por que o áudio foi para a nuvem.</li>
+          </ul>
+        </div>
+        <div class="compare-col good">
+          <h3>Com Transcritório</h3>
+          <ul>
+            <li>15 a 30 minutos de processamento, depois só revisar.</li>
+            <li>Áudio nunca sai do seu computador.</li>
+            <li>Zero custo, para sempre. Código aberto sob licença MIT.</li>
+            <li>Falantes identificados automaticamente e renomeáveis em um clique.</li>
+            <li>Texto pronto para colar no projeto de pesquisa (logo abaixo).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECAO: PRIVACIDADE + ETICA ==================== -->
+  <section id="privacy" class="privacy-section">
+    <div class="container">
+      <h2>Privacidade por desenho, não por promessa</h2>
+      <div class="privacy-grid">
+        <ul class="privacy-points">
+          <li><strong>Processamento 100% local:</strong> o áudio da entrevista nunca é enviado a servidores externos.</li>
+          <li><strong>Sem coleta de dados, sem telemetria:</strong> nenhum cadastro ou login é exigido.</li>
+          <li><strong>Código-fonte aberto sob licença MIT:</strong> auditável por qualquer pessoa.</li>
+          <li><strong>Compatível com LGPD e TCLE:</strong> você mantém controle integral sobre o áudio do informante.</li>
+        </ul>
+        <aside class="ethics-box">
+          <h3>Para comitês de ética e metodologia</h3>
+          <p class="ethics-text">{ethicsText}</p>
+          <CopyButton
+            text={ethicsText}
+            label="Copiar texto para projeto de pesquisa"
+            labelSuccess="Copiado ✓"
+          />
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECAO: FEATURES DETALHADAS ==================== -->
+  <section id="features" class="features-section">
+    <div class="container">
+      <h2>Tudo que um pesquisador precisa</h2>
+
+      <div class="feature-card">
+        <figure class="feature-img">
+          <img src={`${BASE}/img/feature-player.png`} alt="Player sincronizado com áudio e forma de onda, mostrando o momento atual da entrevista." width="900" height="560" />
+        </figure>
+        <div class="feature-body">
+          <h3>Revisão lado a lado com o áudio</h3>
+          <p>Ouça e corrija ao mesmo tempo. Cada trecho transcrito fica ancorado no ponto exato do áudio, e um clique leva você até lá. O pesquisador revisa em um terço do tempo que levaria em um editor de texto comum.</p>
+        </div>
+      </div>
+
+      <div class="feature-card reversed">
+        <figure class="feature-img">
+          <img src={`${BASE}/img/feature-merge-turns.png`} alt="Editor de turnos mostrando opções de juntar e dividir blocos da transcrição." width="900" height="560" />
+        </figure>
+        <div class="feature-body">
+          <h3>Editor de turnos com forma de onda</h3>
+          <p>A forma de onda mostra visualmente silêncios, sobreposições e trocas de falante. Você ajusta limites de trechos, junta ou divide blocos com um clique — útil em entrevistas com falas rápidas ou interrupções frequentes.</p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <figure class="feature-img">
+          <img src={`${BASE}/img/feature-context-menu.png`} alt="Menu contextual da tabela de turnos com opções de edição avançada." width="900" height="560" />
+        </figure>
+        <div class="feature-body">
+          <h3>Tabela de turnos pronta para análise</h3>
+          <p>A transcrição é organizada em turnos de fala com metadados de tempo e falante. Exporte em DOCX, MD, SRT, VTT, CSV, TSV ou NVivo — e importe direto no NVivo, Atlas.ti, MAXQDA ou em um script de R/Python.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECAO: COMO USAR EM 4 PASSOS ==================== -->
+  <section id="how" class="how-section">
+    <div class="container">
+      <h2>Como usar, em quatro passos</h2>
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <div class="step-body">
+            <h3>Crie um projeto</h3>
+            <p>Escolha uma pasta onde os arquivos serão organizados. O Transcritório cria a estrutura de pastas para você.</p>
+            <img src={`${BASE}/img/step-1-new-project.png`} alt="Dialogo de criação de novo projeto." loading="lazy" />
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div class="step-body">
+            <h3>Adicione os áudios ou vídeos</h3>
+            <p>Arraste seus arquivos para a janela. MP3, WAV, M4A, MP4 e outros formatos comuns são aceitos.</p>
+            <img src={`${BASE}/img/step-3-add-files.png`} alt="Tela de adição de arquivos de mídia." loading="lazy" />
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div class="step-body">
+            <h3>Clique em transcrever</h3>
+            <p>Escolha o idioma (português brasileiro) e o número de falantes. O Transcritório faz o resto — em um notebook comum, processa de metade a um terço da duração do áudio.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <div class="step-body">
+            <h3>Revise no Estúdio e exporte</h3>
+            <p>Abra a transcrição, ajuste trechos, renomeie os falantes (Entrevistador, Joana, Pedro…) e exporte no formato da sua preferência.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ==================== SECAO: INSTALANDO POR SO ==================== -->
+  <section id="install" class="install-section">
+    <div class="container">
+      <h2>Instalando no seu sistema</h2>
+      <div class="install-tabs">
+        <details class="install-tab" open>
+          <summary>🪟 Windows 10/11</summary>
+          <ol>
+            <li>Baixe os arquivos <code>Transcritorio-{v}-Setup.exe</code> <strong>e</strong> <code>Transcritorio-{v}-Setup-1.bin</code> da <a href="https://github.com/antrologos/Transcritorio/releases/latest" target="_blank" rel="noopener">última release</a>. Os dois precisam estar na mesma pasta.</li>
+            <li>Execute o instalador. O Windows Defender pode exibir um aviso azul — clique em "Mais informações" e depois em "Executar assim mesmo".</li>
+            <li>Abra o Transcritório pelo menu Iniciar.</li>
+            <li><strong>Opcional:</strong> se você tem placa gráfica NVIDIA, o aplicativo detecta automaticamente e oferece baixar a aceleração (~1 GB), tornando a transcrição até 9x mais rápida.</li>
+          </ol>
+        </details>
+        <details class="install-tab">
+          <summary>🍎 macOS (Apple Silicon)</summary>
+          <ol>
+            <li>Baixe o arquivo <code>Transcritorio.dmg</code> da <a href="https://github.com/antrologos/Transcritorio/releases/latest" target="_blank" rel="noopener">última release</a>.</li>
+            <li>Arraste o Transcritório para a pasta Aplicativos.</li>
+            <li><strong>Primeira vez:</strong> clique com o botão direito no ícone do app e escolha "Abrir". Em seguida, clique em "Abrir" no aviso de segurança. O Mac lembra — nas próximas vezes abre normalmente.</li>
+            <li>Compatível com Macs com chip M1/M2/M3/M4. Requer <code>ffmpeg</code> instalado via <code>brew install ffmpeg</code>.</li>
+          </ol>
+        </details>
+        <details class="install-tab">
+          <summary>🐧 Linux</summary>
+          <ol>
+            <li>Baixe o arquivo <code>Transcritorio-x86_64.AppImage</code> da <a href="https://github.com/antrologos/Transcritorio/releases/latest" target="_blank" rel="noopener">última release</a>.</li>
+            <li>No terminal, dê permissão de execução: <code>chmod +x Transcritorio-*.AppImage</code></li>
+            <li>Instale as libs necessárias: <code>sudo apt install ffmpeg libfuse2 libxcb-cursor0 libxcb-xinerama0 libxkbcommon-x11-0</code> (Ubuntu/Debian).</li>
+            <li>Execute com duplo clique ou <code>./Transcritorio-x86_64.AppImage</code>. Testado em Ubuntu 22.04+ e Fedora 40+.</li>
+          </ol>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECAO: REQUISITOS ==================== -->
+  <section id="requirements" class="req-section">
+    <div class="container">
+      <h2>Requisitos de sistema</h2>
+      <div class="req-grid">
+        <div class="req-card">
+          <span class="req-tier">Mínimo</span>
+          <ul>
+            <li><strong>CPU:</strong> 4 núcleos</li>
+            <li><strong>RAM:</strong> 8 GB</li>
+            <li><strong>Disco:</strong> 5 GB livres</li>
+            <li class="req-note">Funciona — 1h de áudio leva ~40–60 min.</li>
+          </ul>
+        </div>
+        <div class="req-card recommended">
+          <span class="req-tier">Recomendado</span>
+          <ul>
+            <li><strong>CPU:</strong> 8 núcleos</li>
+            <li><strong>RAM:</strong> 16 GB</li>
+            <li><strong>Disco:</strong> 10 GB livres</li>
+            <li class="req-note">1h de áudio em ~20–30 min.</li>
+          </ul>
+        </div>
+        <div class="req-card">
+          <span class="req-tier">Ideal</span>
+          <ul>
+            <li><strong>CPU:</strong> 8+ núcleos</li>
+            <li><strong>RAM:</strong> 16 GB ou mais</li>
+            <li><strong>GPU:</strong> NVIDIA com 6 GB+ VRAM (ou Apple Silicon)</li>
+            <li class="req-note">1h de áudio em 5–10 min.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECAO: A IA POR DETRAS (COLAPSAVEL) ==================== -->
+  <section id="ai" class="ai-section">
+    <div class="container">
+      <details class="ai-details">
+        <summary><h2>A inteligência artificial por detrás</h2><span class="ai-hint">(detalhes técnicos)</span></summary>
+        <div class="ai-grid">
+          <div class="ai-block">
+            <h3>Whisper (OpenAI, 2022)</h3>
+            <p>Modelo de transcrição automática treinado em 680 mil horas de áudio multilíngue, incluindo grande quantidade de português. O Transcritório usa a versão <code>large-v3</code> por padrão, que entrega alta acurácia mesmo em áudios com ruído de fundo ou sotaques regionais. Executado localmente via <code>faster-whisper</code>.</p>
+          </div>
+          <div class="ai-block">
+            <h3>pyannote.audio (Bredin et al., 2020)</h3>
+            <p>Biblioteca responsável pela separação automática de falantes — ou seja, por identificar quem falou em cada trecho. Usa redes neurais para agrupar vozes semelhantes ao longo da entrevista. Funciona bem até com 6–8 participantes distintos e também roda offline.</p>
+          </div>
+          <div class="ai-block">
+            <h3>Processamento local</h3>
+            <p>Tanto Whisper quanto pyannote rodam inteiramente no seu computador, via PyTorch. Nenhum áudio, texto ou metadado sai da sua máquina em momento algum. O primeiro uso baixa os pesos dos modelos (~3 GB); depois disso, o aplicativo funciona sem conexão com a internet.</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ==================== SECAO: FAQ ==================== -->
+  <section id="faq" class="faq-section">
+    <div class="container prose">
+      <h2>Perguntas frequentes</h2>
+      <details><summary>Preciso de internet para usar?</summary><p>Apenas no primeiro uso, para baixar os modelos (~3 GB). Depois disso, o Transcritório funciona integralmente offline.</p></details>
+      <details><summary>Quão precisa é a transcrição?</summary><p>Em áudios limpos de português brasileiro, a acurácia fica entre 90% e 96% das palavras corretas. Revisão humana continua sendo recomendada, especialmente para termos técnicos, nomes próprios e trechos com ruído.</p></details>
+      <details><summary>E entrevistas com sotaque nordestino, caipira ou sulista?</summary><p>O modelo Whisper large-v3 foi treinado com ampla variação dialetal em português e lida bem com sotaques regionais brasileiros. A queda de acurácia costuma ser pequena (2–4 pontos percentuais) em comparação a áudios em variante paulistana/carioca padrão.</p></details>
+      <details><summary>Minha TI institucional bloqueia instalação de programas. O que faço?</summary><p>Em Windows e Linux, o Transcritório pode rodar em modo portátil a partir de uma pasta do usuário, sem exigir privilégios de administrador (.AppImage no Linux, versão zipada no Windows sob demanda). Em último caso, peça à TI uma exceção apresentando a licença MIT e o repositório público no GitHub.</p></details>
+      <details>
+        <summary>Como cito o Transcritório em um artigo ou tese?</summary>
+        <p>Barbosa, R. J. (2026). <em>Transcritório: transcrição local de entrevistas em português brasileiro</em> (v{v}) [Software]. IESP-UERJ/CERES.</p>
+        <pre><code>{bibtex}</code></pre>
+      </details>
+      <details><summary>Preciso de token da Hugging Face para os modelos?</summary><p>Não no fluxo padrão. O Transcritório já inclui os componentes necessários dos modelos. Um token da Hugging Face só é pedido em cenários avançados (por exemplo, usar modelos de separação de falantes mais recentes manualmente).</p></details>
+      <details><summary>Funciona com entrevistas em outros idiomas?</summary><p>Sim. O Whisper suporta mais de 90 idiomas. O foco do Transcritório é português brasileiro, mas você pode selecionar espanhol, inglês, francês, etc. na interface.</p></details>
+      <details><summary>Posso transcrever grupos focais com muitos participantes?</summary><p>Sim, até cerca de 8 falantes com bons resultados. Acima disso, a separação de falantes começa a misturar vozes parecidas — nesses casos, recomenda-se revisão manual dos rótulos no editor.</p></details>
+      <details><summary>O código é realmente aberto? Posso auditar?</summary><p>Sim. Todo o código-fonte está publicado no <a href="https://github.com/antrologos/Transcritorio" target="_blank" rel="noopener">GitHub sob licença MIT</a>. Qualquer pessoa pode ler, modificar, redistribuir e verificar o comportamento do aplicativo.</p></details>
+    </div>
+  </section>
+
+  <!-- ==================== SECAO: CTA FINAL ==================== -->
+  <section class="final-cta">
+    <div class="container final-cta-inner">
+      <h2>Comece hoje. Seus áudios permanecem com você.</h2>
+      <p>Gratuito, sem cadastro, código aberto.</p>
+      <a class="btn btn-primary" href="https://github.com/antrologos/Transcritorio/releases/latest" style="margin-top: var(--spacing-m);">Ver todas as versões no GitHub</a>
+    </div>
+  </section>
+
+</Base>
+
+<style>
+  /* Pills */
+  .pills-section { padding: var(--spacing-l) 0; background: var(--bg-1); border-bottom: 1px solid var(--border); }
+  .pills {
+    display: flex; flex-wrap: wrap; gap: var(--spacing-s) var(--spacing-m);
+    list-style: none; padding: 0; margin: 0;
+    justify-content: center;
+  }
+  .pills li {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    padding: 8px 14px; border-radius: 999px;
+    font-size: 13px; color: var(--text-muted);
+  }
+  .pill-icon { font-size: 16px; }
+
+  /* Compare */
+  .compare-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-l); }
+  .compare-col { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--radius-card); padding: var(--spacing-l); }
+  .compare-col.bad { border-left: 3px solid var(--err); }
+  .compare-col.good { border-left: 3px solid var(--accent); }
+  .compare-col h3 { margin-bottom: var(--spacing-m); }
+  .compare-col ul { padding-left: 20px; color: var(--text-muted); }
+  .compare-col li { margin-bottom: var(--spacing-s); }
+  @media (max-width: 760px) { .compare { grid-template-columns: 1fr; } }
+
+  /* Privacy */
+  .privacy-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
+  .privacy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-l); }
+  .privacy-points { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-m); }
+  .privacy-points li {
+    padding-left: var(--spacing-l); position: relative;
+    color: var(--text-muted); font-size: 15px;
+  }
+  .privacy-points li::before {
+    content: '✓';
+    position: absolute; left: 0; top: 2px;
+    width: 22px; height: 22px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--accent-soft); color: var(--accent);
+    border-radius: 50%;
+    font-size: 14px; font-weight: 700;
+  }
+  .ethics-box {
+    background: var(--bg-1);
+    border: 1px solid var(--border-strong);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-card);
+    padding: var(--spacing-l);
+  }
+  .ethics-box h3 { margin-bottom: var(--spacing-m); font-size: 16px; color: var(--accent); }
+  .ethics-text { font-size: 14px; line-height: 1.65; color: var(--text-primary); margin-bottom: var(--spacing-m); }
+  @media (max-width: 860px) { .privacy-grid { grid-template-columns: 1fr; } }
+
+  /* Features detalhadas */
+  .features-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
+  .feature-card {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl);
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+  }
+  .feature-card.reversed { direction: rtl; }
+  .feature-card.reversed > * { direction: ltr; }
+  .feature-img {
+    margin: 0;
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+  }
+  .feature-img img { display: block; width: 100%; }
+  .feature-body h3 { margin-bottom: var(--spacing-m); }
+  @media (max-width: 860px) {
+    .feature-card { grid-template-columns: 1fr; }
+    .feature-card.reversed { direction: ltr; }
+  }
+
+  /* Como usar */
+  .how-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
+  .steps {
+    list-style: none; padding: 0;
+    display: flex; flex-direction: column; gap: var(--spacing-l);
+    max-width: 900px; margin: 0 auto;
+  }
+  .steps li { display: flex; gap: var(--spacing-l); align-items: flex-start; }
+  .step-num {
+    font-family: var(--font-mono);
+    font-size: 20px; font-weight: 700;
+    width: 48px; height: 48px; flex-shrink: 0;
+    background: var(--bg-1);
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-body { flex: 1; min-width: 0; }
+  .step-body h3 { margin-bottom: 4px; }
+  .step-body img {
+    margin-top: var(--spacing-m);
+    max-width: 100%;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--border);
+  }
+
+  /* Install tabs */
+  .install-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
+  .install-tabs { max-width: 800px; margin: 0 auto; }
+  .install-tab {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: var(--spacing-m) var(--spacing-l);
+    margin-bottom: var(--spacing-m);
+  }
+  .install-tab summary {
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--text-primary);
+    list-style: none;
+  }
+  .install-tab summary::-webkit-details-marker { display: none; }
+  .install-tab[open] { border-color: var(--accent); }
+  .install-tab ol { padding-left: 20px; color: var(--text-muted); margin-top: var(--spacing-m); }
+  .install-tab li { margin-bottom: var(--spacing-s); line-height: 1.65; }
+  .install-tab code { background: var(--bg-2); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--accent); }
+
+  /* Requisitos */
+  .req-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
+  .req-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-m); max-width: 1000px; margin: 0 auto; }
+  .req-card {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: var(--spacing-l);
+  }
+  .req-card.recommended { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(68, 215, 182, 0.3); }
+  .req-tier {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block; margin-bottom: var(--spacing-m);
+  }
+  .req-card ul { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--text-muted); }
+  .req-card li { padding: 6px 0; border-bottom: 1px dashed var(--border); }
+  .req-card li:last-child { border: 0; }
+  .req-card .req-note { color: var(--text-faint); font-style: italic; padding-top: var(--spacing-m); }
+  @media (max-width: 760px) { .req-grid { grid-template-columns: 1fr; } }
+
+  /* AI colapsavel */
+  .ai-section { background: var(--bg-1); }
+  .ai-details summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-m);
+    justify-content: center;
+  }
+  .ai-details summary::-webkit-details-marker { display: none; }
+  .ai-details summary::after {
+    content: '▸';
+    color: var(--accent);
+    transition: transform 200ms;
+  }
+  .ai-details[open] summary::after { transform: rotate(90deg); }
+  .ai-hint { font-size: 14px; color: var(--text-muted); font-family: var(--font-body); font-weight: 400; }
+  .ai-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-l); margin-top: var(--spacing-xl); }
+  .ai-block h3 { font-size: 17px; color: var(--accent); margin-bottom: var(--spacing-s); }
+  .ai-block p { font-size: 14px; line-height: 1.65; }
+  .ai-block code { background: var(--bg-2); padding: 1px 5px; border-radius: 3px; font-size: 12px; color: var(--accent); }
+  @media (max-width: 860px) { .ai-grid { grid-template-columns: 1fr; } }
+
+  /* FAQ */
+  .faq-section h2 { margin-bottom: var(--spacing-xl); }
+  .faq-section details {
+    border-bottom: 1px solid var(--border);
+    padding: var(--spacing-m) 0;
+  }
+  .faq-section summary {
+    cursor: pointer; list-style: none;
+    font-weight: 500;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center; justify-content: space-between;
+  }
+  .faq-section summary::-webkit-details-marker { display: none; }
+  .faq-section summary::after {
+    content: '+'; font-size: 22px; color: var(--accent);
+    transition: transform 200ms;
+  }
+  .faq-section details[open] summary::after { content: '−'; }
+  .faq-section details p { margin-top: var(--spacing-s); color: var(--text-muted); }
+  .faq-section pre {
+    margin-top: var(--spacing-m);
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: var(--spacing-m);
+    overflow-x: auto;
+    font-size: 12px;
+    color: var(--text-primary);
+  }
+
+  /* CTA final */
+  .final-cta {
+    text-align: center;
+    background: radial-gradient(ellipse at center, rgba(68, 215, 182, 0.1), transparent 70%),
+                linear-gradient(180deg, var(--bg-1), var(--bg-0));
+    padding: var(--spacing-2xl) 0;
+  }
+  .final-cta h2 { margin-bottom: var(--spacing-s); }
+  .final-cta p { color: var(--text-muted); font-size: 16px; }
+</style>

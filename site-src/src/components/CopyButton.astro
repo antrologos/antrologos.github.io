@@ -1,0 +1,72 @@
+---
+interface Props {
+  text: string;
+  label: string;
+  labelSuccess: string;
+}
+const { text, label, labelSuccess } = Astro.props;
+const id = 'copy-' + Math.random().toString(36).slice(2, 9);
+---
+
+<button class="copy-btn" data-copy-target={id} aria-live="polite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+  </svg>
+  <span class="label">{label}</span>
+</button>
+<template id={id}>{text}</template>
+
+<script define:vars={{ labelSuccess }}>
+  (function () {
+    document.querySelectorAll('.copy-btn').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const target = btn.getAttribute('data-copy-target');
+        const tpl = target ? document.getElementById(target) : null;
+        if (!tpl) return;
+        const content = tpl.innerHTML.trim();
+        try {
+          await navigator.clipboard.writeText(content);
+          const span = btn.querySelector('.label');
+          const original = span ? span.textContent : '';
+          if (span) span.textContent = labelSuccess;
+          btn.classList.add('copied');
+          setTimeout(() => {
+            if (span) span.textContent = original;
+            btn.classList.remove('copied');
+          }, 2000);
+        } catch (e) {
+          console.error('Clipboard falhou', e);
+        }
+      });
+    });
+  })();
+</script>
+
+<style>
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-btn);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 160ms ease;
+  }
+  .copy-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .copy-btn.copied {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .copy-btn svg { flex-shrink: 0; }
+</style>
