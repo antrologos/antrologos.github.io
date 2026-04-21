@@ -1,0 +1,10 @@
+# Jekyll config for GitHub Pages
+# The legacy GH Pages build (Jekyll) scans every file in the repo. The
+# Astro source in site-src/ contains .astro files with front-matter that
+# Jekyll tries to parse as YAML and fails. The built output lives in
+# Transcritorio/ and is pure HTML/CSS/JS — Jekyll copies it as-is.
+exclude:
+  - site-src/
+  - node_modules/
+  - "*.md"
+  - .github/
