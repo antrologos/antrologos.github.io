@@ -203,7 +203,8 @@ const bibtex = `@software{barbosa2026transcritorio,
             <li>Baixe o arquivo <code>Transcritorio.dmg</code> da <a href="https://github.com/antrologos/Transcritorio/releases/latest" target="_blank" rel="noopener">última release</a>.</li>
             <li>Arraste o Transcritório para a pasta Aplicativos.</li>
             <li><strong>Primeira vez:</strong> clique com o botão direito no ícone do app e escolha "Abrir". Em seguida, clique em "Abrir" no aviso de segurança. O Mac lembra — nas próximas vezes abre normalmente.</li>
-            <li>Compatível com Macs com chip M1/M2/M3/M4. Requer <code>ffmpeg</code> instalado via <code>brew install ffmpeg</code>.</li>
+            <li><strong>Aceleração Metal automática (M1/M2/M3/M4):</strong> o app já vem com a biblioteca de aceleração GPU Apple embutida. Um selo <code>Motor: MLX (Metal)</code> aparece no cabeçalho do projeto quando a aceleração está ativa. Na primeira transcrição, o modelo otimizado (~1,6&nbsp;GB) é baixado em segundo plano.</li>
+            <li><strong>Tudo embutido:</strong> ffmpeg e todas as dependências vêm dentro do <code>.dmg</code>. Nada pra instalar pelo terminal.</li>
           </ol>
         </details>
         <details class="install-tab">
@@ -211,7 +212,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           <ol>
             <li>Baixe o arquivo <code>Transcritorio-x86_64.AppImage</code> da <a href="https://github.com/antrologos/Transcritorio/releases/latest" target="_blank" rel="noopener">última release</a>.</li>
             <li>No terminal, dê permissão de execução: <code>chmod +x Transcritorio-*.AppImage</code></li>
-            <li>Instale as libs necessárias: <code>sudo apt install ffmpeg libfuse2 libxcb-cursor0 libxcb-xinerama0 libxkbcommon-x11-0</code> (Ubuntu/Debian).</li>
+            <li>Instale as bibliotecas do sistema X11 (Ubuntu/Debian): <code>sudo apt install libfuse2 libxcb-cursor0 libxcb-xinerama0 libxkbcommon-x11-0</code>. <strong>ffmpeg já vem embutido</strong> no AppImage — não precisa instalar à parte.</li>
             <li>Execute com duplo clique ou <code>./Transcritorio-x86_64.AppImage</code>. Testado em Ubuntu 22.04+ e Fedora 40+.</li>
           </ol>
         </details>

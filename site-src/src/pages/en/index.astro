@@ -197,7 +197,8 @@ const bibtex = `@software{barbosa2026transcritorio,
             <li>Download <code>Transcritorio.dmg</code> from the <a href="https://github.com/antrologos/Transcritorio/releases/latest" target="_blank" rel="noopener">latest release</a>.</li>
             <li>Drag Transcritório to the Applications folder.</li>
             <li><strong>First launch:</strong> right-click the app icon and choose "Open". Then click "Open" in the security dialog. macOS remembers — opens normally afterward.</li>
-            <li>Compatible with M1/M2/M3/M4 Macs. Requires <code>ffmpeg</code> installed via <code>brew install ffmpeg</code>.</li>
+            <li><strong>Automatic Metal acceleration (M1/M2/M3/M4):</strong> the app ships with the Apple GPU acceleration library bundled. A <code>Motor: MLX (Metal)</code> badge appears in the project header when acceleration is active. On the first transcription, the optimized model (~1.6&nbsp;GB) is downloaded in the background.</li>
+            <li><strong>Everything bundled:</strong> ffmpeg and all dependencies ship inside the <code>.dmg</code>. Nothing to install via terminal.</li>
           </ol>
         </details>
         <details class="install-tab">
@@ -205,7 +206,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           <ol>
             <li>Download <code>Transcritorio-x86_64.AppImage</code> from the <a href="https://github.com/antrologos/Transcritorio/releases/latest" target="_blank" rel="noopener">latest release</a>.</li>
             <li>In the terminal, grant execute permission: <code>chmod +x Transcritorio-*.AppImage</code></li>
-            <li>Install required libs: <code>sudo apt install ffmpeg libfuse2 libxcb-cursor0 libxcb-xinerama0 libxkbcommon-x11-0</code> (Ubuntu/Debian).</li>
+            <li>Install system X11 libs (Ubuntu/Debian): <code>sudo apt install libfuse2 libxcb-cursor0 libxcb-xinerama0 libxkbcommon-x11-0</code>. <strong>ffmpeg ships inside</strong> the AppImage — no separate install needed.</li>
             <li>Run by double-clicking or <code>./Transcritorio-x86_64.AppImage</code>. Tested on Ubuntu 22.04+ and Fedora 40+.</li>
           </ol>
         </details>
