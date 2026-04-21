@@ -196,7 +196,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           <ol>
             <li>Download <code>Transcritorio.dmg</code> from the <a href="https://github.com/antrologos/Transcritorio/releases/latest" target="_blank" rel="noopener">latest release</a>.</li>
             <li>Drag Transcritório to the Applications folder.</li>
-            <li><strong>First launch:</strong> right-click the app icon and choose "Open". Then click "Open" in the security dialog. macOS remembers — opens normally afterward.</li>
+            <li><strong>First launch:</strong> right-click the app icon and choose "Open", then click "Open" in the security dialog. If the app still won't launch (macOS 15 Sequoia blocks apps without a paid Apple Developer ID), open Terminal and drag the <code>Habilitar Transcritório.command</code> file from the mounted DMG into the Terminal window, then press Enter. Full instructions in <a href="https://github.com/antrologos/Transcritorio/blob/main/docs/MAC_INSTALL.md" target="_blank" rel="noopener">docs/MAC_INSTALL.md</a>.</li>
             <li><strong>Automatic Metal acceleration (M1/M2/M3/M4):</strong> the app ships with the Apple GPU acceleration library bundled. A <code>Motor: MLX (Metal)</code> badge appears in the project header when acceleration is active. On the first transcription, the optimized model (~1.6&nbsp;GB) is downloaded in the background.</li>
             <li><strong>Everything bundled:</strong> ffmpeg and all dependencies ship inside the <code>.dmg</code>. Nothing to install via terminal.</li>
           </ol>
