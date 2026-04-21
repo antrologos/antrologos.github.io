@@ -9,7 +9,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "update-version": "node scripts/update-version.mjs",
+    "release": "npm run update-version && npm run build"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",

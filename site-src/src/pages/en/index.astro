@@ -97,6 +97,16 @@ const bibtex = `@software{barbosa2026transcritorio,
 
       <div class="feature-card">
         <figure class="feature-img">
+          <img src={`${BASE}/img/feature-file-manager.png`} alt="Project file manager showing multiple interviews organized by status." width="900" height="560" />
+        </figure>
+        <div class="feature-body">
+          <h3>Project file manager</h3>
+          <p>All of your project's audio files in a single screen, with visual status for every stage: not yet transcribed, queued, done, reviewed. You keep track of an entire project — dozens of interviews — without losing the thread of your work.</p>
+        </div>
+      </div>
+
+      <div class="feature-card reversed">
+        <figure class="feature-img">
           <img src={`${BASE}/img/feature-player.png`} alt="Audio player synced with waveform, showing current position in the interview." width="900" height="560" />
         </figure>
         <div class="feature-body">
@@ -105,7 +115,7 @@ const bibtex = `@software{barbosa2026transcritorio,
         </div>
       </div>
 
-      <div class="feature-card reversed">
+      <div class="feature-card">
         <figure class="feature-img">
           <img src={`${BASE}/img/feature-merge-turns.png`} alt="Turn editor showing options to merge and split transcript blocks." width="900" height="560" />
         </figure>
@@ -115,7 +125,7 @@ const bibtex = `@software{barbosa2026transcritorio,
         </div>
       </div>
 
-      <div class="feature-card">
+      <div class="feature-card reversed">
         <figure class="feature-img">
           <img src={`${BASE}/img/feature-context-menu.png`} alt="Context menu on the turn table showing advanced editing options." width="900" height="560" />
         </figure>
@@ -135,8 +145,11 @@ const bibtex = `@software{barbosa2026transcritorio,
           <span class="step-num">1</span>
           <div class="step-body">
             <h3>Create a project</h3>
-            <p>Pick a folder where files will be organized. Transcritório creates the folder structure for you.</p>
-            <img src={`${BASE}/img/step-1-new-project.png`} alt="New project dialog." loading="lazy" />
+            <p>Pick a name for your project and a folder where files will be organized. Transcritório creates the folder structure for you.</p>
+            <div class="step-img-grid">
+              <img src={`${BASE}/img/step-1-new-project.png`} alt="New project dialog." loading="lazy" />
+              <img src={`${BASE}/img/step-2-project-name.png`} alt="Project name selection screen." loading="lazy" />
+            </div>
           </div>
         </li>
         <li>
@@ -325,6 +338,9 @@ const bibtex = `@software{barbosa2026transcritorio,
   .step-body { flex: 1; min-width: 0; }
   .step-body h3 { margin-bottom: 4px; }
   .step-body img { margin-top: var(--spacing-m); max-width: 100%; border-radius: var(--radius-card); border: 1px solid var(--border); }
+  .step-img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-m); margin-top: var(--spacing-m); }
+  .step-img-grid img { margin-top: 0; width: 100%; border-radius: var(--radius-card); border: 1px solid var(--border); }
+  @media (max-width: 760px) { .step-img-grid { grid-template-columns: 1fr; } }
   .install-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
   .install-tabs { max-width: 800px; margin: 0 auto; }
   .install-tab { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--radius-card); padding: var(--spacing-m) var(--spacing-l); margin-bottom: var(--spacing-m); }

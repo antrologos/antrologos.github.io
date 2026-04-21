@@ -101,6 +101,16 @@ const bibtex = `@software{barbosa2026transcritorio,
 
       <div class="feature-card">
         <figure class="feature-img">
+          <img src={`${BASE}/img/feature-file-manager.png`} alt="Gerenciador de arquivos do projeto mostrando múltiplas entrevistas organizadas por status." width="900" height="560" />
+        </figure>
+        <div class="feature-body">
+          <h3>Gerenciador de arquivos do projeto</h3>
+          <p>Todos os áudios do projeto em uma única tela, com status visual de cada etapa: ainda não transcrito, em fila, concluído, revisado. Você acompanha um projeto inteiro — dezenas de entrevistas — sem perder o fio do trabalho.</p>
+        </div>
+      </div>
+
+      <div class="feature-card reversed">
+        <figure class="feature-img">
           <img src={`${BASE}/img/feature-player.png`} alt="Player sincronizado com áudio e forma de onda, mostrando o momento atual da entrevista." width="900" height="560" />
         </figure>
         <div class="feature-body">
@@ -109,7 +119,7 @@ const bibtex = `@software{barbosa2026transcritorio,
         </div>
       </div>
 
-      <div class="feature-card reversed">
+      <div class="feature-card">
         <figure class="feature-img">
           <img src={`${BASE}/img/feature-merge-turns.png`} alt="Editor de turnos mostrando opções de juntar e dividir blocos da transcrição." width="900" height="560" />
         </figure>
@@ -119,7 +129,7 @@ const bibtex = `@software{barbosa2026transcritorio,
         </div>
       </div>
 
-      <div class="feature-card">
+      <div class="feature-card reversed">
         <figure class="feature-img">
           <img src={`${BASE}/img/feature-context-menu.png`} alt="Menu contextual da tabela de turnos com opções de edição avançada." width="900" height="560" />
         </figure>
@@ -140,8 +150,11 @@ const bibtex = `@software{barbosa2026transcritorio,
           <span class="step-num">1</span>
           <div class="step-body">
             <h3>Crie um projeto</h3>
-            <p>Escolha uma pasta onde os arquivos serão organizados. O Transcritório cria a estrutura de pastas para você.</p>
-            <img src={`${BASE}/img/step-1-new-project.png`} alt="Dialogo de criação de novo projeto." loading="lazy" />
+            <p>Escolha um nome para o projeto e uma pasta onde os arquivos serão organizados. O Transcritório cria a estrutura de pastas para você.</p>
+            <div class="step-img-grid">
+              <img src={`${BASE}/img/step-1-new-project.png`} alt="Dialogo de criação de novo projeto." loading="lazy" />
+              <img src={`${BASE}/img/step-2-project-name.png`} alt="Tela de escolha do nome do projeto." loading="lazy" />
+            </div>
           </div>
         </li>
         <li>
@@ -401,6 +414,21 @@ const bibtex = `@software{barbosa2026transcritorio,
     max-width: 100%;
     border-radius: var(--radius-card);
     border: 1px solid var(--border);
+  }
+  .step-img-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-m);
+    margin-top: var(--spacing-m);
+  }
+  .step-img-grid img {
+    margin-top: 0;
+    width: 100%;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 760px) {
+    .step-img-grid { grid-template-columns: 1fr; }
   }
 
   /* Install tabs */

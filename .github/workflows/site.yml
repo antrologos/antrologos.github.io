@@ -1,0 +1,87 @@
+name: Build and deploy site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site-src/**'
+      - '.github/workflows/site.yml'
+  repository_dispatch:
+    types: [transcritorio-release]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to pin (e.g. 0.1.2). Leave blank to fetch latest.'
+        required: false
+        default: ''
+
+concurrency:
+  group: site-deploy
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: site-src/package-lock.json
+
+      - name: Resolve Transcritorio version
+        id: ver
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          elif [ -n "${{ github.event.client_payload.version }}" ]; then
+            VERSION="${{ github.event.client_payload.version }}"
+          else
+            TAG=$(curl -fsSL https://api.github.com/repos/antrologos/Transcritorio/releases/latest | jq -r '.tag_name // empty')
+            if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
+              echo "Could not resolve latest tag; keeping current version.json"
+              VERSION=""
+            else
+              VERSION="${TAG#v}"
+            fi
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Update version.json
+        if: steps.ver.outputs.version != ''
+        run: |
+          printf '{"version":"%s"}\n' "${{ steps.ver.outputs.version }}" > site-src/src/data/version.json
+          cat site-src/src/data/version.json
+
+      - name: Install dependencies
+        working-directory: site-src
+        run: npm ci
+
+      - name: Build Astro
+        working-directory: site-src
+        run: npm run build
+
+      - name: Commit rebuilt site
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Transcritorio/ site-src/src/data/version.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            VER="${{ steps.ver.outputs.version }}"
+            if [ -n "$VER" ]; then
+              git commit -m "site: rebuild for v$VER"
+            else
+              git commit -m "site: rebuild"
+            fi
+            git push
+          fi

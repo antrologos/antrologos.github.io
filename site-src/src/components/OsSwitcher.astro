@@ -8,102 +8,206 @@ const isPt = lang === 'pt';
 const v = version.version;
 
 const releaseBase = `https://github.com/antrologos/Transcritorio/releases/download/v${v}`;
-const assets = {
-  win: { file: `Transcritorio-${v}-Setup.exe`, label: isPt ? 'Baixar para Windows' : 'Download for Windows' },
-  mac: { file: `Transcritorio.dmg`, label: isPt ? 'Baixar para macOS' : 'Download for macOS' },
-  linux: { file: `Transcritorio-x86_64.AppImage`, label: isPt ? 'Baixar AppImage (Linux)' : 'Download AppImage (Linux)' },
-};
-
 const allReleasesUrl = 'https://github.com/antrologos/Transcritorio/releases/latest';
-const otherLabel = isPt ? 'Outros sistemas' : 'Other systems';
-const allLabel = isPt ? 'Ver todas as versões no GitHub' : 'See all releases on GitHub';
+
+const cards = [
+  {
+    id: 'win',
+    label: 'Windows',
+    sublabel: isPt ? 'Windows 10/11 · 64-bit' : 'Windows 10/11 · 64-bit',
+    size: '596 MB',
+    file: `Transcritorio-${v}-Setup.exe`,
+    extraFile: `Transcritorio-${v}-Setup-1.bin`,
+    extra: isPt ? 'Baixe .exe + .bin na mesma pasta' : 'Download .exe + .bin into the same folder',
+    download: isPt ? 'Baixar para Windows' : 'Download for Windows',
+  },
+  {
+    id: 'mac',
+    label: 'macOS',
+    sublabel: isPt ? 'Apple Silicon (M1/M2/M3/M4)' : 'Apple Silicon (M1/M2/M3/M4)',
+    size: '499 MB',
+    file: 'Transcritorio.dmg',
+    extra: isPt ? 'Primeira vez: clique direito > Abrir' : 'First launch: right-click > Open',
+    download: isPt ? 'Baixar para macOS' : 'Download for macOS',
+  },
+  {
+    id: 'linux',
+    label: 'Linux',
+    sublabel: 'x86_64 · AppImage',
+    size: '717 MB',
+    file: 'Transcritorio-x86_64.AppImage',
+    extra: isPt ? 'chmod +x e rode' : 'chmod +x and run',
+    download: isPt ? 'Baixar AppImage' : 'Download AppImage',
+  },
+];
+
+const allLabel = isPt ? 'Ver todas as versões no GitHub →' : 'See all releases on GitHub →';
+const detectedLabel = isPt ? 'Seu sistema' : 'Your system';
 ---
 
-<div class="os-switcher">
-  <a id="dl-primary" class="btn btn-primary" href={allReleasesUrl}>
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-      <polyline points="7 10 12 15 17 10"></polyline>
-      <line x1="12" y1="15" x2="12" y2="3"></line>
-    </svg>
-    <span id="dl-primary-label">{isPt ? 'Baixar última versão' : 'Download latest'}</span>
-  </a>
-  <details class="dl-others">
-    <summary>{otherLabel}</summary>
-    <ul id="dl-list">
-      <li><a href={`${releaseBase}/${assets.win.file}`}>Windows (.exe + .bin)</a></li>
-      <li><a href={`${releaseBase}/${assets.mac.file}`}>macOS (.dmg)</a></li>
-      <li><a href={`${releaseBase}/${assets.linux.file}`}>Linux (.AppImage)</a></li>
-    </ul>
-  </details>
-  <a class="all-releases" href={allReleasesUrl}>{allLabel} →</a>
+<div class="os-cards" id="os-cards">
+  {cards.map((card) => (
+    <a
+      href={`${releaseBase}/${card.file}`}
+      class={`os-card os-card-${card.id}`}
+      data-os={card.id}
+      download
+    >
+      <div class="os-card-head">
+        <span class="os-icon os-icon-{card.id}" set:html={
+          card.id === 'win' ? `<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 3.5 9.75 2.1v9.4H0zm10.95-1.57L24 0v11.1H10.95zM0 12.6h9.75V22L0 20.59zm10.95 0H24V24l-13.05-1.9z"/></svg>`
+          : card.id === 'mac' ? `<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>`
+          : `<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489.07.488.295.96.658 1.32 1.048 1.02 2.27 1.48 3.603 1.608l.004-.014c.28-.008.568-.024.863-.055-.137.006-.275.012-.41.023 1.337-.131 2.587-.587 3.636-1.613 1.35-1.32 2.25-2.81 2.606-4.35.373-1.603.093-3.237-.8-4.567l-.068-.1C14.13 5.875 13.74 4.15 13.67 2.94c-.06-1.166.023-2.17.124-2.89.021-.02-.011-.032-.015-.041C13.68.003 13.592 0 13.503 0h-.999Z"/></svg>`
+        }></span>
+        <div class="os-title">
+          <h3>{card.label}</h3>
+          <span class="os-sublabel">{card.sublabel}</span>
+        </div>
+        <span class="os-badge-detected" aria-hidden="true">{detectedLabel}</span>
+      </div>
+      <div class="os-card-body">
+        <span class="os-size"><code>{card.size}</code></span>
+        <span class="os-extra">{card.extra}</span>
+      </div>
+      <div class="os-card-cta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span>{card.download}</span>
+      </div>
+    </a>
+  ))}
 </div>
+<a class="all-releases" href={allReleasesUrl}>{allLabel}</a>
 
-<script define:vars={{ v, assets, isPt }}>
+<script>
   (function () {
     const ua = navigator.userAgent.toLowerCase();
     const platform = (navigator.platform || '').toLowerCase();
-    let os = 'win';
+    let os: 'win' | 'mac' | 'linux' = 'win';
     if (/mac/i.test(platform) || /mac/i.test(ua)) os = 'mac';
     else if (/linux/i.test(platform) && !/android/i.test(ua)) os = 'linux';
     else if (/win/i.test(platform)) os = 'win';
 
-    const releaseBase = `https://github.com/antrologos/Transcritorio/releases/download/v${v}`;
-    const asset = assets[os];
-    const primary = document.getElementById('dl-primary');
-    const label = document.getElementById('dl-primary-label');
-    if (primary && asset) {
-      primary.href = `${releaseBase}/${asset.file}`;
-      if (label) label.textContent = asset.label;
-    }
-    // Esconde o link do SO detectado na lista de outros
-    const map = { win: 'Windows', mac: 'macOS', linux: 'Linux' };
-    const myLabel = map[os];
-    document.querySelectorAll('#dl-list li').forEach((li) => {
-      if (li.textContent && li.textContent.trim().startsWith(myLabel)) {
-        li.style.display = 'none';
-      }
+    const cards = document.querySelectorAll<HTMLElement>('.os-card');
+    cards.forEach((card) => {
+      if (card.dataset.os === os) card.classList.add('detected');
     });
   })();
 </script>
 
 <style>
-  .os-switcher {
+  .os-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-m);
+    margin-bottom: var(--spacing-m);
+  }
+  .os-card {
+    position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: var(--spacing-m);
-    align-items: flex-start;
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: var(--spacing-m);
+    text-decoration: none !important;
+    color: var(--text-primary) !important;
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    min-height: 170px;
   }
-  #dl-primary { min-width: 260px; justify-content: center; font-size: 16px; padding: 14px 24px; }
-  .dl-others {
-    font-size: 14px;
-    color: var(--text-muted);
+  .os-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(68, 215, 182, 0.25);
   }
-  .dl-others summary {
-    cursor: pointer;
-    color: var(--text-muted);
-    list-style: none;
+  .os-card.detected {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, rgba(68, 215, 182, 0.08), var(--bg-1) 70%);
   }
-  .dl-others summary::-webkit-details-marker { display: none; }
-  .dl-others summary::before {
-    content: '▸';
-    display: inline-block;
-    margin-right: 6px;
-    transition: transform 180ms;
+  .os-card-head {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-s);
   }
-  .dl-others[open] summary::before { transform: rotate(90deg); }
-  .dl-others ul {
-    list-style: none;
-    padding: 0;
-    margin: var(--spacing-s) 0 0;
+  .os-icon {
+    color: var(--accent);
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+  .os-title { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  .os-title h3 { font-size: 18px; font-weight: 600; margin: 0; }
+  .os-sublabel { font-size: 12px; color: var(--text-faint); }
+  .os-badge-detected {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: none;
+  }
+  .os-card.detected .os-badge-detected { display: inline-block; }
+  .os-card-body {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    font-size: 13px;
+    color: var(--text-muted);
   }
-  .dl-others a { font-family: var(--font-mono); font-size: 13px; }
+  .os-card-body code {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    background: var(--bg-2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    display: inline-block;
+    width: fit-content;
+  }
+  .os-extra { font-style: italic; color: var(--text-faint); font-size: 12px; }
+  .os-card-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px var(--spacing-m);
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-btn);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: all 160ms;
+  }
+  .os-card:hover .os-card-cta {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .os-card.detected .os-card-cta {
+    background: var(--accent);
+    color: var(--bg-0);
+    border-color: var(--accent);
+  }
+  .os-card.detected:hover .os-card-cta {
+    background: var(--accent-hi);
+    border-color: var(--accent-hi);
+    color: var(--bg-0);
+  }
   .all-releases {
+    display: inline-block;
     font-size: 13px;
     color: var(--text-faint);
+    margin-top: var(--spacing-s);
   }
   .all-releases:hover { color: var(--link); }
+  @media (max-width: 760px) {
+    .os-cards { grid-template-columns: 1fr; }
+  }
 </style>
