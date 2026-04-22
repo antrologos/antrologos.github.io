@@ -18,7 +18,7 @@ const cards = [
     size: '596 MB',
     file: `Transcritorio-${v}-Setup.exe`,
     extraFile: `Transcritorio-${v}-Setup-1.bin`,
-    extra: isPt ? 'Baixe .exe + .bin na mesma pasta' : 'Download .exe + .bin into the same folder',
+    extra: isPt ? 'Baixa 2 arquivos juntos (.exe + .bin)' : 'Downloads 2 files together (.exe + .bin)',
     download: isPt ? 'Baixar para Windows' : 'Download for Windows',
   },
   {
@@ -51,6 +51,8 @@ const detectedLabel = isPt ? 'Seu sistema' : 'Your system';
       href={`${releaseBase}/${card.file}`}
       class={`os-card os-card-${card.id}`}
       data-os={card.id}
+      data-extra-url={card.extraFile ? `${releaseBase}/${card.extraFile}` : undefined}
+      data-extra-name={card.extraFile}
       download
     >
       <div class="os-card-head">
@@ -94,6 +96,27 @@ const detectedLabel = isPt ? 'Seu sistema' : 'Your system';
     const cards = document.querySelectorAll<HTMLElement>('.os-card');
     cards.forEach((card) => {
       if (card.dataset.os === os) card.classList.add('detected');
+    });
+
+    // Windows card needs two files in same folder (Setup.exe + Setup-1.bin).
+    // Intercept click: let primary download proceed, then trigger the extra file.
+    document.querySelectorAll<HTMLAnchorElement>('.os-card-win').forEach((card) => {
+      card.addEventListener('click', (ev) => {
+        if (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.button !== 0) return;
+        const extraUrl = card.dataset.extraUrl;
+        const extraName = card.dataset.extraName;
+        if (!extraUrl) return;
+        window.setTimeout(() => {
+          const a = document.createElement('a');
+          a.href = extraUrl;
+          if (extraName) a.download = extraName;
+          else a.download = '';
+          a.rel = 'noopener';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        }, 900);
+      });
     });
   })();
 </script>
