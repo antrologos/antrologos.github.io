@@ -648,6 +648,50 @@ img {
     font-weight: 700;
 }
 
+/* Featured software card: full-width with embedded media (Dashboard preview) */
+.software-card--featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.software-card--featured .software-card__body {
+    display: flex;
+    flex-direction: column;
+}
+
+.software-card--featured .software-card__media {
+    display: block;
+    overflow: hidden;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-alt);
+    transition: transform 0.2s, border-color 0.2s;
+    line-height: 0;
+}
+
+.software-card--featured .software-card__media:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-accent);
+}
+
+.software-card--featured .software-card__media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 5/3;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .software-card--featured {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+}
+
 /* Teaching Section - Graduate Courses (B+C hybrid) */
 .teaching-intro {
     color: var(--color-text-light);
