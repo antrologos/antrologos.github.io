@@ -602,6 +602,242 @@ img {
     color: var(--color-text-light);
 }
 
+/* Teaching Section - Graduate Courses (B+C hybrid) */
+.teaching-intro {
+    color: var(--color-text-light);
+    margin-bottom: 1.5rem;
+    max-width: 58rem;
+}
+
+.teaching-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.teaching-card {
+    background: var(--color-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+}
+
+.teaching-card--seminar {
+    background: var(--color-bg-alt);
+}
+
+.teaching-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.teaching-header h3 {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    color: var(--color-primary);
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.teaching-step {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    align-self: flex-start;
+}
+
+.teaching-badge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    background: var(--color-accent);
+    color: #fff;
+    border-radius: 4px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+.teaching-badge--seminar {
+    background: var(--color-text-muted);
+}
+
+.teaching-card > p {
+    color: var(--color-text-light);
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin: 0 0 0.75rem 0;
+}
+
+.teaching-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.25rem 0 0.75rem 0;
+}
+
+.sem-pill {
+    font-family: ui-monospace, 'SF Mono', 'Menlo', monospace;
+    font-size: 0.78rem;
+    padding: 0.22rem 0.55rem;
+    border-radius: 6px;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    white-space: nowrap;
+}
+
+.teaching-card--seminar .sem-pill {
+    background: var(--color-bg);
+}
+
+a.sem-pill:hover {
+    background: var(--color-bg);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.sem-pill--current {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+}
+
+a.sem-pill--current:hover {
+    background: var(--color-primary-light);
+    border-color: var(--color-primary-light);
+    color: #fff;
+}
+
+.teaching-coteachers {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin: auto 0 0 0;
+    padding-top: 0.25rem;
+}
+
+/* Compact chronological list (details/summary) */
+.teaching-log {
+    margin: 0 0 2rem 0;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1rem;
+}
+
+.teaching-log > summary {
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--color-accent);
+    font-style: italic;
+    list-style: none;
+    padding: 0.25rem 0;
+}
+
+.teaching-log > summary::-webkit-details-marker {
+    display: none;
+}
+
+.teaching-log > summary::before {
+    content: "\25B8  ";
+    font-style: normal;
+    display: inline-block;
+    width: 1rem;
+    transition: transform 0.15s;
+}
+
+.teaching-log[open] > summary::before {
+    content: "\25BE  ";
+}
+
+.teaching-log > summary:hover {
+    color: var(--color-primary-light);
+}
+
+.teaching-list {
+    list-style: none;
+    padding: 0.75rem 0 0 0;
+    margin: 0;
+}
+
+.teaching-list li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.5rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px dotted var(--color-border);
+    line-height: 1.5;
+    font-size: 0.92rem;
+}
+
+.teaching-list li:last-child {
+    border-bottom: none;
+}
+
+.teaching-list__sem {
+    font-family: ui-monospace, 'SF Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--color-text-light);
+    min-width: 3.5rem;
+}
+
+.teaching-list a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--color-text-muted);
+}
+
+.teaching-list a:hover {
+    color: var(--color-accent);
+    border-bottom-color: var(--color-accent);
+}
+
+.teaching-list__cotaught {
+    color: var(--color-text-muted);
+    font-style: italic;
+    font-size: 0.85em;
+}
+
+.teaching-log__footer {
+    margin-top: 1rem;
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+}
+
+.teaching-log__footer a {
+    color: var(--color-accent);
+    font-weight: 500;
+}
+
+/* Teaching responsive */
+@media (max-width: 560px) {
+    .teaching-list li {
+        flex-direction: column;
+        gap: 0.1rem;
+    }
+    .teaching-list__sem {
+        min-width: 0;
+    }
+}
+
 /* Contact Section */
 .contact-grid {
     display: grid;
