@@ -24,9 +24,15 @@
                 <li><a href="#research">Research</a></li>
                 <li><a href="#publications">Publications</a></li>
                 <li class="nav-dropdown">
+                    <a href="#tools" class="nav-dropdown-toggle">Tools</a>
+                    <ul class="nav-dropdown-menu">
+                        <li><a href="https://antrologos.shinyapps.io/PNADCperiods-dashboard/" target="_blank">PNADCperiods Dashboard</a></li>
+                        <li><a href="https://antrologos.github.io/Transcritorio/">Transcritorio</a></li>
+                    </ul>
+                </li>
+                <li class="nav-dropdown">
                     <a href="#software" class="nav-dropdown-toggle">Software</a>
                     <ul class="nav-dropdown-menu">
-                        <li><a href="https://antrologos.github.io/Transcritorio/">Transcritorio</a></li>
                         <li><a href="https://antrologos.github.io/PNADCperiods/" target="_blank">PNADCperiods</a></li>
                         <li><a href="https://ipeagit.github.io/censobr/" target="_blank">censobr</a></li>
                         <li><a href="https://fsbmat-ufv.github.io/heckmanGE/" target="_blank">heckmanGE</a></li>
@@ -44,7 +50,7 @@
             <div class="hero-text">
                 <h1>Rogério Jerônimo Barbosa</h1>
                 <p class="hero-subtitle">Professor of Sociology</p>
-                <p class="hero-affiliation">Instituto de Estudos Sociais e Políticos (IESP-UERJ)</p>
+                <p class="hero-affiliation">Instituto de Estudos Sociais e Políticos (IESP-UERJ) &middot; Co-coordinator, <a href="https://ceres-iesp.uerj.br/" target="_blank">CERES</a></p>
                 <p class="hero-description">
                     I study <strong>income inequality</strong>, <strong>labor markets</strong>, and <strong>social stratification</strong> in Brazil.
                     My work combines sociological theory with quantitative methods to understand the mechanisms
@@ -141,6 +147,20 @@
                     </div>
                 </div>
 
+                <h3 class="subsection-title" id="research-center">Research Center</h3>
+                <div class="projects-list">
+                    <div class="project project--center">
+                        <a href="https://ceres-iesp.uerj.br/" target="_blank" class="project-logo-link" aria-label="Visit CERES website">
+                            <img src="assets/ceres-logo.svg" alt="CERES &mdash; Centro para o Estudo da Riqueza e da Estratifica&ccedil;&atilde;o Social" class="project-logo">
+                        </a>
+                        <div class="project-body">
+                            <h4><a href="https://ceres-iesp.uerj.br/" target="_blank">CERES &mdash; Center for the Study of Wealth and Social Stratification</a></h4>
+                            <p class="project-meta">IESP-UERJ &middot; Co-coordinator, with Carlos Antonio Costa Ribeiro</p>
+                            <p>CERES is the research hub I co-direct at IESP-UERJ, convening systematic work on stratification, mobility, inequality, wealth, poverty, and labor markets in Brazil. It hosts graduate seminars, produces the data infrastructure behind much of the research listed on this site, and is the institutional home of the Lego I&ndash;III methods sequence.</p>
+                        </div>
+                    </div>
+                </div>
+
                 <h3 class="subsection-title">Current Projects</h3>
                 <div class="projects-list">
                     <div class="project">
@@ -152,15 +172,6 @@
                         <h4>Armed Groups and Educational Inequality</h4>
                         <p class="project-meta">2023 - 2025 | UNICEF, Open Society Foundations</p>
                         <p>Examining how territorial control by armed groups (drug trafficking and militias) constrains educational opportunities in Rio de Janeiro.</p>
-                    </div>
-                </div>
-
-                <h3 class="subsection-title">Research Center</h3>
-                <div class="projects-list">
-                    <div class="project">
-                        <h4><a href="https://ceres-iesp.uerj.br/" target="_blank">CERES - Center for the Study of Wealth and Social Stratification</a></h4>
-                        <p class="project-meta">2020 - Present | IESP-UERJ | Co-coordinator</p>
-                        <p>I co-coordinate CERES with Carlos Antônio Costa Ribeiro. The center conducts systematic research on stratification, mobility, inequality, wealth, poverty, and labor markets in Brazil.</p>
                     </div>
                 </div>
             </div>
@@ -260,13 +271,26 @@
             </div>
         </section>
 
-        <section id="software" class="section section-alt">
+        <section id="tools" class="section">
             <div class="container">
-                <h2>Software</h2>
-                <p class="section-intro">Open-source tools for social research: R packages and a desktop transcription app.</p>
+                <h2>Tools</h2>
+                <p class="section-intro">Public-facing applications for researchers, journalists, and policy analysts &mdash; no coding required.</p>
 
                 <div class="software-grid">
-                    <div class="software-card">
+
+                    <article class="software-card tool-card tool-card--dashboard">
+                        <div class="software-header">
+                            <h3>PNADCperiods Dashboard</h3>
+                            <span class="software-badge" style="background: #2c5282;">Web App (Shiny)</span>
+                        </div>
+                        <p>Explore 86+ monthly Brazilian labor-market series &mdash; unemployment, wages, informality &mdash; by state, sex, and age, with interactive charts and CSV export. Built on top of the PNADCperiods R package, so you do not need to know R to use it.</p>
+                        <div class="software-links">
+                            <a href="https://antrologos.shinyapps.io/PNADCperiods-dashboard/" target="_blank" class="link-primary"><strong>Open Dashboard &rarr;</strong></a>
+                            <a href="https://github.com/antrologos/PNADCperiods-dashboard" target="_blank">GitHub</a>
+                        </div>
+                    </article>
+
+                    <article class="software-card tool-card">
                         <div class="software-header">
                             <h3>Transcritorio</h3>
                             <span class="software-badge" style="background: #2c5282;">Desktop App</span>
@@ -277,8 +301,18 @@
                             <a href="https://github.com/antrologos/Transcritorio/releases/tag/v0.1.0" target="_blank">Download</a>
                             <a href="https://github.com/antrologos/Transcritorio" target="_blank">GitHub</a>
                         </div>
-                    </div>
+                    </article>
 
+                </div>
+            </div>
+        </section>
+
+        <section id="software" class="section section-alt">
+            <div class="container">
+                <h2>Software</h2>
+                <p class="section-intro">Open-source R packages for quantitative social research.</p>
+
+                <div class="software-grid">
                     <div class="software-card">
                         <div class="software-header">
                             <h3>PNADCperiods</h3>

@@ -602,6 +602,52 @@ img {
     color: var(--color-text-light);
 }
 
+/* Research Center card with logo (CERES) */
+.project--center {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.project-logo-link {
+    display: block;
+    line-height: 0;
+}
+
+.project-logo {
+    width: 220px;
+    height: auto;
+    max-width: 100%;
+    transition: opacity 0.15s;
+}
+
+.project-logo-link:hover .project-logo {
+    opacity: 0.85;
+}
+
+.project-body h4 {
+    margin-top: 0;
+}
+
+@media (max-width: 640px) {
+    .project--center {
+        grid-template-columns: 1fr;
+    }
+    .project-logo {
+        width: 180px;
+    }
+}
+
+/* Tools section: primary link styling inside software-links */
+.software-links a.link-primary {
+    color: var(--color-accent);
+    font-weight: 600;
+}
+.software-links a.link-primary strong {
+    font-weight: 700;
+}
+
 /* Teaching Section - Graduate Courses (B+C hybrid) */
 .teaching-intro {
     color: var(--color-text-light);
