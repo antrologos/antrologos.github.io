@@ -1,10 +1,11 @@
 #!/usr/bin/env node
-// Updates site-src/src/data/version.json with the latest Transcritorio release tag,
-// or with the version passed as CLI argument.
+// Updates site-src/src/data/version.json with the latest Transcritorio
+// version on PyPI (the official channel since v0.2.0), or with the
+// version passed as CLI argument.
 //
 // Usage:
-//   npm run update-version            # fetches latest from GitHub API
-//   npm run update-version -- 0.1.2   # sets to 0.1.2 explicitly
+//   npm run update-version            # fetches latest from PyPI
+//   npm run update-version -- 0.2.1   # sets explicitly
 //   npm run release                   # updates version + rebuilds site
 
 import { writeFileSync, readFileSync } from 'node:fs';
@@ -15,12 +16,14 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const versionFile = resolve(__dirname, '..', 'src', 'data', 'version.json');
 
 async function fetchLatest() {
-  const url = 'https://api.github.com/repos/antrologos/Transcritorio/releases/latest';
+  // PyPI, not GitHub releases: releases/latest ignores prereleases and
+  // still points at the retired standalone channel (v0.1.8).
+  const url = 'https://pypi.org/pypi/transcritorio/json';
   const res = await fetch(url, { headers: { 'User-Agent': 'transcritorio-site-updater' } });
-  if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+  if (!res.ok) throw new Error(`PyPI API ${res.status}`);
   const data = await res.json();
-  if (!data.tag_name) throw new Error('No tag_name in response');
-  return data.tag_name.replace(/^v/, '');
+  if (!data.info || !data.info.version) throw new Error('No info.version in response');
+  return String(data.info.version);
 }
 
 async function main() {

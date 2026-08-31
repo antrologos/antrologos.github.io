@@ -7,9 +7,10 @@ import version from '../../data/version.json';
 const v = version.version;
 const BASE = import.meta.env.BASE_URL;
 
-// Beta of the new channel (uv/PyPI). Once v0.2.0 is on PyPI, replace the
-// commands below with: uv tool install transcritorio
-const betaWheel = 'https://github.com/antrologos/Transcritorio/releases/download/beta-0.2.0b2/transcritorio-0.2.0b2-py3-none-any.whl';
+// Official channel (v0.2+): PyPI + uv. Double-click installer for
+// users who avoid the terminal (asset from the latest GitHub release).
+const batInstaller = 'https://github.com/antrologos/Transcritorio/releases/latest/download/Instalar-Transcritorio.bat';
+const batUpdater = 'https://github.com/antrologos/Transcritorio/releases/latest/download/Atualizar-Transcritorio.bat';
 
 const title = 'Transcritório — Local interview transcription';
 const description = 'Free desktop app for automatic transcription and speaker separation in Brazilian Portuguese. Runs 100% on your machine — no cloud, no login, no subscription.';
@@ -38,6 +39,8 @@ const bibtex = `@software{barbosa2026transcritorio,
         <li><span class="pill-icon">🗣️</span> Automatic speaker separation</li>
         <li><span class="pill-icon">🇧🇷</span> Native Brazilian Portuguese</li>
         <li><span class="pill-icon">〰️</span> Waveform-synced editor</li>
+        <li><span class="pill-icon">✨</span> Summaries, name glossary and search — on-device AI</li>
+        <li><span class="pill-icon">🔍</span> Speaker changes verified against the audio</li>
         <li><span class="pill-icon">📄</span> Multi-format export</li>
         <li><span class="pill-icon">🆓</span> Free and open-source</li>
       </ul>
@@ -138,6 +141,18 @@ const bibtex = `@software{barbosa2026transcritorio,
           <p>Your transcript is organized into speaking turns with time and speaker metadata. Export to DOCX, MD, SRT, VTT, CSV, TSV or NVivo — and import straight into NVivo, Atlas.ti, MAXQDA, or an R/Python script.</p>
         </div>
       </div>
+
+      <div class="prose" style="margin-top: var(--spacing-xl);">
+        <h3>And version 0.2 added an entire analysis studio:</h3>
+        <ul>
+          <li><strong>✨ Summary with thematic index</strong> — the on-device AI reads your reviewed interview and returns a structured summary of the themes and where they appear. Nothing leaves your computer.</li>
+          <li><strong>✨ Name glossary + spelling review</strong> — the AI sweeps the entire project for people, places and institutions mentioned, groups spelling variants ("Joao", "João", "Jono") and opens a review where <em>you</em> decide, occurrence by occurrence — with the correct spelling editable and one click to hear the passage before deciding.</li>
+          <li><strong>✨ Ask your interviews</strong> — a plain-language question ("what do the interviewees say about school?") answered with quotes from the transcript, via local semantic search.</li>
+          <li><strong>🔍 Acoustic verification of speaker changes</strong> — after voice separation, the app checks every change against the audio itself and flags the doubtful ones at the exact spot, with direct navigation between flags.</li>
+          <li><strong>Two transcription engines</strong> — Whisper (the default, in the right variant for your machine) and NVIDIA's Parakeet pt-BR "TAGARELA" (experimental, remarkably fast even without a graphics card). Recordings in 16 other languages transcribe too, with word-level timestamps.</li>
+          <li><strong>Documents tab</strong> — everything the app produces (final transcript, subtitles, summary, glossary, earlier versions) in a single tab, with dates and an open button. No more hunting through folders.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -185,23 +200,25 @@ const bibtex = `@software{barbosa2026transcritorio,
   <section id="install" class="install-section">
     <div class="container">
       <h2>Installing on your system</h2>
-      <p><strong>New install format (beta 0.2.0b2).</strong> The old installers (.exe/.dmg/AppImage) were discontinued: without commercial code signing they were blocked by antivirus software on many machines. Transcritório now installs from the terminal in a few commands, with no security warnings and no admin password. Once version 0.2.0 is published, the install command becomes simply <code>uv tool install transcritorio</code>.</p>
+      <p>The old installers (.exe/.dmg/AppImage) were discontinued: without commercial code signing they were blocked by antivirus software on many machines. The current format uses only components signed by their official distributors (Microsoft, Astral, PyPI) — no security warnings and no admin password.</p>
       <div class="install-tabs">
         <details class="install-tab" open>
           <summary>🪟 Windows 10/11</summary>
+          <p><strong>No terminal (recommended):</strong> download <a href={batInstaller}><strong>Instalar-Transcritorio.bat</strong></a> and double-click it. It installs everything on its own, shows progress and opens the program when done — if Windows asks "Do you want to run this file?", confirm (the script is public and auditable; it only installs from official sources). To update later: <a href={batUpdater}>Atualizar-Transcritorio.bat</a>.</p>
+          <p>Or, from the <strong>Command Prompt</strong> (Start menu → type <code>cmd</code> → Enter):</p>
           <ol>
-            <li>Open <strong>Command Prompt</strong> (Start menu → type <code>cmd</code> → Enter) and install the base tools: <code>winget install astral-sh.uv</code> then <code>winget install Gyan.FFmpeg</code>.</li>
-            <li>Close and reopen Command Prompt, then install Transcritório: <code>uv tool install "transcritorio @ {betaWheel}"</code></li>
+            <li>Install the base tools: <code>winget install astral-sh.uv</code> then <code>winget install Gyan.FFmpeg</code>.</li>
+            <li>Close and reopen Command Prompt, then install Transcritório: <code>uv tool install transcritorio</code></li>
             <li>Open it with the <code>transcritorio</code> command — a desktop shortcut is created on first run.</li>
-            <li><strong>Optional (NVIDIA GPU):</strong> for up to 9× faster transcription, also run <code>uv tool install --reinstall "transcritorio[cuda] @ {betaWheel}" --with torch==2.8.0+cu128 --with torchaudio==2.8.0+cu128 --with torchvision==0.23.0+cu128 --index https://download.pytorch.org/whl/cu128 --index-strategy unsafe-best-match</code> (~2.5&nbsp;GB download).</li>
+            <li><strong>Optional (NVIDIA GPU):</strong> for up to 9× faster transcription, use the app menu <strong>Tools → Install NVIDIA acceleration (CUDA)…</strong>, which shows the ready-to-run command (~2.5&nbsp;GB download).</li>
           </ol>
         </details>
         <details class="install-tab">
           <summary>🍎 macOS</summary>
           <ol>
             <li>In <strong>Terminal</strong> (with <a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a>): <code>brew install uv ffmpeg</code></li>
-            <li>Install Transcritório: <code>uv tool install "transcritorio @ {betaWheel}"</code></li>
-            <li><strong>Apple Silicon (M1/M2/M3/M4):</strong> use <code>uv tool install "transcritorio[mac] @ {betaWheel}"</code> to transcribe with Metal acceleration (a <code>Motor: MLX (Metal)</code> badge appears in the project header).</li>
+            <li>Install Transcritório: <code>uv tool install transcritorio</code></li>
+            <li><strong>Apple Silicon (M1/M2/M3/M4):</strong> use <code>uv tool install "transcritorio[mac]"</code> to transcribe with Metal acceleration (look for the <code>Motor: MLX (Metal)</code> badge).</li>
             <li>Open it with the <code>transcritorio</code> command. <strong>No Gatekeeper:</strong> there is no app bundle to "authorize" — the program runs in your user profile.</li>
           </ol>
         </details>
@@ -209,45 +226,46 @@ const bibtex = `@software{barbosa2026transcritorio,
           <summary>🐧 Linux</summary>
           <ol>
             <li>In the terminal: <code>curl -LsSf https://astral.sh/uv/install.sh | sh</code> and <code>sudo apt install ffmpeg</code> (Ubuntu/Debian; use your distro's package manager).</li>
-            <li>Close and reopen the terminal, then install: <code>uv tool install "transcritorio @ {betaWheel}"</code></li>
+            <li>Close and reopen the terminal, then install: <code>uv tool install transcritorio</code></li>
             <li>Open it with the <code>transcritorio</code> command.</li>
-            <li><strong>Optional (NVIDIA GPU):</strong> same acceleration command as the Windows tab (~2.5&nbsp;GB download).</li>
+            <li><strong>Optional (NVIDIA GPU):</strong> use the app menu <strong>Tools → Install NVIDIA acceleration (CUDA)…</strong> (~2.5&nbsp;GB download).</li>
           </ol>
         </details>
       </div>
-      <p class="install-note">Primary support: Windows 10/11. macOS and Linux are in beta. To update later: <code>uv tool upgrade transcritorio</code>. To uninstall: <code>uv tool uninstall transcritorio</code> — projects and transcripts remain untouched.</p>
+      <p class="install-note">Primary support: Windows 10/11. macOS and Linux install through the same channel but have not yet been field-tested — if anything fails, <a href="https://github.com/antrologos/Transcritorio/issues" target="_blank" rel="noopener">open an issue</a>. To update later: <code>uv tool upgrade transcritorio</code> (or Atualizar-Transcritorio.bat). To uninstall: <code>uv tool uninstall transcritorio</code> — projects and transcripts remain untouched.</p>
     </div>
   </section>
 
   <section id="requirements" class="req-section">
     <div class="container">
-      <h2>System requirements</h2>
+      <h2>Requirements, by install profile</h2>
+      <p style="text-align: center; color: var(--text-muted); max-width: 640px; margin: 0 auto var(--spacing-xl);">The first-run wizard examines your machine and suggests the right profile — nothing is forced on you. Measured numbers; times on an 8-core CPU (on 4 cores, expect roughly double).</p>
       <div class="req-grid">
         <div class="req-card">
-          <span class="req-tier">Minimum</span>
+          <span class="req-tier">Essential</span>
           <ul>
-            <li><strong>CPU:</strong> 4 cores</li>
-            <li><strong>RAM:</strong> 8 GB</li>
-            <li><strong>Disk:</strong> 5 GB free</li>
-            <li class="req-note">Works — 1h of audio takes ~40–60 min.</li>
+            <li><strong>Transcription only</strong> (compact model)</li>
+            <li><strong>Machine:</strong> 2+ cores, 4 GB RAM</li>
+            <li><strong>Disk:</strong> ~3.5 GB</li>
+            <li class="req-note">1h of audio ≈ 1h of processing — or minutes with the TAGARELA engine (experimental, fast even without a graphics card).</li>
           </ul>
         </div>
         <div class="req-card recommended">
-          <span class="req-tier">Recommended</span>
+          <span class="req-tier">Standard</span>
           <ul>
-            <li><strong>CPU:</strong> 8 cores</li>
-            <li><strong>RAM:</strong> 16 GB</li>
-            <li><strong>Disk:</strong> 10 GB free</li>
-            <li class="req-note">1h of audio in ~20–30 min.</li>
+            <li><strong>+ speaker separation</strong> and word-level timestamps</li>
+            <li><strong>Machine:</strong> 4+ cores, 8 GB RAM</li>
+            <li><strong>Disk:</strong> ~5 GB (CPU) / ~10 GB (with NVIDIA GPU)</li>
+            <li class="req-note">1h of audio ≈ 1–1.5h on CPU; ~5–10 min with a 4 GB+ NVIDIA GPU (or Apple Silicon).</li>
           </ul>
         </div>
         <div class="req-card">
-          <span class="req-tier">Ideal</span>
+          <span class="req-tier">Full</span>
           <ul>
-            <li><strong>CPU:</strong> 8+ cores</li>
-            <li><strong>RAM:</strong> 16 GB or more</li>
-            <li><strong>GPU:</strong> NVIDIA 6 GB+ VRAM (or Apple Silicon)</li>
-            <li class="req-note">1h of audio in 5–10 min.</li>
+            <li><strong>+ on-device AI analysis</strong> (summary, glossary, ask)</li>
+            <li><strong>Machine:</strong> NVIDIA GPU 6 GB+ VRAM, 16 GB RAM</li>
+            <li><strong>Disk:</strong> ~19 GB</li>
+            <li class="req-note">1h of audio in 5–10 min; analyses in seconds to minutes.</li>
           </ul>
         </div>
       </div>
@@ -258,18 +276,29 @@ const bibtex = `@software{barbosa2026transcritorio,
     <div class="container">
       <details class="ai-details">
         <summary><h2>The AI behind it</h2><span class="ai-hint">(technical details)</span></summary>
+        <div class="prose" style="margin-bottom: var(--spacing-l);">
+          <p>When you click <strong>Transcribe</strong>, a multi-stage pipeline runs entirely on your computer: <strong>FFmpeg</strong> prepares the audio (16 kHz, mono); the transcription engine turns speech into text with word-by-word timing; <strong>pyannote</strong> works out who speaks in each segment; Transcritório's own <strong>acoustic verification</strong> compares every speaker change against the audio itself and flags the doubtful ones; and the text becomes editable blocks in the Studio. The analyses (✨) use a second brain, also local. Every piece below was chosen through comparative tests on real interviews — and the whole set is watched over by more than a hundred automated tests.</p>
+        </div>
         <div class="ai-grid">
           <div class="ai-block">
-            <h3>Whisper (OpenAI, 2022)</h3>
-            <p>Speech recognition model trained on 680k hours of multilingual audio, including large amounts of Portuguese. Transcritório uses the <code>large-v3</code> variant by default, delivering high accuracy even on noisy audio or regional accents. Runs locally via <code>faster-whisper</code>.</p>
+            <h3>Whisper (OpenAI) via WhisperX and faster-whisper</h3>
+            <p>Transcription model trained on 680k hours of multilingual audio, with plenty of Portuguese. Transcritório picks the right variant for your machine — <code>large-v3</code>/<code>turbo</code> with a GPU, <code>small</code> on CPU — and runs it via <code>faster-whisper</code> (CTranslate2), with <code>WhisperX</code>'s word-by-word alignment. On Apple Silicon, the same Whisper runs on Metal via <code>mlx-whisper</code>.</p>
           </div>
           <div class="ai-block">
-            <h3>pyannote.audio (Bredin et al., 2020)</h3>
-            <p>Library handling automatic speaker separation — identifying who spoke when. Uses neural networks to cluster similar voices across the interview. Works well even with 6–8 distinct participants, and also runs offline.</p>
+            <h3>Parakeet pt-BR "TAGARELA" (NVIDIA)</h3>
+            <p>Alternative (experimental) engine trained specifically for Brazilian Portuguese. Running via <code>onnx-asr</code>, it transcribes ~25× faster than real time <em>even without a graphics card</em> — one hour of interview in a few minutes on an ordinary laptop.</p>
           </div>
           <div class="ai-block">
-            <h3>Local processing</h3>
-            <p>Both Whisper and pyannote run entirely on your computer via PyTorch. No audio, text, or metadata ever leaves your machine. First launch downloads model weights (~3 GB); after that, the app runs without an internet connection.</p>
+            <h3>pyannote.audio (speaker separation)</h3>
+            <p>Neural networks that cluster similar voices across the interview to say who spoke in each segment — solid up to 6–8 participants. On top of it, Transcritório's acoustic verification compares the voices on both sides of every change and flags suspicious ones with 🔍, at the exact spot in the audio.</p>
+          </div>
+          <div class="ai-block">
+            <h3>Qwen and GLiNER (local analysis ✨)</h3>
+            <p>The summary with thematic index, "Ask your interviews" and meaning-based search use a <code>Qwen</code> language model running in a dedicated environment inside the app; the name glossary uses <code>GLiNER</code>, specialized in finding people, places and institutions in text. All offline — your interviews never become anyone's "training data".</p>
+          </div>
+          <div class="ai-block">
+            <h3>100% local processing</h3>
+            <p>The whole stack runs on <code>PyTorch</code>, with a <code>Qt</code> interface and installation managed by <code>uv</code>. No audio, text, or metadata ever leaves your machine. First use downloads the models for your chosen profile (once); after that, the app works without the internet.</p>
           </div>
         </div>
       </details>
@@ -279,7 +308,7 @@ const bibtex = `@software{barbosa2026transcritorio,
   <section id="faq" class="faq-section">
     <div class="container prose">
       <h2>Frequently asked questions</h2>
-      <details><summary>Do I need the internet to use it?</summary><p>Only for installation and first launch, to download the program and the AI models (about 3 GB; ~5 GB if you enable speaker separation). After that, Transcritório works fully offline — no audio ever leaves your machine.</p></details>
+      <details><summary>Do I need the internet to use it?</summary><p>Only for installation and first use, to download the program (~2.5 GB) and the models for your chosen profile (from ~1 GB on Essential to ~2.5 GB on Standard; the Full profile's AI analysis adds another ~9 GB). After that, Transcritório works fully offline — no audio ever leaves your machine.</p></details>
       <details><summary>How accurate is the transcription?</summary><p>On clean Brazilian Portuguese audio, accuracy ranges from 90% to 96% of words correct. Human review remains recommended, especially for technical terms, proper names and noisy passages.</p></details>
       <details><summary>What about interviews with strong regional accents?</summary><p>Whisper large-v3 was trained with wide dialectal variation in Portuguese and handles Brazilian regional accents well. Accuracy drops are usually small (2–4 percentage points) compared to standard Sao Paulo/Rio speech.</p></details>
       <details><summary>My institution's IT blocks software installs. What do I do?</summary><p>Installation does not require admin privileges: <code>uv</code> installs Transcritório inside your user profile, and there is no downloaded executable — precisely what used to trigger antivirus blocks in the old format. If something is still blocked, request an IT exception citing the MIT license and public GitHub repo.</p></details>
@@ -289,7 +318,7 @@ const bibtex = `@software{barbosa2026transcritorio,
         <pre><code>{bibtex}</code></pre>
       </details>
       <details><summary>Do I need a Hugging Face token for the models?</summary><p>Only if you want automatic speaker separation: the pyannote model requires accepting its terms on the Hugging Face website (free), and the first-run wizard walks you through it. For transcription only, no account or token is needed — pick "transcribe only" in the wizard.</p></details>
-      <details><summary>Does it work with interviews in other languages?</summary><p>Yes. Whisper supports 90+ languages. Transcritório focuses on Brazilian Portuguese, but Spanish, English, French and others can be selected.</p></details>
+      <details><summary>Does it work with interviews in other languages?</summary><p>Yes. The focus is Brazilian Portuguese, but Transcritório transcribes 16 other languages with word-level timestamps (Spanish, English, French, German, Italian and more — each language downloads its own alignment pack), plus dozens of additional languages without word timestamps. The language is chosen per file, in the Properties tab.</p></details>
       <details><summary>Can I transcribe focus groups with many participants?</summary><p>Yes, up to about 8 speakers with good results. When transcribing, pick the "Focus group" preset when the app asks how many people speak; in review, each voice gets a color, and the "Whose voice is this?" dialog plays samples of each participant so you can name them. Beyond ~8 voices, separation starts mixing similar voices — review labels in the editor.</p></details>
       <details><summary>Is the code really open? Can I audit it?</summary><p>Yes. All source code is published on <a href="https://github.com/antrologos/Transcritorio" target="_blank" rel="noopener">GitHub under MIT license</a>. Anyone can read, modify, redistribute and verify the app's behavior.</p></details>
     </div>

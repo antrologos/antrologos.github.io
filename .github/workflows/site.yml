@@ -45,12 +45,13 @@ jobs:
           elif [ -n "${{ github.event.client_payload.version }}" ]; then
             VERSION="${{ github.event.client_payload.version }}"
           else
-            TAG=$(curl -fsSL https://api.github.com/repos/antrologos/Transcritorio/releases/latest | jq -r '.tag_name // empty')
-            if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
-              echo "Could not resolve latest tag; keeping current version.json"
+            # PyPI e o canal oficial desde a v0.2.0. A API releases/latest
+            # do GitHub ignorava prereleases e regredia o site para o
+            # v0.1.8 do canal standalone aposentado.
+            VERSION=$(curl -fsSL https://pypi.org/pypi/transcritorio/json | jq -r '.info.version // empty')
+            if [ -z "$VERSION" ] || [ "$VERSION" = "null" ]; then
+              echo "Could not resolve PyPI version; keeping current version.json"
               VERSION=""
-            else
-              VERSION="${TAG#v}"
             fi
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"

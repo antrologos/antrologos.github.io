@@ -5,25 +5,28 @@ interface Props {
 const { lang } = Astro.props;
 const isPt = lang === 'pt';
 
-const allReleasesUrl = 'https://github.com/antrologos/Transcritorio/releases';
+const allReleasesUrl = 'https://pypi.org/project/transcritorio/';
 
-// Canal de instalacao atual: pacote Python via uv (o instalador .exe/.dmg/
-// AppImage foi descontinuado — bloqueios de antivirus sem assinatura de
-// codigo). Os cartoes levam as instrucoes por sistema na propria pagina.
+// Canal oficial (v0.2+): pacote Python no PyPI, instalado via uv (o
+// instalador .exe/.dmg/AppImage foi descontinuado — bloqueios de
+// antivirus sem assinatura de codigo). Os cartoes levam as instrucoes
+// por sistema na propria pagina; no Windows ha instalador de 1 clique.
+import version from '../data/version.json';
+const v = `v${version.version}`;
 const cards = [
   {
     id: 'win',
     label: 'Windows',
     sublabel: isPt ? 'Windows 10/11 · 64-bit' : 'Windows 10/11 · 64-bit',
-    size: isPt ? 'beta 0.2.0b2' : 'beta 0.2.0b2',
-    extra: isPt ? '3 comandos no Prompt de Comando' : '3 commands in Command Prompt',
+    size: v,
+    extra: isPt ? 'Instalador de 1 clique (ou 3 comandos)' : 'One-click installer (or 3 commands)',
     download: isPt ? 'Como instalar no Windows' : 'How to install on Windows',
   },
   {
     id: 'mac',
     label: 'macOS',
     sublabel: isPt ? 'Apple Silicon e Intel' : 'Apple Silicon and Intel',
-    size: isPt ? 'beta 0.2.0b2' : 'beta 0.2.0b2',
+    size: v,
     extra: isPt ? 'Via Homebrew — sem Gatekeeper' : 'Via Homebrew — no Gatekeeper',
     download: isPt ? 'Como instalar no macOS' : 'How to install on macOS',
   },
@@ -31,13 +34,13 @@ const cards = [
     id: 'linux',
     label: 'Linux',
     sublabel: 'x86_64',
-    size: isPt ? 'beta 0.2.0b2' : 'beta 0.2.0b2',
+    size: v,
     extra: isPt ? '3 comandos no terminal' : '3 commands in the terminal',
     download: isPt ? 'Como instalar no Linux' : 'How to install on Linux',
   },
 ];
 
-const allLabel = isPt ? 'Ver todas as versões no GitHub →' : 'See all releases on GitHub →';
+const allLabel = isPt ? 'Ver o pacote no PyPI →' : 'See the package on PyPI →';
 const detectedLabel = isPt ? 'Seu sistema' : 'Your system';
 ---
 
