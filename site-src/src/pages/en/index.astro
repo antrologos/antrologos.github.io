@@ -149,7 +149,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           <li><strong>✨ Name glossary + spelling review</strong> — the AI sweeps the entire project for people, places and institutions mentioned, groups spelling variants ("Joao", "João", "Jono") and opens a review where <em>you</em> decide, occurrence by occurrence — with the correct spelling editable and one click to hear the passage before deciding.</li>
           <li><strong>✨ Ask your interviews</strong> — a plain-language question ("what do the interviewees say about school?") answered with quotes from the transcript, via local semantic search.</li>
           <li><strong>🔍 Acoustic verification of speaker changes</strong> — after voice separation, the app checks every change against the audio itself and flags the doubtful ones at the exact spot, with direct navigation between flags.</li>
-          <li><strong>Two transcription engines</strong> — Whisper (the default, in the right variant for your machine) and NVIDIA's Parakeet pt-BR "TAGARELA" (experimental, remarkably fast even without a graphics card). Recordings in 15 other languages transcribe too, with word-level timestamps (16 alignment packs, including Portuguese).</li>
+          <li><strong>Two transcription engines</strong> — Whisper (the default on machines with a GPU) and NVIDIA's Parakeet pt-BR "TAGARELA" (experimental; the default on machines without a graphics card — one hour of audio in a few minutes, CPU only). Recordings in 15 other languages transcribe too, with word-level timestamps (16 alignment packs, including Portuguese).</li>
           <li><strong>Documents tab</strong> — everything the app produces (final transcript, subtitles, summary, glossary, earlier versions) in a single tab, with dates and an open button. No more hunting through folders.</li>
         </ul>
       </div>
@@ -183,7 +183,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           <span class="step-num">3</span>
           <div class="step-body">
             <h3>Click transcribe</h3>
-            <p>Transcritório asks how many people speak (one-on-one interview? focus group?) and does the rest. Times are in the requirement cards below: minutes with a GPU (or with the TAGARELA engine on CPU); about the audio's own length with Whisper on CPU.</p>
+            <p>Transcritório asks how many people speak (one-on-one interview? focus group?) and does the rest. Times are in the requirement cards below: minutes with a GPU or with the TAGARELA engine (the default without a graphics card); about the audio's own length if you pick Whisper on CPU.</p>
           </div>
         </li>
         <li>
@@ -246,8 +246,8 @@ const bibtex = `@software{barbosa2026transcritorio,
           <ul>
             <li><strong>Transcription only</strong> (compact model)</li>
             <li><strong>Machine:</strong> 2+ cores, 4 GB RAM</li>
-            <li><strong>Disk:</strong> ~3.5 GB</li>
-            <li class="req-note">1h of audio ≈ 1h of processing — or minutes with the TAGARELA engine (experimental, fast even without a graphics card).</li>
+            <li><strong>Disk:</strong> ~6 GB</li>
+            <li class="req-note">1h of audio in a few minutes with the TAGARELA engine (the default without a graphics card); ~1h if you pick Whisper instead.</li>
           </ul>
         </div>
         <div class="req-card recommended">
@@ -255,8 +255,8 @@ const bibtex = `@software{barbosa2026transcritorio,
           <ul>
             <li><strong>+ speaker separation</strong> and word-level timestamps</li>
             <li><strong>Machine:</strong> 4+ cores, 8 GB RAM</li>
-            <li><strong>Disk:</strong> ~5 GB (CPU) / ~10 GB (with NVIDIA GPU)</li>
-            <li class="req-note">1h of audio ≈ 1–1.5h on CPU; ~5–10 min with a 4 GB+ NVIDIA GPU (or Apple Silicon).</li>
+            <li><strong>Disk:</strong> ~7.5 GB (CPU) / ~10 GB (with NVIDIA GPU)</li>
+            <li class="req-note">Transcription in minutes (TAGARELA); with speaker separation, ~1h on CPU; ~5–10 min total with a 4 GB+ NVIDIA GPU (or Apple Silicon).</li>
           </ul>
         </div>
         <div class="req-card">
@@ -286,7 +286,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           </div>
           <div class="ai-block">
             <h3>Parakeet pt-BR "TAGARELA" (NVIDIA)</h3>
-            <p>Alternative (experimental) engine trained specifically for Brazilian Portuguese. Running via <code>onnx-asr</code>, it transcribes 13× to 25× faster than real time <em>even without a graphics card</em> — one hour of interview in a few minutes on an ordinary laptop.</p>
+            <p>An (experimental) engine trained specifically for Brazilian Portuguese — and, since v0.2.2, <strong>the default on machines without a graphics card</strong>. Running via <code>onnx-asr</code>, it transcribes 13× to 25× faster than real time <em>even without a graphics card</em> — one hour of interview in a few minutes on an ordinary laptop, with native word-level timestamps.</p>
           </div>
           <div class="ai-block">
             <h3>pyannote.audio (speaker separation)</h3>
@@ -308,7 +308,7 @@ const bibtex = `@software{barbosa2026transcritorio,
   <section id="faq" class="faq-section">
     <div class="container prose">
       <h2>Frequently asked questions</h2>
-      <details><summary>Do I need the internet to use it?</summary><p>Only for installation and first use, to download the program (~2.5 GB) and the models for your chosen profile (from ~1 GB on Essential to ~2.5 GB on Standard; the Full profile's AI analysis adds another ~10 GB). After that, Transcritório works fully offline — no audio ever leaves your machine.</p></details>
+      <details><summary>Do I need the internet to use it?</summary><p>Only for installation and first use, to download the program (~2.5 GB) and the models for your chosen profile (from ~3.5 GB on Essential to ~5 GB on Standard; the Full profile's AI analysis adds another ~10 GB). After that, Transcritório works fully offline — no audio ever leaves your machine.</p></details>
       <details><summary>How accurate is the transcription?</summary><p>On clean Brazilian Portuguese audio, accuracy ranges from 90% to 96% of words correct. Human review remains recommended, especially for technical terms, proper names and noisy passages.</p></details>
       <details><summary>What about interviews with strong regional accents?</summary><p>Whisper large-v3 was trained with wide dialectal variation in Portuguese and handles Brazilian regional accents well. Accuracy drops are usually small (2–4 percentage points) compared to standard Sao Paulo/Rio speech.</p></details>
       <details><summary>My institution's IT blocks software installs. What do I do?</summary><p>Installation does not require admin privileges: <code>uv</code> installs Transcritório inside your user profile, and there is no downloaded executable — precisely what used to trigger antivirus blocks in the old format. If something is still blocked, request an IT exception citing the MIT license and public GitHub repo.</p></details>

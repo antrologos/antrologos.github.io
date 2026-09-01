@@ -153,7 +153,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           <li><strong>✨ Glossário de nomes + revisão de grafias</strong> — a AI varre o projeto inteiro atrás de pessoas, lugares e instituições citadas, agrupa as variações de grafia ("Joao", "João", "Jono") e abre uma revisão em que <em>você</em> decide, ocorrência por ocorrência — com a grafia certa editável e um clique para ouvir o trecho antes de decidir.</li>
           <li><strong>✨ Perguntar às entrevistas</strong> — uma pergunta em português ("o que os entrevistados dizem sobre a escola?") respondida com citações dos trechos, por busca semântica local.</li>
           <li><strong>🔍 Verificação acústica das trocas de falante</strong> — depois da separação de vozes, o app confere cada troca contra o próprio áudio e marca as duvidosas no ponto exato, com navegação direta entre as marcações.</li>
-          <li><strong>Dois motores de transcrição</strong> — Whisper (o padrão, na variante certa para a sua máquina) e o Parakeet pt-BR "TAGARELA" (experimental, da NVIDIA, muito rápido mesmo sem placa de vídeo). Gravações em 15 outros idiomas também transcrevem com tempos por palavra (16 pacotes de alinhamento, incluindo o português).</li>
+          <li><strong>Dois motores de transcrição</strong> — Whisper (o padrão em máquinas com GPU) e o Parakeet pt-BR "TAGARELA" (experimental, da NVIDIA; o padrão em máquinas sem placa de vídeo — 1h de áudio em poucos minutos, só no processador). Gravações em 15 outros idiomas também transcrevem com tempos por palavra (16 pacotes de alinhamento, incluindo o português).</li>
           <li><strong>Aba Documentos</strong> — tudo que o app produz (transcrição final, legendas, resumo, glossário, versões anteriores) numa aba só, com data e botão de abrir. Chega de caçar arquivo em pasta.</li>
         </ul>
       </div>
@@ -188,7 +188,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           <span class="step-num">3</span>
           <div class="step-body">
             <h3>Clique em transcrever</h3>
-            <p>O Transcritório pergunta quantas pessoas falam (entrevista a dois? grupo focal?) e faz o resto. Os tempos estão nos cartões de requisitos abaixo: minutos com GPU (ou com o motor TAGARELA em CPU); cerca da própria duração do áudio no Whisper em CPU.</p>
+            <p>O Transcritório pergunta quantas pessoas falam (entrevista a dois? grupo focal?) e faz o resto. Os tempos estão nos cartões de requisitos abaixo: minutos com GPU ou com o motor TAGARELA (o padrão sem placa de vídeo); cerca da própria duração do áudio se optar pelo Whisper em CPU.</p>
           </div>
         </li>
         <li>
@@ -253,8 +253,8 @@ const bibtex = `@software{barbosa2026transcritorio,
           <ul>
             <li><strong>Só transcrever</strong> (modelo compacto)</li>
             <li><strong>Máquina:</strong> 2+ núcleos, 4 GB RAM</li>
-            <li><strong>Disco:</strong> ~3,5 GB</li>
-            <li class="req-note">1h de áudio ≈ 1h de processamento — ou minutos com o motor TAGARELA (experimental, rápido até sem placa de vídeo).</li>
+            <li><strong>Disco:</strong> ~6 GB</li>
+            <li class="req-note">1h de áudio em poucos minutos com o motor TAGARELA (o padrão sem placa de vídeo); ~1h se optar pelo Whisper.</li>
           </ul>
         </div>
         <div class="req-card recommended">
@@ -262,8 +262,8 @@ const bibtex = `@software{barbosa2026transcritorio,
           <ul>
             <li><strong>+ separação de falantes</strong> e tempos por palavra</li>
             <li><strong>Máquina:</strong> 4+ núcleos, 8 GB RAM</li>
-            <li><strong>Disco:</strong> ~5 GB (CPU) / ~10 GB (com GPU NVIDIA)</li>
-            <li class="req-note">1h de áudio ≈ 1–1,5h em CPU; ~5–10 min com GPU NVIDIA de 4 GB+ (ou Apple Silicon).</li>
+            <li><strong>Disco:</strong> ~7,5 GB (CPU) / ~10 GB (com GPU NVIDIA)</li>
+            <li class="req-note">Transcrição em minutos (TAGARELA); com a separação de falantes, ~1h em CPU; ~5–10 min no total com GPU NVIDIA de 4 GB+ (ou Apple Silicon).</li>
           </ul>
         </div>
         <div class="req-card">
@@ -294,7 +294,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           </div>
           <div class="ai-block">
             <h3>Parakeet pt-BR "TAGARELA" (NVIDIA)</h3>
-            <p>Motor alternativo (experimental) treinado especificamente para o português brasileiro. Rodando via <code>onnx-asr</code>, transcreve de 13× a 25× mais rápido que o tempo real <em>mesmo sem placa de vídeo</em> — 1 hora de entrevista em poucos minutos num notebook comum.</p>
+            <p>Motor (experimental) treinado especificamente para o português brasileiro — e, desde a v0.2.2, <strong>o padrão em máquinas sem placa de vídeo</strong>. Rodando via <code>onnx-asr</code>, transcreve de 13× a 25× mais rápido que o tempo real <em>mesmo sem placa de vídeo</em> — 1 hora de entrevista em poucos minutos num notebook comum, com tempos por palavra nativos.</p>
           </div>
           <div class="ai-block">
             <h3>pyannote.audio (separação de falantes)</h3>
@@ -317,7 +317,7 @@ const bibtex = `@software{barbosa2026transcritorio,
   <section id="faq" class="faq-section">
     <div class="container prose">
       <h2>Perguntas frequentes</h2>
-      <details><summary>Preciso de internet para usar?</summary><p>Apenas na instalação e no primeiro uso, para baixar o programa (~2,5 GB) e os modelos do perfil escolhido (de ~1 GB no Essencial a ~2,5 GB no Padrão; a análise com AI do perfil Completo soma mais ~10 GB). Depois disso, o Transcritório funciona integralmente offline — nenhum áudio sai da sua máquina em momento algum.</p></details>
+      <details><summary>Preciso de internet para usar?</summary><p>Apenas na instalação e no primeiro uso, para baixar o programa (~2,5 GB) e os modelos do perfil escolhido (de ~3,5 GB no Essencial a ~5 GB no Padrão; a análise com AI do perfil Completo soma mais ~10 GB). Depois disso, o Transcritório funciona integralmente offline — nenhum áudio sai da sua máquina em momento algum.</p></details>
       <details><summary>Quão precisa é a transcrição?</summary><p>Em áudios limpos de português brasileiro, a acurácia fica entre 90% e 96% das palavras corretas. Revisão humana continua sendo recomendada, especialmente para termos técnicos, nomes próprios e trechos com ruído.</p></details>
       <details><summary>E entrevistas com sotaque nordestino, caipira ou sulista?</summary><p>O modelo Whisper large-v3 foi treinado com ampla variação dialetal em português e lida bem com sotaques regionais brasileiros. A queda de acurácia costuma ser pequena (2–4 pontos percentuais) em comparação a áudios em variante paulistana/carioca padrão.</p></details>
       <details><summary>Minha TI institucional bloqueia instalação de programas. O que faço?</summary><p>A instalação não exige privilégios de administrador: o <code>uv</code> instala o Transcritório dentro do seu perfil de usuário, e não há executável baixado de site — justamente o que costumava disparar bloqueios de antivírus no formato antigo. Se ainda assim algo for barrado, peça à TI uma exceção apresentando a licença MIT e o repositório público no GitHub.</p></details>
