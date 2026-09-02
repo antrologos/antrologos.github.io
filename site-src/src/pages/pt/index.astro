@@ -263,7 +263,7 @@ const bibtex = `@software{barbosa2026transcritorio,
             <li><strong>+ separação de falantes</strong> e tempos por palavra</li>
             <li><strong>Máquina:</strong> 4+ núcleos, 8 GB RAM</li>
             <li><strong>Disco:</strong> ~7,5 GB (CPU) / ~10 GB (com GPU NVIDIA)</li>
-            <li class="req-note">Transcrição em minutos (TAGARELA); com a separação de falantes, ~1h em CPU; ~5–10 min no total com GPU NVIDIA de 4 GB+ (ou Apple Silicon).</li>
+            <li class="req-note">Transcrição em minutos (TAGARELA); a separação de falantes leva de 25 min a ~1h por hora de áudio em CPU, conforme o processador — e pode ficar para depois; ~5–10 min no total com GPU NVIDIA de 4 GB+ (ou Apple Silicon).</li>
           </ul>
         </div>
         <div class="req-card">
@@ -328,6 +328,7 @@ const bibtex = `@software{barbosa2026transcritorio,
       </details>
       <details><summary>Preciso de token da Hugging Face para os modelos?</summary><p>Só se você quiser a separação automática de falantes: o modelo pyannote exige aceitar os termos de uso no site da Hugging Face (gratuito), e o assistente do primeiro uso guia o passo a passo. Para apenas transcrever, nenhuma conta ou token é necessário — escolha "apenas transcrever" no assistente.</p></details>
       <details><summary>Funciona com entrevistas em outros idiomas?</summary><p>Sim. O foco é o português brasileiro, mas o Transcritório transcreve em 15 outros idiomas com tempos por palavra (espanhol, inglês, francês, alemão, italiano e outros — cada idioma baixa um pacote de alinhamento próprio), e um pacote multilíngue opcional (MMS, uso não-comercial) estende os tempos por palavra a mais de mil idiomas adicionais. A língua se escolhe por arquivo, na aba Propriedades.</p></details>
+      <details><summary>A barra parece travada na "separação de falantes"?</summary><p>Sem placa de vídeo, essa é a etapa demorada: de 25 minutos a cerca de 1 hora por hora de áudio, conforme o processador (a transcrição em si leva minutos com o TAGARELA). Desde a v0.2.3 a barra mostra o progresso real e uma estimativa de tempo — e, ao clicar em Transcrever, dá para desmarcar "Separar falantes agora": o texto fica pronto em minutos e a lista oferece completar as vozes depois, em lote.</p></details>
       <details><summary>Posso transcrever grupos focais com muitos participantes?</summary><p>Sim, funciona bem até 6–8 falantes. Ao transcrever, escolha o preset "Grupo focal" quando o app perguntar quantas pessoas falam; na revisão, cada voz ganha uma cor, e o diálogo "De quem é esta voz?" toca amostras de cada participante para você nomeá-los. Acima disso, a separação começa a misturar vozes parecidas — revise os rótulos no editor.</p></details>
       <details><summary>O código é realmente aberto? Posso auditar?</summary><p>Sim. Todo o código-fonte está publicado no <a href="https://github.com/antrologos/Transcritorio" target="_blank" rel="noopener">GitHub sob licença MIT</a>. Qualquer pessoa pode ler, modificar, redistribuir e verificar o comportamento do aplicativo.</p></details>
     </div>
