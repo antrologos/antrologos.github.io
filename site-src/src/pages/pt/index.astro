@@ -153,7 +153,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           <li><strong>✨ Glossário de nomes + revisão de grafias</strong> — a AI varre o projeto inteiro atrás de pessoas, lugares e instituições citadas, agrupa as variações de grafia ("Joao", "João", "Jono") e abre uma revisão em que <em>você</em> decide, ocorrência por ocorrência — com a grafia certa editável e um clique para ouvir o trecho antes de decidir.</li>
           <li><strong>✨ Perguntar às entrevistas</strong> — uma pergunta em português ("o que os entrevistados dizem sobre a escola?") respondida com citações dos trechos, por busca semântica local.</li>
           <li><strong>🔍 Verificação acústica das trocas de falante</strong> — depois da separação de vozes, o app confere cada troca contra o próprio áudio e marca as duvidosas no ponto exato, com navegação direta entre as marcações.</li>
-          <li><strong>Dois motores de transcrição</strong> — Whisper (o padrão em máquinas com GPU) e o Parakeet pt-BR "TAGARELA" (experimental, da NVIDIA; o padrão em máquinas sem placa de vídeo — 1h de áudio em poucos minutos, só no processador). Gravações em 15 outros idiomas também transcrevem com tempos por palavra (16 pacotes de alinhamento, incluindo o português).</li>
+          <li><strong>Dois motores de transcrição</strong> — o Parakeet pt-BR "TAGARELA" (da NVIDIA, treinado para o português falado; o padrão em todas as máquinas — 1h de áudio em poucos minutos, mesmo só no processador) e o Whisper (a reserva para outros idiomas). Gravações em 15 outros idiomas também transcrevem com tempos por palavra (16 pacotes de alinhamento, incluindo o português).</li>
           <li><strong>Aba Documentos</strong> — tudo que o app produz (transcrição final, legendas, resumo, glossário, versões anteriores) numa aba só, com data e botão de abrir. Chega de caçar arquivo em pasta.</li>
         </ul>
       </div>
@@ -188,7 +188,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           <span class="step-num">3</span>
           <div class="step-body">
             <h3>Clique em transcrever</h3>
-            <p>O Transcritório pergunta quantas pessoas falam (entrevista a dois? grupo focal?) e faz o resto. Os tempos estão nos cartões de requisitos abaixo: minutos com GPU ou com o motor TAGARELA (o padrão sem placa de vídeo); cerca da própria duração do áudio se optar pelo Whisper em CPU.</p>
+            <p>O Transcritório pergunta quantas pessoas falam (entrevista a dois? grupo focal?) e faz o resto. Os tempos estão nos cartões de requisitos abaixo: poucos minutos com o motor TAGARELA (o padrão), com ou sem placa de vídeo; cerca da própria duração do áudio se optar pelo Whisper em CPU.</p>
           </div>
         </li>
         <li>
@@ -254,7 +254,7 @@ const bibtex = `@software{barbosa2026transcritorio,
             <li><strong>Só transcrever</strong> (modelo compacto)</li>
             <li><strong>Máquina:</strong> 2+ núcleos, 4 GB RAM</li>
             <li><strong>Disco:</strong> ~6 GB</li>
-            <li class="req-note">1h de áudio em poucos minutos com o motor TAGARELA (o padrão sem placa de vídeo); ~1h se optar pelo Whisper.</li>
+            <li class="req-note">1h de áudio em poucos minutos com o motor TAGARELA (o padrão); ~1h se optar pelo Whisper.</li>
           </ul>
         </div>
         <div class="req-card recommended">
@@ -263,7 +263,7 @@ const bibtex = `@software{barbosa2026transcritorio,
             <li><strong>+ separação de falantes</strong> e tempos por palavra</li>
             <li><strong>Máquina:</strong> 4+ núcleos, 8 GB RAM</li>
             <li><strong>Disco:</strong> ~7,5 GB (CPU) / ~10 GB (com GPU NVIDIA)</li>
-            <li class="req-note">Transcrição em minutos (TAGARELA); a separação de falantes leva de ~7 a ~20 min por hora de áudio em CPU, conforme o processador — e pode ficar para depois; ~5–10 min no total com GPU NVIDIA de 4 GB+ (ou Apple Silicon).</li>
+            <li class="req-note">Transcrição em minutos (TAGARELA); a separação de falantes leva de ~4 min (máquina de 24 threads) a ~22 min (4 threads) por hora de áudio em CPU — e pode ficar para depois; cerca de 1 min por hora com GPU NVIDIA de 4 GB+.</li>
           </ul>
         </div>
         <div class="req-card">
@@ -290,11 +290,11 @@ const bibtex = `@software{barbosa2026transcritorio,
         <div class="ai-grid">
           <div class="ai-block">
             <h3>Whisper (OpenAI) via WhisperX e faster-whisper</h3>
-            <p>Modelo de transcrição treinado em 680 mil horas de áudio multilíngue, com muito português. O Transcritório escolhe a variante certa para a sua máquina — <code>large-v3</code>/<code>turbo</code> com GPU, <code>small</code> em CPU — e o executa via <code>faster-whisper</code> (CTranslate2), com o alinhamento palavra a palavra do <code>WhisperX</code>. Em Apple Silicon, o mesmo Whisper roda no Metal via <code>mlx-whisper</code>.</p>
+            <p>Modelo de transcrição treinado em 680 mil horas de áudio multilíngue, com muito português. É a reserva para gravações em outros idiomas — o Transcritório sugere <code>large-v3-turbo</code> com GPU e <code>small</code> em CPU, e avisa sobre a diferença de qualidade — executada via <code>faster-whisper</code> (CTranslate2), com o alinhamento palavra a palavra do <code>WhisperX</code>. Em Apple Silicon, o mesmo Whisper roda no Metal via <code>mlx-whisper</code>.</p>
           </div>
           <div class="ai-block">
             <h3>Parakeet pt-BR "TAGARELA" (NVIDIA)</h3>
-            <p>Motor (experimental) treinado especificamente para o português brasileiro — e, desde a v0.2.2, <strong>o padrão em máquinas sem placa de vídeo</strong>. Rodando via <code>onnx-asr</code>, transcreve de 13× a 25× mais rápido que o tempo real <em>mesmo sem placa de vídeo</em> — 1 hora de entrevista em poucos minutos num notebook comum, com tempos por palavra nativos.</p>
+            <p>Motor treinado especificamente para o português brasileiro — e, desde a v0.2.5, <strong>o padrão em todas as máquinas</strong> (segundo os autores do modelo, em fala espontânea erra menos palavras que o Whisper large-v3). Rodando via <code>onnx-asr</code>, transcreve de 13× a 25× mais rápido que o tempo real <em>mesmo sem placa de vídeo</em> — 1 hora de entrevista em poucos minutos num notebook comum, com pontuação e tempos por palavra nativos. Só transcreve português: para outros idiomas o app avisa e oferece um Whisper de reserva.</p>
           </div>
           <div class="ai-block">
             <h3>pyannote.audio (separação de falantes)</h3>
@@ -328,7 +328,7 @@ const bibtex = `@software{barbosa2026transcritorio,
       </details>
       <details><summary>Preciso de token da Hugging Face para os modelos?</summary><p>Só se você quiser a separação automática de falantes: o modelo pyannote exige aceitar os termos de uso no site da Hugging Face (gratuito), e o assistente do primeiro uso guia o passo a passo. Para apenas transcrever, nenhuma conta ou token é necessário — escolha "apenas transcrever" no assistente.</p></details>
       <details><summary>Funciona com entrevistas em outros idiomas?</summary><p>Sim. O foco é o português brasileiro, mas o Transcritório transcreve em 15 outros idiomas com tempos por palavra (espanhol, inglês, francês, alemão, italiano e outros — cada idioma baixa um pacote de alinhamento próprio), e um pacote multilíngue opcional (MMS, uso não-comercial) estende os tempos por palavra a mais de mil idiomas adicionais. A língua se escolhe por arquivo, na aba Propriedades.</p></details>
-      <details><summary>A barra parece travada na "separação de falantes"?</summary><p>Sem placa de vídeo, essa é a etapa demorada: de 7 a cerca de 20 minutos por hora de áudio, conforme o processador (a transcrição em si leva minutos com o TAGARELA). Desde a v0.2.3 a barra mostra o progresso real e uma estimativa de tempo — e, ao clicar em Transcrever, dá para desmarcar "Separar falantes agora": o texto fica pronto em minutos e a lista oferece completar as vozes depois, em lote.</p></details>
+      <details><summary>A barra parece travada na "separação de falantes"?</summary><p>Sem placa de vídeo, essa é a etapa demorada: de ~4 minutos (máquina de 24 threads) a ~22 minutos (4 threads) por hora de áudio (a transcrição em si leva minutos com o TAGARELA; com placa de vídeo a separação leva cerca de 1 minuto por hora). Desde a v0.2.3 a barra mostra o progresso real e uma estimativa de tempo — e, ao clicar em Transcrever, dá para desmarcar "Separar falantes agora": o texto fica pronto em minutos e a lista oferece completar as vozes depois, em lote.</p></details>
       <details><summary>Posso transcrever grupos focais com muitos participantes?</summary><p>Sim, funciona bem até 6–8 falantes. Ao transcrever, escolha o preset "Grupo focal" quando o app perguntar quantas pessoas falam; na revisão, cada voz ganha uma cor, e o diálogo "De quem é esta voz?" toca amostras de cada participante para você nomeá-los. Acima disso, a separação começa a misturar vozes parecidas — revise os rótulos no editor.</p></details>
       <details><summary>O código é realmente aberto? Posso auditar?</summary><p>Sim. Todo o código-fonte está publicado no <a href="https://github.com/antrologos/Transcritorio" target="_blank" rel="noopener">GitHub sob licença MIT</a>. Qualquer pessoa pode ler, modificar, redistribuir e verificar o comportamento do aplicativo.</p></details>
     </div>

@@ -149,7 +149,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           <li><strong>✨ Name glossary + spelling review</strong> — the AI sweeps the entire project for people, places and institutions mentioned, groups spelling variants ("Joao", "João", "Jono") and opens a review where <em>you</em> decide, occurrence by occurrence — with the correct spelling editable and one click to hear the passage before deciding.</li>
           <li><strong>✨ Ask your interviews</strong> — a plain-language question ("what do the interviewees say about school?") answered with quotes from the transcript, via local semantic search.</li>
           <li><strong>🔍 Acoustic verification of speaker changes</strong> — after voice separation, the app checks every change against the audio itself and flags the doubtful ones at the exact spot, with direct navigation between flags.</li>
-          <li><strong>Two transcription engines</strong> — Whisper (the default on machines with a GPU) and NVIDIA's Parakeet pt-BR "TAGARELA" (experimental; the default on machines without a graphics card — one hour of audio in a few minutes, CPU only). Recordings in 15 other languages transcribe too, with word-level timestamps (16 alignment packs, including Portuguese).</li>
+          <li><strong>Two transcription engines</strong> — NVIDIA's Parakeet pt-BR "TAGARELA" (trained on spoken Brazilian Portuguese; the default on every machine — one hour of audio in a few minutes, even CPU only) and Whisper (the fallback for other languages). Recordings in 15 other languages transcribe too, with word-level timestamps (16 alignment packs, including Portuguese).</li>
           <li><strong>Documents tab</strong> — everything the app produces (final transcript, subtitles, summary, glossary, earlier versions) in a single tab, with dates and an open button. No more hunting through folders.</li>
         </ul>
       </div>
@@ -183,7 +183,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           <span class="step-num">3</span>
           <div class="step-body">
             <h3>Click transcribe</h3>
-            <p>Transcritório asks how many people speak (one-on-one interview? focus group?) and does the rest. Times are in the requirement cards below: minutes with a GPU or with the TAGARELA engine (the default without a graphics card); about the audio's own length if you pick Whisper on CPU.</p>
+            <p>Transcritório asks how many people speak (one-on-one interview? focus group?) and does the rest. Times are in the requirement cards below: a few minutes with the TAGARELA engine (the default), with or without a graphics card; about the audio's own length if you pick Whisper on CPU.</p>
           </div>
         </li>
         <li>
@@ -247,7 +247,7 @@ const bibtex = `@software{barbosa2026transcritorio,
             <li><strong>Transcription only</strong> (compact model)</li>
             <li><strong>Machine:</strong> 2+ cores, 4 GB RAM</li>
             <li><strong>Disk:</strong> ~6 GB</li>
-            <li class="req-note">1h of audio in a few minutes with the TAGARELA engine (the default without a graphics card); ~1h if you pick Whisper instead.</li>
+            <li class="req-note">1h of audio in a few minutes with the TAGARELA engine (the default); ~1h if you pick Whisper instead.</li>
           </ul>
         </div>
         <div class="req-card recommended">
@@ -256,7 +256,7 @@ const bibtex = `@software{barbosa2026transcritorio,
             <li><strong>+ speaker separation</strong> and word-level timestamps</li>
             <li><strong>Machine:</strong> 4+ cores, 8 GB RAM</li>
             <li><strong>Disk:</strong> ~7.5 GB (CPU) / ~10 GB (with NVIDIA GPU)</li>
-            <li class="req-note">Transcription in minutes (TAGARELA); speaker separation takes ~7 to ~20 min per hour of audio on CPU, depending on the processor — and can be done later; ~5–10 min total with a 4 GB+ NVIDIA GPU (or Apple Silicon).</li>
+            <li class="req-note">Transcription in minutes (TAGARELA); speaker separation takes ~4 min (24-thread machine) to ~22 min (4 threads) per hour of audio on CPU — and can be done later; about 1 min per hour with a 4 GB+ NVIDIA GPU.</li>
           </ul>
         </div>
         <div class="req-card">
@@ -282,11 +282,11 @@ const bibtex = `@software{barbosa2026transcritorio,
         <div class="ai-grid">
           <div class="ai-block">
             <h3>Whisper (OpenAI) via WhisperX and faster-whisper</h3>
-            <p>Transcription model trained on 680k hours of multilingual audio, with plenty of Portuguese. Transcritório picks the right variant for your machine — <code>large-v3</code>/<code>turbo</code> with a GPU, <code>small</code> on CPU — and runs it via <code>faster-whisper</code> (CTranslate2), with <code>WhisperX</code>'s word-by-word alignment. On Apple Silicon, the same Whisper runs on Metal via <code>mlx-whisper</code>.</p>
+            <p>Transcription model trained on 680k hours of multilingual audio, with plenty of Portuguese. It is the fallback for recordings in other languages — Transcritório suggests <code>large-v3-turbo</code> with a GPU and <code>small</code> on CPU, and warns about the quality difference — run via <code>faster-whisper</code> (CTranslate2), with <code>WhisperX</code>'s word-by-word alignment. On Apple Silicon, the same Whisper runs on Metal via <code>mlx-whisper</code>.</p>
           </div>
           <div class="ai-block">
             <h3>Parakeet pt-BR "TAGARELA" (NVIDIA)</h3>
-            <p>An (experimental) engine trained specifically for Brazilian Portuguese — and, since v0.2.2, <strong>the default on machines without a graphics card</strong>. Running via <code>onnx-asr</code>, it transcribes 13× to 25× faster than real time <em>even without a graphics card</em> — one hour of interview in a few minutes on an ordinary laptop, with native word-level timestamps.</p>
+            <p>An engine trained specifically for Brazilian Portuguese — and, since v0.2.5, <strong>the default on every machine</strong> (per its authors, on spontaneous speech it gets fewer words wrong than Whisper large-v3). Running via <code>onnx-asr</code>, it transcribes 13× to 25× faster than real time <em>even without a graphics card</em> — one hour of interview in a few minutes on an ordinary laptop, with native punctuation and word-level timestamps. Portuguese only: for other languages the app warns and offers a Whisper fallback.</p>
           </div>
           <div class="ai-block">
             <h3>pyannote.audio (speaker separation)</h3>
@@ -320,7 +320,7 @@ const bibtex = `@software{barbosa2026transcritorio,
       <details><summary>Do I need a Hugging Face token for the models?</summary><p>Only if you want automatic speaker separation: the pyannote model requires accepting its terms on the Hugging Face website (free), and the first-run wizard walks you through it. For transcription only, no account or token is needed — pick "transcribe only" in the wizard.</p></details>
       <details><summary>Does it work with interviews in other languages?</summary><p>Yes. The focus is Brazilian Portuguese, but Transcritório transcribes 15 other languages with word-level timestamps (Spanish, English, French, German, Italian and more — each language downloads its own alignment pack), plus an optional multilingual pack (MMS, non-commercial use) that extends word-level timestamps to over a thousand additional languages. The language is chosen per file, in the Properties tab.</p></details>
       <details><summary>Is the app's interface in English?</summary><p>Not yet — the interface is in Brazilian Portuguese, the project's home audience. On this page, menu names are translated for readability (Tools = <em>Ferramentas</em>; Documents = <em>Documentos</em>; Properties = <em>Propriedades</em>). Transcription itself supports the languages listed above.</p></details>
-      <details><summary>Does the progress bar look stuck at "speaker separation"?</summary><p>Without a graphics card, that is the slow stage: 7 to about 20 minutes per hour of audio, depending on the processor (transcription itself takes minutes with TAGARELA). Since v0.2.3 the bar shows real progress and a time estimate — and when you click Transcribe you can untick "Separate speakers now": the text is ready in minutes and the list offers to add the voices later, in a batch.</p></details>
+      <details><summary>Does the progress bar look stuck at "speaker separation"?</summary><p>Without a graphics card, that is the slow stage: ~4 minutes (24-thread machine) to ~22 minutes (4 threads) per hour of audio (transcription itself takes minutes with TAGARELA; with a graphics card separation takes about 1 minute per hour). Since v0.2.3 the bar shows real progress and a time estimate — and when you click Transcribe you can untick "Separate speakers now": the text is ready in minutes and the list offers to add the voices later, in a batch.</p></details>
       <details><summary>Can I transcribe focus groups with many participants?</summary><p>Yes, it works well with up to 6–8 speakers. When transcribing, pick the "Focus group" preset when the app asks how many people speak; in review, each voice gets a color, and the "Whose voice is this?" dialog plays samples of each participant so you can name them. Beyond that, separation starts mixing similar voices — review labels in the editor.</p></details>
       <details><summary>Is the code really open? Can I audit it?</summary><p>Yes. All source code is published on <a href="https://github.com/antrologos/Transcritorio" target="_blank" rel="noopener">GitHub under MIT license</a>. Anyone can read, modify, redistribute and verify the app's behavior.</p></details>
     </div>
