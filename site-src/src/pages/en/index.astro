@@ -208,7 +208,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           <p>Or, from the <strong>Command Prompt</strong> (Start menu → type <code>cmd</code> → Enter):</p>
           <ol>
             <li>Install the base tools: <code>winget install astral-sh.uv</code> then <code>winget install Gyan.FFmpeg</code>.</li>
-            <li>Close and reopen Command Prompt, then install Transcritório: <code>uv tool install transcritorio</code></li>
+            <li>Close and reopen Command Prompt, then install Transcritório: <code>uv tool install --python 3.12 transcritorio</code></li>
             <li>Open it with the <code>transcritorio</code> command — a desktop shortcut is created on first run.</li>
             <li><strong>Optional (NVIDIA GPU):</strong> for up to 9× faster transcription, use the app menu <strong>Tools → Install NVIDIA acceleration (CUDA)…</strong>, which shows the ready-to-run command (~2.5&nbsp;GB download).</li>
           </ol>
@@ -217,8 +217,8 @@ const bibtex = `@software{barbosa2026transcritorio,
           <summary>🍎 macOS</summary>
           <ol>
             <li>In <strong>Terminal</strong> (with <a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a>): <code>brew install uv ffmpeg</code></li>
-            <li>Install Transcritório: <code>uv tool install transcritorio</code></li>
-            <li><strong>Apple Silicon (M1/M2/M3/M4):</strong> use <code>uv tool install "transcritorio[mac]"</code> to transcribe with Metal acceleration (look for the <code>Motor: MLX (Metal)</code> badge).</li>
+            <li>Install Transcritório: <code>uv tool install --python 3.12 transcritorio</code></li>
+            <li><strong>Apple Silicon (M1/M2/M3/M4):</strong> use <code>uv tool install --python 3.12 "transcritorio[mac]"</code> to transcribe with Metal acceleration (look for the <code>Motor: MLX (Metal)</code> badge).</li>
             <li>Open it with the <code>transcritorio</code> command. <strong>No Gatekeeper:</strong> there is no app bundle to "authorize" — the program runs in your user profile.</li>
           </ol>
         </details>
@@ -226,7 +226,7 @@ const bibtex = `@software{barbosa2026transcritorio,
           <summary>🐧 Linux</summary>
           <ol>
             <li>In the terminal: <code>curl -LsSf https://astral.sh/uv/install.sh | sh</code> and <code>sudo apt install ffmpeg</code> (Ubuntu/Debian; use your distro's package manager).</li>
-            <li>Close and reopen the terminal, then install: <code>uv tool install transcritorio</code></li>
+            <li>Close and reopen the terminal, then install: <code>uv tool install --python 3.12 transcritorio</code></li>
             <li>Open it with the <code>transcritorio</code> command.</li>
             <li><strong>Optional (NVIDIA GPU):</strong> use the app menu <strong>Tools → Install NVIDIA acceleration (CUDA)…</strong> (~2.5&nbsp;GB download).</li>
           </ol>
