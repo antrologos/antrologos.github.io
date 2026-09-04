@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Hero from '../../components/Hero.astro';
 import CopyButton from '../../components/CopyButton.astro';
 import version from '../../data/version.json';
+import beta from '../../data/beta.json';
 
 const v = version.version;
 const BASE = import.meta.env.BASE_URL;
@@ -236,6 +237,19 @@ const bibtex = `@software{barbosa2026transcritorio,
     </div>
   </section>
 
+  <!-- ==================== SECTION: TEST VERSION (BETA) ==================== -->
+  <section id="beta" class="beta-section">
+    <div class="container">
+      <div class="beta-box">
+        <h2>Test version <span class="beta-tag">beta {beta.version}</span></h2>
+        <p>There is a test version, for anyone who wants to try what is coming next and help find problems. It <strong>does not replace</strong> the stable version: it installs alongside it, and both can be open at the same time — the test version says so in its window title.</p>
+        <p><strong>Under test:</strong> semantic search was rebuilt (precision of the top 5 results rose from 0.48 to 0.67 on a hand-judged benchmark); <strong>“Ask the interviews”</strong> became a single gesture, with passages in seconds and a written answer citing them; and a new <strong>Interview themes</strong> feature that groups the passages of every interview by meaning, lets you <strong>code</strong> them (one or more codes per passage) and <strong>export to QualiLab</strong> or to a spreadsheet. For interviews and focus groups, the program asks which speakers count — you usually do not code the person asking.</p>
+        <p class="beta-download"><a class="btn-beta" href={beta.installer}>Download Instalar-Beta.bat</a> <span>Windows — double-click it. Reuses the models you already downloaded.</span></p>
+        <p class="beta-note">This is a version to <strong>test</strong>: it may have defects, and the QualiLab export has not yet been validated by opening the file in QualiLab itself. Your projects and transcripts are not modified. To remove it, delete the folder <code>%LOCALAPPDATA%\Transcritorio\beta-venv</code>. <a href={beta.release} target="_blank" rel="noopener">Full notes</a> · <a href="https://github.com/antrologos/Transcritorio/issues" target="_blank" rel="noopener">Report a problem</a></p>
+      </div>
+    </div>
+  </section>
+
   <section id="requirements" class="req-section">
     <div class="container">
       <h2>Requirements, by install profile</h2>
@@ -387,6 +401,45 @@ const bibtex = `@software{barbosa2026transcritorio,
   .install-tab ol { padding-left: 20px; color: var(--text-muted); margin-top: var(--spacing-m); }
   .install-tab li { margin-bottom: var(--spacing-s); line-height: 1.65; }
   .install-tab code { background: var(--bg-2); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--accent); }
+  /* Versao de teste: visivelmente separada da estavel, sem competir com ela */
+  .beta-section { padding: var(--spacing-l) 0; }
+  .beta-box {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-card);
+    padding: var(--spacing-l);
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  .beta-box h2 { text-align: left; font-size: 22px; margin-bottom: var(--spacing-m); }
+  .beta-box p { margin-bottom: var(--spacing-m); }
+  .beta-tag {
+    display: inline-block;
+    font-family: var(--font-mono, monospace);
+    font-size: 13px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  .beta-download { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-m); }
+  .beta-download span { color: var(--text-muted); font-size: 14px; }
+  .btn-beta {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: var(--radius-card);
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .btn-beta:hover { background: var(--accent-soft); }
+  .beta-note { font-size: 14px; color: var(--text-muted); margin-bottom: 0; }
+  .beta-note code { background: var(--bg-2); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+
   .req-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
   .req-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-m); max-width: 1000px; margin: 0 auto; }
   .req-card { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--radius-card); padding: var(--spacing-l); }

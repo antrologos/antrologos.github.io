@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Hero from '../../components/Hero.astro';
 import CopyButton from '../../components/CopyButton.astro';
 import version from '../../data/version.json';
+import beta from '../../data/beta.json';
 
 const v = version.version;
 const BASE = import.meta.env.BASE_URL;
@@ -239,6 +240,19 @@ const bibtex = `@software{barbosa2026transcritorio,
         </details>
       </div>
       <p class="install-note">Suporte principal: Windows 10/11. macOS e Linux funcionam pelo mesmo canal, mas ainda sem teste de campo — se algo falhar, <a href="https://github.com/antrologos/Transcritorio/issues" target="_blank" rel="noopener">abra uma issue</a>. Para atualizar: <code>uv tool upgrade transcritorio</code> (ou o Atualizar-Transcritorio.bat). Para desinstalar: <code>uv tool uninstall transcritorio</code> — projetos e transcrições ficam intactos.</p>
+    </div>
+  </section>
+
+  <!-- ==================== SECAO: VERSAO DE TESTE (BETA) ==================== -->
+  <section id="beta" class="beta-section">
+    <div class="container">
+      <div class="beta-box">
+        <h2>Versão de teste <span class="beta-tag">beta {beta.version}</span></h2>
+        <p>Existe uma versão de teste, para quem quiser experimentar o que vem a seguir e ajudar a encontrar problemas. Ela <strong>não substitui</strong> a versão estável: instala-se ao lado dela, e as duas podem ficar abertas ao mesmo tempo — a janela da versão de teste diz isso no título.</p>
+        <p><strong>Novidades em teste:</strong> a busca por sentido foi refeita (a precisão dos 5 primeiros resultados subiu de 0,48 para 0,67 num gabarito julgado à mão); <strong>“Perguntar às entrevistas”</strong> virou um gesto só, com os trechos em segundos e a resposta escrita citando-os; e uma função nova de <strong>Temas das entrevistas</strong>, que agrupa os trechos de todas as entrevistas por semelhança de sentido, permite <strong>codificar</strong> (um ou mais códigos por trecho) e <strong>exportar para o QualiLab</strong> ou para planilha. Em entrevistas e grupos focais, o programa pergunta quais falantes entram na análise — normalmente não se codifica quem pergunta.</p>
+        <p class="beta-download"><a class="btn-beta" href={beta.installer}>Baixar Instalar-Beta.bat</a> <span>Windows — clique duas vezes. Reaproveita os modelos que você já baixou.</span></p>
+        <p class="beta-note">É uma versão para <strong>testar</strong>: pode ter defeitos, e a exportação para o QualiLab ainda não foi validada abrindo o arquivo no QualiLab de verdade. Seus projetos e transcrições não são alterados. Para remover, apague a pasta <code>%LOCALAPPDATA%\Transcritorio\beta-venv</code>. <a href={beta.release} target="_blank" rel="noopener">Notas completas</a> · <a href="https://github.com/antrologos/Transcritorio/issues" target="_blank" rel="noopener">Relatar um problema</a></p>
+      </div>
     </div>
   </section>
 
@@ -492,6 +506,45 @@ const bibtex = `@software{barbosa2026transcritorio,
   .install-tab code { background: var(--bg-2); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--accent); }
 
   /* Requisitos */
+  /* Versao de teste: visivelmente separada da estavel, sem competir com ela */
+  .beta-section { padding: var(--spacing-l) 0; }
+  .beta-box {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-card);
+    padding: var(--spacing-l);
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  .beta-box h2 { text-align: left; font-size: 22px; margin-bottom: var(--spacing-m); }
+  .beta-box p { margin-bottom: var(--spacing-m); }
+  .beta-tag {
+    display: inline-block;
+    font-family: var(--font-mono, monospace);
+    font-size: 13px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  .beta-download { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-m); }
+  .beta-download span { color: var(--text-muted); font-size: 14px; }
+  .btn-beta {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: var(--radius-card);
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .btn-beta:hover { background: var(--accent-soft); }
+  .beta-note { font-size: 14px; color: var(--text-muted); margin-bottom: 0; }
+  .beta-note code { background: var(--bg-2); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+
   .req-section h2 { text-align: center; margin-bottom: var(--spacing-xl); }
   .req-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-m); max-width: 1000px; margin: 0 auto; }
   .req-card {

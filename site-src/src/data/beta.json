@@ -1,0 +1,7 @@
+{
+  "version": "0.3.0b1",
+  "tag": "beta-0.3.0b1",
+  "branch": "beta",
+  "installer": "https://github.com/antrologos/Transcritorio/releases/download/beta-0.3.0b1/Instalar-Beta.bat",
+  "release": "https://github.com/antrologos/Transcritorio/releases/tag/beta-0.3.0b1"
+}
