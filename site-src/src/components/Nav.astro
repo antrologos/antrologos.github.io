@@ -2,11 +2,19 @@
 interface Props {
   lang: 'pt' | 'en';
   otherUrl: string;
+  /** Prefixo das ancoras. Vazio na landing (a ancora e da propria
+   * pagina); a URL da landing em qualquer outra pagina, senao os links
+   * do menu levam a lugar nenhum. */
+  homeHref?: string;
 }
-const { lang, otherUrl } = Astro.props;
+const { lang, otherUrl, homeHref = '' } = Astro.props;
 const isPt = lang === 'pt';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const manualUrl = `${base}/pt/manual/`;
+
 const labels = {
+  manual: isPt ? 'Manual' : 'Manual (PT)',
   features: isPt ? 'Recursos' : 'Features',
   how: isPt ? 'Como usar' : 'How to use',
   install: isPt ? 'Instalacao' : 'Install',
@@ -22,11 +30,12 @@ const labels = {
       Transcritório
     </a>
     <nav class="nav-links" aria-label={isPt ? 'Navegação' : 'Navigation'}>
-      <a href="#features">{labels.features}</a>
-      <a href="#how">{labels.how}</a>
-      <a href="#install">{labels.install}</a>
-      <a href="#requirements">{labels.requirements}</a>
-      <a href="#faq">{labels.faq}</a>
+      <a href={`${homeHref}#features`}>{labels.features}</a>
+      <a href={manualUrl}>{labels.manual}</a>
+      <a href={`${homeHref}#how`}>{labels.how}</a>
+      <a href={`${homeHref}#install`}>{labels.install}</a>
+      <a href={`${homeHref}#requirements`}>{labels.requirements}</a>
+      <a href={`${homeHref}#faq`}>{labels.faq}</a>
     </nav>
     <div class="nav-right">
       <a class="lang-toggle" href={otherUrl} hreflang={isPt ? 'en-US' : 'pt-BR'} aria-label={isPt ? 'Switch to English' : 'Trocar para portugues'}>

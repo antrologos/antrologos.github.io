@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import Manual from '../../../layouts/Manual.astro';
+
+const capitulos = (await getCollection('manual')).sort(
+  (a, b) => a.data.ordem - b.data.ordem
+);
+const indice = capitulos.map((c) => ({ id: c.id, titulo: c.data.titulo }));
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Manual
+  titulo="Manual do Transcritório"
+  descricao="Como transcrever, revisar e analisar entrevistas — do primeiro projeto ao documento final."
+  capitulos={indice}
+  path="pt/manual/"
+>
+  <p>
+    Este manual acompanha a jornada de uma pesquisa: criar o projeto, colocar as
+    gravações, transcrever, dizer quem é cada voz, revisar, analisar e exportar.
+    Dá para lê-lo de ponta a ponta na primeira vez, ou abrir só o capítulo do
+    momento.
+  </p>
+  <p>
+    Duas coisas moram <strong>dentro do programa</strong>, e não aqui: a lista de
+    todos os comandos com os seus atalhos, na tecla <kbd>F1</kbd>, e uma versão
+    curta deste manual em <em>Ajuda → Como usar o Transcritório</em>, que funciona
+    sem internet.
+  </p>
+
+  <ul class="manual-cartoes">
+    {capitulos.map((c) => (
+      <li>
+        <a class="manual-cartao" href={`${base}/pt/manual/${c.id}/`}>
+          <strong>{c.data.titulo}</strong>
+          <span>{c.data.descricao}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Manual>

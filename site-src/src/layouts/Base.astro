@@ -10,9 +10,16 @@ interface Props {
   description: string;
   /** path relativo dentro de /Transcritorio/ ex: 'pt/' ou 'en/' */
   path: string;
+  /** URL do mesmo conteudo no outro idioma. Sem isto, a troca de idioma
+   * so funciona nas paginas que tem par: a regra automatica trocaria
+   * 'pt/manual/estudio/' por 'en/manual/estudio/', que nao existe. */
+  otherHref?: string;
+  /** Base para as ancoras do menu (#features, #how...). Fora da landing
+   * elas apontariam para ancoras da propria pagina, que nao existem. */
+  homeHref?: string;
 }
 
-const { lang, title, description, path } = Astro.props;
+const { lang, title, description, path, otherHref, homeHref } = Astro.props;
 
 const siteUrl = 'https://antrologos.github.io/Transcritorio';
 const canonical = `${siteUrl}/${path}`;
@@ -21,7 +28,7 @@ const otherLang = lang === 'pt' ? 'en' : 'pt';
 const otherPath = lang === 'pt'
   ? path.replace(/^pt\//, 'en/')
   : path.replace(/^en\//, 'pt/');
-const otherUrl = `${siteUrl}/${otherPath}`;
+const otherUrl = otherHref ?? `${siteUrl}/${otherPath}`;
 
 const htmlLang = lang === 'pt' ? 'pt-BR' : 'en-US';
 const ogImage = `${siteUrl}/img/og-image.png`;
@@ -93,7 +100,7 @@ const ogImage = `${siteUrl}/img/og-image.png`;
   })} />
 </head>
 <body>
-  <Nav lang={lang} otherUrl={otherUrl} />
+  <Nav lang={lang} otherUrl={otherUrl} homeHref={homeHref} />
   <main>
     <slot />
   </main>

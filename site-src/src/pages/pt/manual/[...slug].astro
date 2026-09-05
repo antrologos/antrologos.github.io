@@ -1,0 +1,28 @@
+---
+import { getCollection, render } from 'astro:content';
+import Manual from '../../../layouts/Manual.astro';
+
+export async function getStaticPaths() {
+  const capitulos = (await getCollection('manual')).sort(
+    (a, b) => a.data.ordem - b.data.ordem
+  );
+  const indice = capitulos.map((c) => ({ id: c.id, titulo: c.data.titulo }));
+  return capitulos.map((capitulo) => ({
+    params: { slug: capitulo.id },
+    props: { capitulo, indice },
+  }));
+}
+
+const { capitulo, indice } = Astro.props;
+const { Content } = await render(capitulo);
+---
+
+<Manual
+  titulo={capitulo.data.titulo}
+  descricao={capitulo.data.descricao}
+  atual={capitulo.id}
+  capitulos={indice}
+  path={`pt/manual/${capitulo.id}/`}
+>
+  <Content />
+</Manual>
