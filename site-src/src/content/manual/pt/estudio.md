@@ -20,9 +20,11 @@ Abra uma entrevista com duplo clique na lista. A janela se divide em três:
 - **no meio**, a lista de blocos, com o falante e o horário de cada um;
 - **embaixo**, o texto do bloco aberto, que é onde você digita.
 
-Clicar num bloco leva o áudio até ele. Duplo clique numa palavra do texto leva o
-áudio **até aquela palavra** — é o gesto para conferir um nome próprio ou um
-número sem ficar arrastando a onda.
+Clicar no **tempo** de um bloco, ou dar duplo clique na linha dele, leva o áudio
+até o começo do bloco. Duplo clique numa palavra do texto leva o áudio **até
+aquela palavra** — é o gesto para conferir um nome próprio ou um número sem ficar
+arrastando a onda. (Vale quando a transcrição tem tempos por palavra, o que é o
+caso dos perfis Padrão e Completo.)
 
 ## O ciclo
 
@@ -48,11 +50,12 @@ junto e deixando o cursor no texto, pronto para digitar.</li>
 Se a fala estiver rápida demais, <kbd>F7</kbd> e <kbd>F8</kbd> mudam a velocidade
 sem mudar o tom da voz.
 
-## Os blocos marcados com 🔍
+## Os blocos marcados para conferir
 
 Depois de separar as vozes, o programa confere as **trocas de falante** que ele
 mesmo propôs, ouvindo o áudio dos dois lados da emenda. Quando a troca parece
-duvidosa, ele marca o bloco com uma lupa e mostra uma faixa dizendo quantos há.
+duvidosa, ele marca o bloco como **Dúvida** na lista e mostra, acima dela, uma
+faixa com uma lupa 🔍 dizendo quantos há.
 
 Esses blocos são o melhor uso do seu tempo: são os lugares onde a máquina está
 insegura, e quase sempre é ali que o erro está. <kbd>Alt+Shift+↓</kbd> pula
@@ -97,9 +100,13 @@ Aí não há fronteira a mover — o que está errado é o falante mesmo.
 
 ## Juntar e dividir
 
-<kbd>Alt+D</kbd> divide o bloco no ponto do cursor. Se o texto não foi editado, o
-corte cai no **tempo exato da palavra** sob o cursor; se foi, o programa estima
-pela posição.
+<kbd>Alt+D</kbd> divide o bloco no ponto do cursor. O *texto* sempre divide ali;
+para o *tempo* do corte, o programa segue uma ordem: um clique seu na onda sonora,
+dentro do bloco, vale primeiro; senão, o tempo da palavra sob o cursor — exato
+quando a transcrição tem tempos por palavra e o texto do bloco não foi reescrito,
+aproximado pela palavra mais próxima quando foi; senão, a posição do áudio
+pausado dentro do bloco; e, por último, uma estimativa pela posição do cursor no
+texto. A barra de baixo diz qual dessas regras valeu.
 
 <kbd>Alt+J</kbd> junta com o bloco seguinte e <kbd>Alt+Shift+J</kbd> com o
 anterior. Juntar blocos de falantes diferentes é permitido: o bloco resultante
@@ -117,7 +124,7 @@ fica com o falante do bloco de cima, e a barra de baixo diz qual ficou.
 <tr><td><kbd>Alt+Shift+←</kbd> / <kbd>Alt+Shift+→</kbd></td><td>Volta e avança 2 segundos</td></tr>
 <tr><td><kbd>F7</kbd> / <kbd>F8</kbd></td><td>Mais devagar / mais rápido</td></tr>
 <tr><td><kbd>Alt+↓</kbd> / <kbd>Alt+↑</kbd></td><td>Bloco seguinte / anterior</td></tr>
-<tr><td><kbd>Alt+Shift+↓</kbd> / <kbd>Alt+Shift+↑</kbd></td><td>Próximo bloco marcado 🔍 / anterior</td></tr>
+<tr><td><kbd>Alt+Shift+↓</kbd> / <kbd>Alt+Shift+↑</kbd></td><td>Próximo bloco marcado para conferir / anterior</td></tr>
 <tr><td><kbd>F6</kbd></td><td>Passa o foco entre a lista de blocos e o texto</td></tr>
 <tr><td><kbd>Alt+D</kbd></td><td>Divide o bloco no cursor</td></tr>
 <tr><td><kbd>Alt+J</kbd> / <kbd>Alt+Shift+J</kbd></td><td>Junta com o bloco seguinte / anterior</td></tr>

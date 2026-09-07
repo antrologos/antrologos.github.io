@@ -45,9 +45,20 @@ const ogImage = `${siteUrl}/img/og-image.png`;
 
   <!-- Canonical + hreflang -->
   <link rel="canonical" href={canonical} />
-  <link rel="alternate" hreflang="pt-BR" href={`${siteUrl}/pt/`} />
-  <link rel="alternate" hreflang="en-US" href={`${siteUrl}/en/`} />
-  <link rel="alternate" hreflang="x-default" href={`${siteUrl}/pt/`} />
+  {otherHref ? (
+    <>
+      {/* Pagina sem par em ingles (manual): o alternate pt-BR e ela mesma,
+          coerente com o canonical; sem en-US, que seria mentira. */}
+      <link rel="alternate" hreflang="pt-BR" href={canonical} />
+      <link rel="alternate" hreflang="x-default" href={canonical} />
+    </>
+  ) : (
+    <>
+      <link rel="alternate" hreflang="pt-BR" href={`${siteUrl}/pt/`} />
+      <link rel="alternate" hreflang="en-US" href={`${siteUrl}/en/`} />
+      <link rel="alternate" hreflang="x-default" href={`${siteUrl}/pt/`} />
+    </>
+  )}
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />

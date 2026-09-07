@@ -26,7 +26,7 @@ const proximo = i >= 0 && i < capitulos.length - 1 ? capitulos[i + 1] : null;
 
 <Base
   lang="pt"
-  title={`${titulo} — Manual do Transcritório`}
+  title={titulo === 'Manual do Transcritório' ? titulo : `${titulo} — Manual do Transcritório`}
   description={descricao}
   path={path}
   homeHref={home}

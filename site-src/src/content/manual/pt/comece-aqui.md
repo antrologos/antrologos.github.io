@@ -10,7 +10,8 @@ formatos que servem para escrever e para analisar.
 
 Tudo acontece no seu computador. Nenhum áudio, nenhuma transcrição e nenhum
 nome sai para a internet — é por isso que o programa pede paciência na primeira
-vez, quando baixa os modelos, e depois nunca mais precisa de conexão.
+vez, quando baixa os modelos, e depois só volta a precisar de conexão para baixar
+componentes novos, como os de análise ou o pacote de outro idioma.
 
 ## O caminho, em sete passos
 
