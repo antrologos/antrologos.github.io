@@ -19,4 +19,13 @@ const manual = defineCollection({
   }),
 });
 
-export const collections = { manual };
+// Novidades: o CHANGELOG.md do app, renderizado. Ele JA e escrito em lingua
+// de usuario ("qual era o problema -> qual e o gesto novo"), entao nao ha
+// prosa a reescrever — so a copia, atualizada pelo site.yml antes do build e
+// commitada junto. Buscar sem fallback transformaria uma intermitencia de
+// rede num deploy quebrado ou num 404 numa URL ja indexada.
+const changelog = defineCollection({
+  loader: glob({ pattern: 'CHANGELOG.md', base: './src/content/changelog' }),
+});
+
+export const collections = { manual, changelog };

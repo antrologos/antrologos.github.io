@@ -12,9 +12,11 @@ const isPt = lang === 'pt';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const manualUrl = `${base}/pt/manual/`;
+const novidadesUrl = `${base}/pt/novidades/`;
 
 const labels = {
   manual: isPt ? 'Manual' : 'Manual (PT)',
+  novidades: isPt ? 'Novidades' : 'Changelog (PT)',
   features: isPt ? 'Recursos' : 'Features',
   how: isPt ? 'Como usar' : 'How to use',
   install: isPt ? 'Instalação' : 'Install',
@@ -32,6 +34,7 @@ const labels = {
     <nav class="nav-links" aria-label={isPt ? 'Navegação' : 'Navigation'}>
       <a href={`${homeHref}#features`}>{labels.features}</a>
       <a href={manualUrl}>{labels.manual}</a>
+      <a href={novidadesUrl}>{labels.novidades}</a>
       <a href={`${homeHref}#how`}>{labels.how}</a>
       <a href={`${homeHref}#install`}>{labels.install}</a>
       <a href={`${homeHref}#requirements`}>{labels.requirements}</a>

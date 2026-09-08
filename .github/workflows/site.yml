@@ -62,6 +62,22 @@ jobs:
           printf '{"version":"%s"}\n' "${{ steps.ver.outputs.version }}" > site-src/src/data/version.json
           cat site-src/src/data/version.json
 
+      - name: Refresh CHANGELOG (novidades)
+        run: |
+          # A pagina /pt/novidades/ e o CHANGELOG do app renderizado. Buscar do
+          # ramo beta (onde as mudancas aparecem primeiro) e, se a rede falhar,
+          # SEGUIR com a copia commitada: uma intermitencia nao pode quebrar o
+          # deploy nem produzir um 404 numa URL ja indexada.
+          set +e
+          curl -fsSL --max-time 30             https://raw.githubusercontent.com/antrologos/Transcritorio/beta/CHANGELOG.md             -o /tmp/CHANGELOG.md
+          if [ $? -eq 0 ] && [ -s /tmp/CHANGELOG.md ]; then
+            mv /tmp/CHANGELOG.md site-src/src/content/changelog/CHANGELOG.md
+            echo "CHANGELOG atualizado do ramo beta"
+          else
+            echo "CHANGELOG nao pode ser buscado; usando a copia commitada"
+          fi
+          set -e
+
       - name: Install dependencies
         working-directory: site-src
         run: npm ci
@@ -74,7 +90,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Transcritorio/ site-src/src/data/version.json
+          git add Transcritorio/ site-src/src/data/version.json site-src/src/content/changelog/CHANGELOG.md
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else

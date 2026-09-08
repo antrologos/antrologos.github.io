@@ -1,0 +1,54 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import '../../styles/manual.css';
+import version from '../../data/version.json';
+
+// Uma entrada so; o id vem do nome do arquivo e o loader o normaliza, entao
+// pegar a primeira e mais robusto que adivinhar a forma do id.
+const [entrada] = await getCollection('changelog');
+const { Content } = await render(entrada);
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base
+  lang="pt"
+  title="Novidades do Transcritório"
+  description="O que mudou em cada versão do Transcritório, em português e sem jargão."
+  path="pt/novidades/"
+  homeHref={`${base}/pt/`}
+  otherHref={`${base}/en/`}
+>
+  <div class="container novidades-shell">
+    <article class="manual-corpo">
+      <header>
+        <h1>Novidades</h1>
+        <p class="subtitulo">
+          O que mudou em cada versão, e por quê. A versão publicada hoje é a
+          <strong>{version.version}</strong>.
+        </p>
+      </header>
+
+      <div class="prosa">
+        <blockquote>
+          <p>
+            A primeira seção, <em>Em desenvolvimento</em>, é o <strong>canal de teste</strong>:
+            são mudanças que ainda não saíram na versão estável. Dentro do programa, a mesma
+            lista está em <em>Ajuda → Novidades desta versão</em>.
+          </p>
+        </blockquote>
+        <Content />
+      </div>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .novidades-shell {
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-2xl);
+  }
+  /* O changelog abre com "# Changelog", que duplicaria o titulo da pagina. */
+  .prosa :global(h1) { display: none; }
+</style>

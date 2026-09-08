@@ -16,33 +16,35 @@ componentes novos, como os de análise ou o pacote de outro idioma.
 ## O caminho, em sete passos
 
 <ol class="passos">
-<li><strong>Crie um projeto.</strong> Um projeto é uma pasta única com todo o
-trabalho de uma pesquisa. Suas gravações não são copiadas nem alteradas: o
-projeto apenas aponta para onde elas estão.</li>
+<li><strong><a href="/Transcritorio/pt/manual/projeto/">Crie um projeto.</a></strong>
+Um projeto é uma pasta única com todo o trabalho de uma pesquisa. Suas gravações
+não são copiadas nem alteradas: o projeto apenas aponta para onde elas estão.</li>
 
 <li><strong>Coloque as gravações.</strong> Arraste os arquivos para a janela.
 Aceita MP3, M4A, WAV, FLAC, MP4 e MOV — vídeo funciona, e a imagem aparece
 enquanto você revisa.</li>
 
-<li><strong>Transcreva.</strong> Marque o que quer transcrever e mande ver. Uma
-hora de entrevista leva alguns minutos em um computador com placa de vídeo, e
-mais tempo sem ela. Dá para deixar rodando e ir fazer outra coisa.</li>
+<li><strong><a href="/Transcritorio/pt/manual/transcrever/">Transcreva.</a></strong>
+Marque o que quer transcrever e mande ver. Uma hora de entrevista leva alguns
+minutos em um computador com placa de vídeo, e mais tempo sem ela. Dá para deixar
+rodando e ir fazer outra coisa.</li>
 
-<li><strong>Diga quem é cada voz.</strong> O programa separa as vozes sozinho,
-mas não sabe os nomes. Ele toca uma amostra de cada uma e pergunta.</li>
+<li><strong><a href="/Transcritorio/pt/manual/vozes/">Diga quem é cada voz.</a></strong>
+O programa separa as vozes sozinho, mas não sabe os nomes. Ele toca uma amostra de
+cada uma e pergunta.</li>
 
 <li><strong>Revise.</strong> É aqui que está o trabalho de verdade, e é o
 capítulo que mais vale a pena ler: <a href="/Transcritorio/pt/manual/estudio/">o
 Estúdio de Revisão</a>.</li>
 
-<li><strong>Analise, se quiser.</strong> Buscar por assunto, agrupar trechos por
-tema, aplicar códigos, resumir, montar um glossário de nomes citados. Tudo
-opcional, tudo local.</li>
+<li><strong><a href="/Transcritorio/pt/manual/analisar/">Analise, se quiser.</a></strong>
+Buscar por assunto, agrupar trechos por tema, aplicar códigos, resumir, montar um
+glossário de nomes citados. Tudo opcional, tudo local.</li>
 
-<li><strong>Exporte.</strong> Sai <code>.docx</code> e <code>.md</code> para
-leitura, <code>.srt</code> e <code>.vtt</code> para legendas, <code>.csv</code>
-para planilha. Fica tudo na pasta <strong>Resultados</strong>, dentro do
-projeto.</li>
+<li><strong><a href="/Transcritorio/pt/manual/exportar/">Exporte.</a></strong>
+Sai <code>.docx</code> e <code>.md</code> para leitura, <code>.srt</code> e
+<code>.vtt</code> para legendas, <code>.csv</code> para planilha. Fica tudo na
+pasta <strong>Resultados</strong>, dentro do projeto.</li>
 </ol>
 
 ## Duas coisas que ficam dentro do programa
