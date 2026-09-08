@@ -33,6 +33,12 @@ pediu.
 
 ## Onde os arquivos ficam
 
+<figure>
+  <img src="/Transcritorio/img/manual/documentos.png"
+       alt="A aba Documentos lista o que existe e o que ainda não foi gerado." loading="lazy" />
+  <figcaption>A aba Documentos lista o que existe e o que ainda não foi gerado.</figcaption>
+</figure>
+
 Na pasta **Resultados**, dentro do projeto. Ela nasce na primeira exportação — antes disso não
 existe.
 

@@ -12,6 +12,12 @@ ser o que você quer quando acabou de montar o projeto.
 
 ## A setinha ao lado do botão
 
+<figure>
+  <img src="/Transcritorio/img/manual/transcrever-menu.png"
+       alt="A setinha do botão Transcrever: o motor e a chave de separar falantes." loading="lazy" />
+  <figcaption>A setinha do botão Transcrever: o motor e a chave de separar falantes.</figcaption>
+</figure>
+
 Ali ficam duas escolhas que vale conhecer:
 
 - **o motor**, isto é, qual modelo vai ouvir o áudio;

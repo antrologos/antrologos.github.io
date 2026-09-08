@@ -10,6 +10,12 @@ documento final, a busca, os temas.
 
 ## A pergunta
 
+<figure>
+  <img src="/Transcritorio/img/manual/vozes.png"
+       alt="Uma linha por voz, com trechos para ouvir. O nome vale para a transcrição inteira." loading="lazy" />
+  <figcaption>Uma linha por voz, com trechos para ouvir. O nome vale para a transcrição inteira.</figcaption>
+</figure>
+
 Quando a separação termina, o programa abre **De quem é esta voz?**. Se você não responder na
 hora, a pergunta não some: ao abrir aquela transcrição, aparece uma faixa dizendo que as
 vozes ainda não foram confirmadas, com o botão **Dar nome às vozes…**. Ele também está em

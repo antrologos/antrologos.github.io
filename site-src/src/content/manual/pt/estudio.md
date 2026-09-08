@@ -14,6 +14,12 @@ encontrar. Quinze minutos aqui se pagam na primeira entrevista.
 
 ## A tela
 
+<figure>
+  <img src="/Transcritorio/img/manual/estudio.png"
+       alt="O Estúdio: a gravação em cima, os blocos no meio, o texto do bloco embaixo." loading="lazy" />
+  <figcaption>O Estúdio: a gravação em cima, os blocos no meio, o texto do bloco embaixo.</figcaption>
+</figure>
+
 Abra uma entrevista com duplo clique na lista. A janela se divide em três:
 
 - **em cima**, a gravação: os controles, a onda sonora e a régua de tempo;
@@ -99,6 +105,12 @@ Aí não há fronteira a mover — o que está errado é o falante mesmo.
 <kbd>Alt+E</kbd> abre a lista de falantes do bloco sem tirar a mão do teclado.
 
 ## Juntar e dividir
+
+<figure>
+  <img src="/Transcritorio/img/manual/estudio-editor.png"
+       alt="A fileira de botões do editor espelha os atalhos — inclusive o conserto de fronteira." loading="lazy" />
+  <figcaption>A fileira de botões do editor espelha os atalhos — inclusive o conserto de fronteira.</figcaption>
+</figure>
 
 <kbd>Alt+D</kbd> divide o bloco no ponto do cursor. O *texto* sempre divide ali;
 para o *tempo* do corte, o programa segue uma ordem: um clique seu na onda sonora,

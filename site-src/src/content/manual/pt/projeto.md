@@ -30,6 +30,12 @@ tela que abre junto com o programa.
 
 ## Colocar as gravações
 
+<figure>
+  <img src="/Transcritorio/img/manual/lista-do-projeto.png"
+       alt="A lista do projeto. A caixa da esquerda escolhe o que transcrever; o duplo clique abre a entrevista." loading="lazy" />
+  <figcaption>A lista do projeto. A caixa da esquerda escolhe o que transcrever; o duplo clique abre a entrevista.</figcaption>
+</figure>
+
 Arraste os arquivos para a janela — é o caminho mais rápido. Ou use **+ Adicionar mídia…**,
 na barra de cima, que aceita arquivos ou uma pasta inteira.
 

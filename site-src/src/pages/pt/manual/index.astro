@@ -28,6 +28,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     sem internet.
   </p>
 
+  <p class="nota-exemplo">
+    As telas deste manual usam uma <strong>conversa fictícia</strong>, escrita para
+    servir de exemplo — nenhuma entrevista de pesquisa aparece aqui.
+  </p>
+
   <p>
     E, quando quiser saber o que mudou de uma versão para a outra, a lista completa
     está em <a href={`${base}/pt/novidades/`}>Novidades</a>.
@@ -44,3 +49,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     ))}
   </ul>
 </Manual>
+
+<style>
+  .nota-exemplo {
+    font-size: 15px;
+    color: var(--text-muted);
+    border-left: 2px solid var(--border-strong);
+    padding-left: var(--spacing-m);
+  }
+</style>

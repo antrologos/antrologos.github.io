@@ -49,6 +49,12 @@ pasta <strong>Resultados</strong>, dentro do projeto.</li>
 
 ## Duas coisas que ficam dentro do programa
 
+<figure>
+  <img src="/Transcritorio/img/manual/atalhos-f1.png"
+       alt="A tecla F1: todos os comandos, com a tecla de cada um e uma busca que aceita as duas coisas." loading="lazy" />
+  <figcaption>A tecla F1: todos os comandos, com a tecla de cada um e uma busca que aceita as duas coisas.</figcaption>
+</figure>
+
 Este manual está no site porque é fácil de atualizar e cabem imagens. Mas duas
 peças de ajuda moram no próprio Transcritório, e são as que você vai usar mais:
 
